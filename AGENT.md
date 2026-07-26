@@ -26,7 +26,7 @@
 ## 数据库
 
 1. 优先采用本地SQLite
-2. 允许用户输入sql路径，如PostgreSQL、MySQL等等
+2. 允许用户输入sql连接字符串，如PostgreSQL、MySQL等等
 
 ## 用户注册
 
