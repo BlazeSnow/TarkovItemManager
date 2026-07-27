@@ -1,0 +1,123 @@
+[
+  {
+    "facilityID": 7,
+    "level": 1,
+    "requirements": [
+      {
+        "itemID": 96,
+        "quantity": 1,
+        "foundInRaid": false
+      },
+      {
+        "itemID": 0,
+        "quantity": 10000,
+        "foundInRaid": false
+      }
+    ],
+    "facilityPrerequisites": [],
+    "merchantPrerequisites": [],
+    "skillPrerequisites": [],
+    "taskPrerequisites": [],
+    "editionPrerequisites": [],
+    "constructionTimeSeconds": 0,
+    "source": {
+      "page": "https://www.eftarkov.com/news/web_106.html",
+      "sourceFacilityName": "照明",
+      "sourceRequirementsAvailable": true,
+      "taskAndEditionConditionsProvided": false
+    }
+  },
+  {
+    "facilityID": 7,
+    "level": 2,
+    "requirements": [
+      {
+        "itemID": 13,
+        "quantity": 10,
+        "foundInRaid": false
+      },
+      {
+        "itemID": 10,
+        "quantity": 14,
+        "foundInRaid": false
+      }
+    ],
+    "facilityPrerequisites": [
+      {
+        "facilityID": 7,
+        "level": 1
+      },
+      {
+        "facilityID": 16,
+        "level": 1
+      }
+    ],
+    "merchantPrerequisites": [],
+    "skillPrerequisites": [],
+    "taskPrerequisites": [],
+    "editionPrerequisites": [],
+    "constructionTimeSeconds": 0,
+    "source": {
+      "page": "https://www.eftarkov.com/news/web_106.html",
+      "sourceFacilityName": "照明",
+      "sourceRequirementsAvailable": true,
+      "taskAndEditionConditionsProvided": false
+    }
+  },
+  {
+    "facilityID": 7,
+    "level": 3,
+    "requirements": [
+      {
+        "itemID": 12,
+        "quantity": 7,
+        "foundInRaid": true
+      },
+      {
+        "itemID": 13,
+        "quantity": 12,
+        "foundInRaid": false
+      },
+      {
+        "itemID": 39,
+        "quantity": 12,
+        "foundInRaid": false
+      },
+      {
+        "itemID": 0,
+        "quantity": 50000,
+        "foundInRaid": false
+      }
+    ],
+    "facilityPrerequisites": [
+      {
+        "facilityID": 1,
+        "level": 1
+      },
+      {
+        "facilityID": 7,
+        "level": 2
+      },
+      {
+        "facilityID": 16,
+        "level": 2
+      }
+    ],
+    "merchantPrerequisites": [
+      {
+        "merchantID": 5,
+        "level": 2
+      }
+    ],
+    "skillPrerequisites": [],
+    "taskPrerequisites": [],
+    "editionPrerequisites": [],
+    "constructionTimeSeconds": 21600,
+    "source": {
+      "page": "https://www.eftarkov.com/news/web_106.html",
+      "sourceFacilityName": "照明",
+      "sourceRequirementsAvailable": true,
+      "taskAndEditionConditionsProvided": false
+    }
+  }
+]

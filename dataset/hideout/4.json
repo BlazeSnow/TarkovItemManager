@@ -1,0 +1,204 @@
+[
+  {
+    "facilityID": 4,
+    "level": 1,
+    "requirements": [],
+    "facilityPrerequisites": [],
+    "merchantPrerequisites": [],
+    "skillPrerequisites": [],
+    "taskPrerequisites": [],
+    "editionPrerequisites": [],
+    "constructionTimeSeconds": 0,
+    "source": {
+      "page": "https://www.eftarkov.com/news/web_103.html",
+      "sourceFacilityName": "仓库",
+      "sourceRequirementsAvailable": false,
+      "taskAndEditionConditionsProvided": false
+    }
+  },
+  {
+    "facilityID": 4,
+    "level": 2,
+    "requirements": [
+      {
+        "itemID": 4,
+        "quantity": 4,
+        "foundInRaid": false
+      },
+      {
+        "itemID": 82,
+        "quantity": 10,
+        "foundInRaid": false
+      },
+      {
+        "itemID": 81,
+        "quantity": 5,
+        "foundInRaid": true
+      },
+      {
+        "itemID": 65,
+        "quantity": 1,
+        "foundInRaid": true
+      },
+      {
+        "itemID": 0,
+        "quantity": 2500000,
+        "foundInRaid": false
+      }
+    ],
+    "facilityPrerequisites": [
+      {
+        "facilityID": 4,
+        "level": 1
+      },
+      {
+        "facilityID": 6,
+        "level": 1
+      }
+    ],
+    "merchantPrerequisites": [],
+    "skillPrerequisites": [],
+    "taskPrerequisites": [],
+    "editionPrerequisites": [],
+    "constructionTimeSeconds": 86400,
+    "source": {
+      "page": "https://www.eftarkov.com/news/web_103.html",
+      "sourceFacilityName": "仓库",
+      "sourceRequirementsAvailable": true,
+      "taskAndEditionConditionsProvided": false
+    }
+  },
+  {
+    "facilityID": 4,
+    "level": 3,
+    "requirements": [
+      {
+        "itemID": 81,
+        "quantity": 7,
+        "foundInRaid": true
+      },
+      {
+        "itemID": 82,
+        "quantity": 15,
+        "foundInRaid": false
+      },
+      {
+        "itemID": 15,
+        "quantity": 2,
+        "foundInRaid": true
+      },
+      {
+        "itemID": 0,
+        "quantity": 8500000,
+        "foundInRaid": false
+      }
+    ],
+    "facilityPrerequisites": [
+      {
+        "facilityID": 4,
+        "level": 2
+      },
+      {
+        "facilityID": 6,
+        "level": 2
+      },
+      {
+        "facilityID": 12,
+        "level": 2
+      }
+    ],
+    "merchantPrerequisites": [
+      {
+        "merchantID": 0,
+        "level": 3
+      },
+      {
+        "merchantID": 6,
+        "level": 3
+      }
+    ],
+    "skillPrerequisites": [],
+    "taskPrerequisites": [],
+    "editionPrerequisites": [],
+    "constructionTimeSeconds": 172800,
+    "source": {
+      "page": "https://www.eftarkov.com/news/web_103.html",
+      "sourceFacilityName": "仓库",
+      "sourceRequirementsAvailable": true,
+      "taskAndEditionConditionsProvided": false
+    }
+  },
+  {
+    "facilityID": 4,
+    "level": 4,
+    "requirements": [
+      {
+        "itemID": 54,
+        "quantity": 10,
+        "foundInRaid": false
+      },
+      {
+        "itemID": 53,
+        "quantity": 10,
+        "foundInRaid": false
+      },
+      {
+        "itemID": 33,
+        "quantity": 2,
+        "foundInRaid": true
+      },
+      {
+        "itemID": 113,
+        "quantity": 8,
+        "foundInRaid": false
+      },
+      {
+        "itemID": 2,
+        "quantity": 200000,
+        "foundInRaid": false
+      }
+    ],
+    "facilityPrerequisites": [
+      {
+        "facilityID": 1,
+        "level": 3
+      },
+      {
+        "facilityID": 3,
+        "level": 2
+      },
+      {
+        "facilityID": 4,
+        "level": 3
+      },
+      {
+        "facilityID": 16,
+        "level": 3
+      },
+      {
+        "facilityID": 12,
+        "level": 3
+      }
+    ],
+    "merchantPrerequisites": [
+      {
+        "merchantID": 4,
+        "level": 4
+      },
+      {
+        "merchantID": 6,
+        "level": 4
+      }
+    ],
+    "skillPrerequisites": [],
+    "taskPrerequisites": [],
+    "editionPrerequisites": [],
+    "constructionTimeSeconds": 345600,
+    "source": {
+      "page": "https://www.eftarkov.com/news/web_103.html",
+      "sourceFacilityName": "仓库",
+      "sourceRequirementsAvailable": true,
+      "taskAndEditionConditionsProvided": false
+    }
+  }
+]

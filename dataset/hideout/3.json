@@ -1,0 +1,185 @@
+[
+  {
+    "facilityID": 3,
+    "level": 1,
+    "requirements": [
+      {
+        "itemID": 68,
+        "quantity": 1,
+        "foundInRaid": false
+      },
+      {
+        "itemID": 14,
+        "quantity": 1,
+        "foundInRaid": false
+      },
+      {
+        "itemID": 8,
+        "quantity": 1,
+        "foundInRaid": false
+      },
+      {
+        "itemID": 61,
+        "quantity": 1,
+        "foundInRaid": false
+      },
+      {
+        "itemID": 22,
+        "quantity": 1,
+        "foundInRaid": false
+      }
+    ],
+    "facilityPrerequisites": [
+      {
+        "facilityID": 6,
+        "level": 2
+      },
+      {
+        "facilityID": 18,
+        "level": 2
+      }
+    ],
+    "merchantPrerequisites": [],
+    "skillPrerequisites": [],
+    "taskPrerequisites": [],
+    "editionPrerequisites": [],
+    "constructionTimeSeconds": 0,
+    "source": {
+      "page": "https://www.eftarkov.com/news/web_102.html",
+      "sourceFacilityName": "情报中心",
+      "sourceRequirementsAvailable": true,
+      "taskAndEditionConditionsProvided": false
+    }
+  },
+  {
+    "facilityID": 3,
+    "level": 2,
+    "requirements": [
+      {
+        "itemID": 36,
+        "quantity": 3,
+        "foundInRaid": false
+      },
+      {
+        "itemID": 66,
+        "quantity": 8,
+        "foundInRaid": false
+      },
+      {
+        "itemID": 14,
+        "quantity": 7,
+        "foundInRaid": false
+      },
+      {
+        "itemID": 61,
+        "quantity": 3,
+        "foundInRaid": true
+      }
+    ],
+    "facilityPrerequisites": [
+      {
+        "facilityID": 3,
+        "level": 1
+      },
+      {
+        "facilityID": 10,
+        "level": 3
+      },
+      {
+        "facilityID": 14,
+        "level": 3
+      },
+      {
+        "facilityID": 18,
+        "level": 3
+      }
+    ],
+    "merchantPrerequisites": [
+      {
+        "merchantID": 5,
+        "level": 2
+      }
+    ],
+    "skillPrerequisites": [
+      {
+        "name": "专注",
+        "level": 3
+      }
+    ],
+    "taskPrerequisites": [],
+    "editionPrerequisites": [],
+    "constructionTimeSeconds": 21600,
+    "source": {
+      "page": "https://www.eftarkov.com/news/web_102.html",
+      "sourceFacilityName": "情报中心",
+      "sourceRequirementsAvailable": true,
+      "taskAndEditionConditionsProvided": false
+    }
+  },
+  {
+    "facilityID": 3,
+    "level": 3,
+    "requirements": [
+      {
+        "itemID": 118,
+        "quantity": 2,
+        "foundInRaid": false
+      },
+      {
+        "itemID": 35,
+        "quantity": 2,
+        "foundInRaid": false
+      },
+      {
+        "itemID": 49,
+        "quantity": 8,
+        "foundInRaid": false
+      },
+      {
+        "itemID": 101,
+        "quantity": 1,
+        "foundInRaid": false
+      },
+      {
+        "itemID": 47,
+        "quantity": 8,
+        "foundInRaid": false
+      },
+      {
+        "itemID": 50,
+        "quantity": 2,
+        "foundInRaid": true
+      }
+    ],
+    "facilityPrerequisites": [
+      {
+        "facilityID": 1,
+        "level": 3
+      },
+      {
+        "facilityID": 3,
+        "level": 2
+      },
+      {
+        "facilityID": 16,
+        "level": 3
+      }
+    ],
+    "merchantPrerequisites": [
+      {
+        "merchantID": 0,
+        "level": 3
+      }
+    ],
+    "skillPrerequisites": [],
+    "taskPrerequisites": [],
+    "editionPrerequisites": [],
+    "constructionTimeSeconds": 86400,
+    "source": {
+      "page": "https://www.eftarkov.com/news/web_102.html",
+      "sourceFacilityName": "情报中心",
+      "sourceRequirementsAvailable": true,
+      "taskAndEditionConditionsProvided": false
+    }
+  }
+]

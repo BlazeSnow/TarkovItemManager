@@ -21,7 +21,7 @@
 2. items.json存储所有物品的数值ID和官方中文名
 3. facilities.json存储藏身处设施的数值ID和官方中文名
 4. merchants.json存储商人的数值ID和名称
-5. hideout.json存储 PVE 快照元数据及各设施等级升级记录：材料物品ID、个数、是否需要战局中带出（带勾，Found in Raid）、设施/商人/技能/任务/版本包前置条件和建造时间
+5. 根 hideout.json 存储 PVE 快照元数据和有序 upgradeFiles 清单；dataset/hideout/<设施ID>.json 分别存储该设施各等级升级记录：材料物品ID、个数、是否需要战局中带出（带勾，Found in Raid）、设施/商人/技能/任务/版本包前置条件和建造时间
 6. 静态数据当前采用扁平数值ID契约；后端加载器适配应作为独立改造，不得混入数据整理工作
 
 ## 数据库

@@ -1,0 +1,152 @@
+[
+  {
+    "facilityID": 14,
+    "level": 1,
+    "requirements": [
+      {
+        "itemID": 73,
+        "quantity": 2,
+        "foundInRaid": false
+      },
+      {
+        "itemID": 28,
+        "quantity": 1,
+        "foundInRaid": false
+      },
+      {
+        "itemID": 14,
+        "quantity": 1,
+        "foundInRaid": false
+      },
+      {
+        "itemID": 0,
+        "quantity": 25000,
+        "foundInRaid": false
+      }
+    ],
+    "facilityPrerequisites": [
+      {
+        "facilityID": 16,
+        "level": 1
+      }
+    ],
+    "merchantPrerequisites": [],
+    "skillPrerequisites": [],
+    "taskPrerequisites": [],
+    "editionPrerequisites": [],
+    "constructionTimeSeconds": 0,
+    "source": {
+      "page": "https://www.eftarkov.com/news/web_113.html",
+      "sourceFacilityName": "营养部",
+      "sourceRequirementsAvailable": true,
+      "taskAndEditionConditionsProvided": false
+    }
+  },
+  {
+    "facilityID": 14,
+    "level": 2,
+    "requirements": [
+      {
+        "itemID": 73,
+        "quantity": 3,
+        "foundInRaid": false
+      },
+      {
+        "itemID": 6,
+        "quantity": 4,
+        "foundInRaid": false
+      },
+      {
+        "itemID": 7,
+        "quantity": 4,
+        "foundInRaid": false
+      },
+      {
+        "itemID": 38,
+        "quantity": 2,
+        "foundInRaid": true
+      }
+    ],
+    "facilityPrerequisites": [
+      {
+        "facilityID": 2,
+        "level": 2
+      },
+      {
+        "facilityID": 14,
+        "level": 1
+      }
+    ],
+    "merchantPrerequisites": [],
+    "skillPrerequisites": [],
+    "taskPrerequisites": [],
+    "editionPrerequisites": [],
+    "constructionTimeSeconds": 14400,
+    "source": {
+      "page": "https://www.eftarkov.com/news/web_113.html",
+      "sourceFacilityName": "营养部",
+      "sourceRequirementsAvailable": true,
+      "taskAndEditionConditionsProvided": false
+    }
+  },
+  {
+    "facilityID": 14,
+    "level": 3,
+    "requirements": [
+      {
+        "itemID": 107,
+        "quantity": 5,
+        "foundInRaid": false
+      },
+      {
+        "itemID": 67,
+        "quantity": 5,
+        "foundInRaid": false
+      },
+      {
+        "itemID": 114,
+        "quantity": 2,
+        "foundInRaid": true
+      },
+      {
+        "itemID": 0,
+        "quantity": 125000,
+        "foundInRaid": false
+      }
+    ],
+    "facilityPrerequisites": [
+      {
+        "facilityID": 2,
+        "level": 3
+      },
+      {
+        "facilityID": 4,
+        "level": 2
+      },
+      {
+        "facilityID": 14,
+        "level": 2
+      },
+      {
+        "facilityID": 16,
+        "level": 2
+      }
+    ],
+    "merchantPrerequisites": [],
+    "skillPrerequisites": [
+      {
+        "name": "代谢",
+        "level": 3
+      }
+    ],
+    "taskPrerequisites": [],
+    "editionPrerequisites": [],
+    "constructionTimeSeconds": 86400,
+    "source": {
+      "page": "https://www.eftarkov.com/news/web_113.html",
+      "sourceFacilityName": "营养部",
+      "sourceRequirementsAvailable": true,
+      "taskAndEditionConditionsProvided": false
+    }
+  }
+]

@@ -1,0 +1,54 @@
+[
+  {
+    "facilityID": 13,
+    "level": 1,
+    "requirements": [
+      {
+        "itemID": 48,
+        "quantity": 5,
+        "foundInRaid": false
+      },
+      {
+        "itemID": 46,
+        "quantity": 10,
+        "foundInRaid": false
+      },
+      {
+        "itemID": 18,
+        "quantity": 5,
+        "foundInRaid": true
+      },
+      {
+        "itemID": 1,
+        "quantity": 25000,
+        "foundInRaid": false
+      }
+    ],
+    "facilityPrerequisites": [
+      {
+        "facilityID": 6,
+        "level": 3
+      },
+      {
+        "facilityID": 16,
+        "level": 3
+      }
+    ],
+    "merchantPrerequisites": [
+      {
+        "merchantID": 3,
+        "level": 3
+      }
+    ],
+    "skillPrerequisites": [],
+    "taskPrerequisites": [],
+    "editionPrerequisites": [],
+    "constructionTimeSeconds": 172800,
+    "source": {
+      "page": "https://www.eftarkov.com/news/web_112.html",
+      "sourceFacilityName": "空气过滤单元",
+      "sourceRequirementsAvailable": true,
+      "taskAndEditionConditionsProvided": false
+    }
+  }
+]

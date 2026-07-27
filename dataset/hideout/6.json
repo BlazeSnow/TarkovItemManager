@@ -1,0 +1,120 @@
+[
+  {
+    "facilityID": 6,
+    "level": 1,
+    "requirements": [
+      {
+        "itemID": 0,
+        "quantity": 25000,
+        "foundInRaid": false
+      }
+    ],
+    "facilityPrerequisites": [],
+    "merchantPrerequisites": [],
+    "skillPrerequisites": [],
+    "taskPrerequisites": [],
+    "editionPrerequisites": [],
+    "constructionTimeSeconds": 0,
+    "source": {
+      "page": "https://www.eftarkov.com/news/web_105.html",
+      "sourceFacilityName": "通风",
+      "sourceRequirementsAvailable": true,
+      "taskAndEditionConditionsProvided": false
+    }
+  },
+  {
+    "facilityID": 6,
+    "level": 2,
+    "requirements": [
+      {
+        "itemID": 41,
+        "quantity": 5,
+        "foundInRaid": false
+      },
+      {
+        "itemID": 95,
+        "quantity": 5,
+        "foundInRaid": false
+      },
+      {
+        "itemID": 11,
+        "quantity": 1,
+        "foundInRaid": true
+      },
+      {
+        "itemID": 59,
+        "quantity": 1,
+        "foundInRaid": true
+      }
+    ],
+    "facilityPrerequisites": [
+      {
+        "facilityID": 8,
+        "level": 1
+      }
+    ],
+    "merchantPrerequisites": [],
+    "skillPrerequisites": [],
+    "taskPrerequisites": [],
+    "editionPrerequisites": [],
+    "constructionTimeSeconds": 10800,
+    "source": {
+      "page": "https://www.eftarkov.com/news/web_105.html",
+      "sourceFacilityName": "通风",
+      "sourceRequirementsAvailable": true,
+      "taskAndEditionConditionsProvided": false
+    }
+  },
+  {
+    "facilityID": 6,
+    "level": 3,
+    "requirements": [
+      {
+        "itemID": 13,
+        "quantity": 14,
+        "foundInRaid": false
+      },
+      {
+        "itemID": 41,
+        "quantity": 10,
+        "foundInRaid": false
+      },
+      {
+        "itemID": 88,
+        "quantity": 5,
+        "foundInRaid": false
+      },
+      {
+        "itemID": 11,
+        "quantity": 4,
+        "foundInRaid": true
+      },
+      {
+        "itemID": 59,
+        "quantity": 4,
+        "foundInRaid": true
+      }
+    ],
+    "facilityPrerequisites": [
+      {
+        "facilityID": 6,
+        "level": 2
+      },
+      {
+        "facilityID": 16,
+        "level": 2
+      }
+    ],
+    "merchantPrerequisites": [],
+    "skillPrerequisites": [],
+    "taskPrerequisites": [],
+    "editionPrerequisites": [],
+    "constructionTimeSeconds": 36000,
+    "source": {
+      "page": "https://www.eftarkov.com/news/web_105.html",
+      "sourceFacilityName": "通风",
+      "sourceRequirementsAvailable": true,
+      "taskAndEditionConditionsProvided": false
+    }
+  }
+]

@@ -1,0 +1,208 @@
+[
+  {
+    "facilityID": 24,
+    "level": 1,
+    "requirements": [
+      {
+        "itemID": 39,
+        "quantity": 8,
+        "foundInRaid": false
+      },
+      {
+        "itemID": 54,
+        "quantity": 15,
+        "foundInRaid": false
+      },
+      {
+        "itemID": 90,
+        "quantity": 1,
+        "foundInRaid": true
+      },
+      {
+        "itemID": 20,
+        "quantity": 1,
+        "foundInRaid": true
+      },
+      {
+        "itemID": 105,
+        "quantity": 1,
+        "foundInRaid": false
+      },
+      {
+        "itemID": 63,
+        "quantity": 10,
+        "foundInRaid": false
+      },
+      {
+        "itemID": 15,
+        "quantity": 1,
+        "foundInRaid": true
+      },
+      {
+        "itemID": 0,
+        "quantity": 300000,
+        "foundInRaid": false
+      }
+    ],
+    "facilityPrerequisites": [
+      {
+        "facilityID": 7,
+        "level": 2
+      },
+      {
+        "facilityID": 19,
+        "level": 6
+      }
+    ],
+    "merchantPrerequisites": [
+      {
+        "merchantID": 6,
+        "level": 2
+      }
+    ],
+    "skillPrerequisites": [],
+    "taskPrerequisites": [],
+    "editionPrerequisites": [],
+    "constructionTimeSeconds": 21600,
+    "source": {
+      "page": "https://www.eftarkov.com/news/web_123.html",
+      "sourceFacilityName": "装备架",
+      "sourceRequirementsAvailable": true,
+      "taskAndEditionConditionsProvided": false
+    }
+  },
+  {
+    "facilityID": 24,
+    "level": 2,
+    "requirements": [
+      {
+        "itemID": 39,
+        "quantity": 12,
+        "foundInRaid": false
+      },
+      {
+        "itemID": 27,
+        "quantity": 5,
+        "foundInRaid": false
+      },
+      {
+        "itemID": 81,
+        "quantity": 8,
+        "foundInRaid": false
+      },
+      {
+        "itemID": 6,
+        "quantity": 1,
+        "foundInRaid": true
+      },
+      {
+        "itemID": 16,
+        "quantity": 10,
+        "foundInRaid": false
+      },
+      {
+        "itemID": 113,
+        "quantity": 5,
+        "foundInRaid": false
+      },
+      {
+        "itemID": 15,
+        "quantity": 1,
+        "foundInRaid": true
+      },
+      {
+        "itemID": 0,
+        "quantity": 800000,
+        "foundInRaid": false
+      }
+    ],
+    "facilityPrerequisites": [
+      {
+        "facilityID": 23,
+        "level": 1
+      },
+      {
+        "facilityID": 24,
+        "level": 1
+      }
+    ],
+    "merchantPrerequisites": [],
+    "skillPrerequisites": [],
+    "taskPrerequisites": [],
+    "editionPrerequisites": [],
+    "constructionTimeSeconds": 43200,
+    "source": {
+      "page": "https://www.eftarkov.com/news/web_123.html",
+      "sourceFacilityName": "装备架",
+      "sourceRequirementsAvailable": true,
+      "taskAndEditionConditionsProvided": false
+    }
+  },
+  {
+    "facilityID": 24,
+    "level": 3,
+    "requirements": [
+      {
+        "itemID": 39,
+        "quantity": 15,
+        "foundInRaid": false
+      },
+      {
+        "itemID": 41,
+        "quantity": 15,
+        "foundInRaid": false
+      },
+      {
+        "itemID": 104,
+        "quantity": 10,
+        "foundInRaid": false
+      },
+      {
+        "itemID": 94,
+        "quantity": 10,
+        "foundInRaid": false
+      },
+      {
+        "itemID": 33,
+        "quantity": 1,
+        "foundInRaid": true
+      },
+      {
+        "itemID": 108,
+        "quantity": 1,
+        "foundInRaid": true
+      },
+      {
+        "itemID": 17,
+        "quantity": 1,
+        "foundInRaid": true
+      },
+      {
+        "itemID": 0,
+        "quantity": 1200000,
+        "foundInRaid": false
+      }
+    ],
+    "facilityPrerequisites": [
+      {
+        "facilityID": 23,
+        "level": 2
+      },
+      {
+        "facilityID": 24,
+        "level": 2
+      }
+    ],
+    "merchantPrerequisites": [],
+    "skillPrerequisites": [],
+    "taskPrerequisites": [],
+    "editionPrerequisites": [],
+    "constructionTimeSeconds": 86400,
+    "source": {
+      "page": "https://www.eftarkov.com/news/web_123.html",
+      "sourceFacilityName": "装备架",
+      "sourceRequirementsAvailable": true,
+      "taskAndEditionConditionsProvided": false
+    }
+  }
+]

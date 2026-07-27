@@ -1,0 +1,64 @@
+[
+  {
+    "facilityID": 9,
+    "level": 1,
+    "requirements": [
+      {
+        "itemID": 41,
+        "quantity": 5,
+        "foundInRaid": false
+      },
+      {
+        "itemID": 55,
+        "quantity": 5,
+        "foundInRaid": false
+      },
+      {
+        "itemID": 30,
+        "quantity": 10,
+        "foundInRaid": false
+      },
+      {
+        "itemID": 7,
+        "quantity": 10,
+        "foundInRaid": false
+      },
+      {
+        "itemID": 78,
+        "quantity": 2,
+        "foundInRaid": true
+      },
+      {
+        "itemID": 58,
+        "quantity": 2,
+        "foundInRaid": true
+      },
+      {
+        "itemID": 26,
+        "quantity": 1,
+        "foundInRaid": true
+      }
+    ],
+    "facilityPrerequisites": [
+      {
+        "facilityID": 8,
+        "level": 3
+      },
+      {
+        "facilityID": 14,
+        "level": 3
+      }
+    ],
+    "merchantPrerequisites": [],
+    "skillPrerequisites": [],
+    "taskPrerequisites": [],
+    "editionPrerequisites": [],
+    "constructionTimeSeconds": 172800,
+    "source": {
+      "page": "https://www.eftarkov.com/news/web_108.html",
+      "sourceFacilityName": "酿酒处",
+      "sourceRequirementsAvailable": true,
+      "taskAndEditionConditionsProvided": false
+    }
+  }
+]

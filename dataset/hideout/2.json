@@ -1,0 +1,152 @@
+[
+  {
+    "facilityID": 2,
+    "level": 1,
+    "requirements": [
+      {
+        "itemID": 19,
+        "quantity": 1,
+        "foundInRaid": false
+      },
+      {
+        "itemID": 69,
+        "quantity": 1,
+        "foundInRaid": false
+      },
+      {
+        "itemID": 79,
+        "quantity": 1,
+        "foundInRaid": false
+      },
+      {
+        "itemID": 20,
+        "quantity": 1,
+        "foundInRaid": false
+      },
+      {
+        "itemID": 0,
+        "quantity": 2000,
+        "foundInRaid": false
+      }
+    ],
+    "facilityPrerequisites": [],
+    "merchantPrerequisites": [],
+    "skillPrerequisites": [],
+    "taskPrerequisites": [],
+    "editionPrerequisites": [],
+    "constructionTimeSeconds": 0,
+    "source": {
+      "page": "https://www.eftarkov.com/news/web_101.html",
+      "sourceFacilityName": "卫生间",
+      "sourceRequirementsAvailable": true,
+      "taskAndEditionConditionsProvided": false
+    }
+  },
+  {
+    "facilityID": 2,
+    "level": 2,
+    "requirements": [
+      {
+        "itemID": 82,
+        "quantity": 6,
+        "foundInRaid": false
+      },
+      {
+        "itemID": 90,
+        "quantity": 2,
+        "foundInRaid": true
+      },
+      {
+        "itemID": 104,
+        "quantity": 3,
+        "foundInRaid": false
+      },
+      {
+        "itemID": 7,
+        "quantity": 6,
+        "foundInRaid": false
+      },
+      {
+        "itemID": 15,
+        "quantity": 1,
+        "foundInRaid": true
+      }
+    ],
+    "facilityPrerequisites": [
+      {
+        "facilityID": 2,
+        "level": 1
+      },
+      {
+        "facilityID": 6,
+        "level": 1
+      },
+      {
+        "facilityID": 8,
+        "level": 1
+      }
+    ],
+    "merchantPrerequisites": [],
+    "skillPrerequisites": [],
+    "taskPrerequisites": [],
+    "editionPrerequisites": [],
+    "constructionTimeSeconds": 10800,
+    "source": {
+      "page": "https://www.eftarkov.com/news/web_101.html",
+      "sourceFacilityName": "卫生间",
+      "sourceRequirementsAvailable": true,
+      "taskAndEditionConditionsProvided": false
+    }
+  },
+  {
+    "facilityID": 2,
+    "level": 3,
+    "requirements": [
+      {
+        "itemID": 7,
+        "quantity": 10,
+        "foundInRaid": false
+      },
+      {
+        "itemID": 78,
+        "quantity": 2,
+        "foundInRaid": true
+      },
+      {
+        "itemID": 120,
+        "quantity": 6,
+        "foundInRaid": false
+      },
+      {
+        "itemID": 85,
+        "quantity": 1,
+        "foundInRaid": true
+      }
+    ],
+    "facilityPrerequisites": [
+      {
+        "facilityID": 2,
+        "level": 2
+      },
+      {
+        "facilityID": 6,
+        "level": 2
+      },
+      {
+        "facilityID": 8,
+        "level": 2
+      }
+    ],
+    "merchantPrerequisites": [],
+    "skillPrerequisites": [],
+    "taskPrerequisites": [],
+    "editionPrerequisites": [],
+    "constructionTimeSeconds": 25200,
+    "source": {
+      "page": "https://www.eftarkov.com/news/web_101.html",
+      "sourceFacilityName": "卫生间",
+      "sourceRequirementsAvailable": true,
+      "taskAndEditionConditionsProvided": false
+    }
+  }
+]

@@ -1,0 +1,152 @@
+[
+  {
+    "facilityID": 11,
+    "level": 1,
+    "requirements": [
+      {
+        "itemID": 27,
+        "quantity": 1,
+        "foundInRaid": false
+      },
+      {
+        "itemID": 44,
+        "quantity": 1,
+        "foundInRaid": false
+      },
+      {
+        "itemID": 0,
+        "quantity": 10000,
+        "foundInRaid": false
+      }
+    ],
+    "facilityPrerequisites": [
+      {
+        "facilityID": 6,
+        "level": 1
+      }
+    ],
+    "merchantPrerequisites": [],
+    "skillPrerequisites": [],
+    "taskPrerequisites": [],
+    "editionPrerequisites": [],
+    "constructionTimeSeconds": 0,
+    "source": {
+      "page": "https://www.eftarkov.com/news/web_110.html",
+      "sourceFacilityName": "休息区",
+      "sourceRequirementsAvailable": true,
+      "taskAndEditionConditionsProvided": false
+    }
+  },
+  {
+    "facilityID": 11,
+    "level": 2,
+    "requirements": [
+      {
+        "itemID": 9,
+        "quantity": 1,
+        "foundInRaid": true
+      },
+      {
+        "itemID": 39,
+        "quantity": 5,
+        "foundInRaid": false
+      },
+      {
+        "itemID": 97,
+        "quantity": 1,
+        "foundInRaid": true
+      },
+      {
+        "itemID": 0,
+        "quantity": 35000,
+        "foundInRaid": false
+      }
+    ],
+    "facilityPrerequisites": [
+      {
+        "facilityID": 11,
+        "level": 1
+      },
+      {
+        "facilityID": 16,
+        "level": 2
+      },
+      {
+        "facilityID": 12,
+        "level": 2
+      }
+    ],
+    "merchantPrerequisites": [
+      {
+        "merchantID": 6,
+        "level": 2
+      }
+    ],
+    "skillPrerequisites": [],
+    "taskPrerequisites": [],
+    "editionPrerequisites": [],
+    "constructionTimeSeconds": 7200,
+    "source": {
+      "page": "https://www.eftarkov.com/news/web_110.html",
+      "sourceFacilityName": "休息区",
+      "sourceRequirementsAvailable": true,
+      "taskAndEditionConditionsProvided": false
+    }
+  },
+  {
+    "facilityID": 11,
+    "level": 3,
+    "requirements": [
+      {
+        "itemID": 13,
+        "quantity": 10,
+        "foundInRaid": false
+      },
+      {
+        "itemID": 12,
+        "quantity": 5,
+        "foundInRaid": false
+      },
+      {
+        "itemID": 102,
+        "quantity": 4,
+        "foundInRaid": true
+      },
+      {
+        "itemID": 14,
+        "quantity": 5,
+        "foundInRaid": false
+      }
+    ],
+    "facilityPrerequisites": [
+      {
+        "facilityID": 11,
+        "level": 2
+      },
+      {
+        "facilityID": 16,
+        "level": 3
+      },
+      {
+        "facilityID": 12,
+        "level": 3
+      }
+    ],
+    "merchantPrerequisites": [
+      {
+        "merchantID": 3,
+        "level": 3
+      }
+    ],
+    "skillPrerequisites": [],
+    "taskPrerequisites": [],
+    "editionPrerequisites": [],
+    "constructionTimeSeconds": 36000,
+    "source": {
+      "page": "https://www.eftarkov.com/news/web_110.html",
+      "sourceFacilityName": "休息区",
+      "sourceRequirementsAvailable": true,
+      "taskAndEditionConditionsProvided": false
+    }
+  }
+]

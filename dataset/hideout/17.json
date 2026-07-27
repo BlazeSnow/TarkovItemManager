@@ -1,0 +1,60 @@
+[
+  {
+    "facilityID": 17,
+    "level": 1,
+    "requirements": [
+      {
+        "itemID": 52,
+        "quantity": 4,
+        "foundInRaid": true
+      },
+      {
+        "itemID": 31,
+        "quantity": 6,
+        "foundInRaid": true
+      },
+      {
+        "itemID": 43,
+        "quantity": 8,
+        "foundInRaid": true
+      },
+      {
+        "itemID": 40,
+        "quantity": 1,
+        "foundInRaid": true
+      },
+      {
+        "itemID": 76,
+        "quantity": 3,
+        "foundInRaid": true
+      },
+      {
+        "itemID": 60,
+        "quantity": 3,
+        "foundInRaid": true
+      },
+      {
+        "itemID": 75,
+        "quantity": 1,
+        "foundInRaid": false
+      }
+    ],
+    "facilityPrerequisites": [
+      {
+        "facilityID": 3,
+        "level": 2
+      }
+    ],
+    "merchantPrerequisites": [],
+    "skillPrerequisites": [],
+    "taskPrerequisites": [],
+    "editionPrerequisites": [],
+    "constructionTimeSeconds": 288000,
+    "source": {
+      "page": "https://www.eftarkov.com/news/web_116.html",
+      "sourceFacilityName": "Scav 宝箱",
+      "sourceRequirementsAvailable": true,
+      "taskAndEditionConditionsProvided": false
+    }
+  }
+]

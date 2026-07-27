@@ -1,0 +1,134 @@
+[
+  {
+    "facilityID": 18,
+    "level": 1,
+    "requirements": [
+      {
+        "itemID": 64,
+        "quantity": 1,
+        "foundInRaid": false
+      },
+      {
+        "itemID": 0,
+        "quantity": 20000,
+        "foundInRaid": false
+      }
+    ],
+    "facilityPrerequisites": [],
+    "merchantPrerequisites": [],
+    "skillPrerequisites": [],
+    "taskPrerequisites": [],
+    "editionPrerequisites": [],
+    "constructionTimeSeconds": 0,
+    "source": {
+      "page": "https://www.eftarkov.com/news/web_117.html",
+      "sourceFacilityName": "安保",
+      "sourceRequirementsAvailable": true,
+      "taskAndEditionConditionsProvided": false
+    }
+  },
+  {
+    "facilityID": 18,
+    "level": 2,
+    "requirements": [
+      {
+        "itemID": 98,
+        "quantity": 1,
+        "foundInRaid": true
+      },
+      {
+        "itemID": 4,
+        "quantity": 2,
+        "foundInRaid": false
+      },
+      {
+        "itemID": 117,
+        "quantity": 2,
+        "foundInRaid": false
+      },
+      {
+        "itemID": 0,
+        "quantity": 45000,
+        "foundInRaid": false
+      }
+    ],
+    "facilityPrerequisites": [
+      {
+        "facilityID": 2,
+        "level": 1
+      },
+      {
+        "facilityID": 7,
+        "level": 1
+      }
+    ],
+    "merchantPrerequisites": [],
+    "skillPrerequisites": [
+      {
+        "name": "耐力",
+        "level": 2
+      }
+    ],
+    "taskPrerequisites": [],
+    "editionPrerequisites": [],
+    "constructionTimeSeconds": 10800,
+    "source": {
+      "page": "https://www.eftarkov.com/news/web_117.html",
+      "sourceFacilityName": "安保",
+      "sourceRequirementsAvailable": true,
+      "taskAndEditionConditionsProvided": false
+    }
+  },
+  {
+    "facilityID": 18,
+    "level": 3,
+    "requirements": [
+      {
+        "itemID": 13,
+        "quantity": 10,
+        "foundInRaid": false
+      },
+      {
+        "itemID": 24,
+        "quantity": 1,
+        "foundInRaid": true
+      },
+      {
+        "itemID": 109,
+        "quantity": 8,
+        "foundInRaid": false
+      },
+      {
+        "itemID": 68,
+        "quantity": 2,
+        "foundInRaid": true
+      }
+    ],
+    "facilityPrerequisites": [
+      {
+        "facilityID": 7,
+        "level": 3
+      },
+      {
+        "facilityID": 18,
+        "level": 2
+      }
+    ],
+    "merchantPrerequisites": [
+      {
+        "merchantID": 5,
+        "level": 2
+      }
+    ],
+    "skillPrerequisites": [],
+    "taskPrerequisites": [],
+    "editionPrerequisites": [],
+    "constructionTimeSeconds": 61200,
+    "source": {
+      "page": "https://www.eftarkov.com/news/web_117.html",
+      "sourceFacilityName": "安保",
+      "sourceRequirementsAvailable": true,
+      "taskAndEditionConditionsProvided": false
+    }
+  }
+]

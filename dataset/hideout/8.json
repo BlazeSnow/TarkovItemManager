@@ -1,0 +1,158 @@
+[
+  {
+    "facilityID": 8,
+    "level": 1,
+    "requirements": [
+      {
+        "itemID": 27,
+        "quantity": 3,
+        "foundInRaid": false
+      },
+      {
+        "itemID": 54,
+        "quantity": 5,
+        "foundInRaid": false
+      },
+      {
+        "itemID": 53,
+        "quantity": 5,
+        "foundInRaid": false
+      },
+      {
+        "itemID": 7,
+        "quantity": 4,
+        "foundInRaid": false
+      }
+    ],
+    "facilityPrerequisites": [
+      {
+        "facilityID": 18,
+        "level": 1
+      }
+    ],
+    "merchantPrerequisites": [],
+    "skillPrerequisites": [],
+    "taskPrerequisites": [],
+    "editionPrerequisites": [],
+    "constructionTimeSeconds": 7200,
+    "source": {
+      "page": "https://www.eftarkov.com/news/web_107.html",
+      "sourceFacilityName": "集水器",
+      "sourceRequirementsAvailable": true,
+      "taskAndEditionConditionsProvided": false
+    }
+  },
+  {
+    "facilityID": 8,
+    "level": 2,
+    "requirements": [
+      {
+        "itemID": 104,
+        "quantity": 5,
+        "foundInRaid": false
+      },
+      {
+        "itemID": 7,
+        "quantity": 6,
+        "foundInRaid": false
+      },
+      {
+        "itemID": 11,
+        "quantity": 2,
+        "foundInRaid": true
+      },
+      {
+        "itemID": 85,
+        "quantity": 2,
+        "foundInRaid": true
+      }
+    ],
+    "facilityPrerequisites": [
+      {
+        "facilityID": 1,
+        "level": 2
+      },
+      {
+        "facilityID": 8,
+        "level": 1
+      }
+    ],
+    "merchantPrerequisites": [
+      {
+        "merchantID": 7,
+        "level": 2
+      }
+    ],
+    "skillPrerequisites": [
+      {
+        "name": "专注",
+        "level": 3
+      }
+    ],
+    "taskPrerequisites": [],
+    "editionPrerequisites": [],
+    "constructionTimeSeconds": 28800,
+    "source": {
+      "page": "https://www.eftarkov.com/news/web_107.html",
+      "sourceFacilityName": "集水器",
+      "sourceRequirementsAvailable": true,
+      "taskAndEditionConditionsProvided": false
+    }
+  },
+  {
+    "facilityID": 8,
+    "level": 3,
+    "requirements": [
+      {
+        "itemID": 98,
+        "quantity": 2,
+        "foundInRaid": true
+      },
+      {
+        "itemID": 33,
+        "quantity": 1,
+        "foundInRaid": true
+      },
+      {
+        "itemID": 113,
+        "quantity": 10,
+        "foundInRaid": false
+      },
+      {
+        "itemID": 0,
+        "quantity": 200000,
+        "foundInRaid": false
+      }
+    ],
+    "facilityPrerequisites": [
+      {
+        "facilityID": 8,
+        "level": 2
+      },
+      {
+        "facilityID": 16,
+        "level": 3
+      },
+      {
+        "facilityID": 12,
+        "level": 3
+      }
+    ],
+    "merchantPrerequisites": [
+      {
+        "merchantID": 7,
+        "level": 3
+      }
+    ],
+    "skillPrerequisites": [],
+    "taskPrerequisites": [],
+    "editionPrerequisites": [],
+    "constructionTimeSeconds": 57600,
+    "source": {
+      "page": "https://www.eftarkov.com/news/web_107.html",
+      "sourceFacilityName": "集水器",
+      "sourceRequirementsAvailable": true,
+      "taskAndEditionConditionsProvided": false
+    }
+  }
+]
