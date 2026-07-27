@@ -26,7 +26,7 @@ const visible = computed(() => props.materials.filter((item) => filter.value ===
           <td :class="{ 'text-decoration-line-through text-medium-emphasis': material.checked }">{{ material.name }}</td>
           <td class="text-right font-weight-bold">{{ material.quantity }}</td>
         </tr>
-        <tr v-if="!visible.length"><td colspan="3" class="text-center text-medium-emphasis py-6">当前筛选没有材料</td></tr>
+        <tr v-if="!visible.length"><td colspan="3" class="text-center text-medium-emphasis py-6">选择设施升级目标后将在这里显示所需材料</td></tr>
       </tbody>
     </v-table>
   </v-sheet>

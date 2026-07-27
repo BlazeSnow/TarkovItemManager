@@ -4,8 +4,8 @@ import type { Facility } from '@/api'
 
 const props = defineProps<{ facility: Facility }>()
 const emit = defineEmits<{ change: [id: string, level: number] }>()
-const selected = ref(props.facility.selected_level)
-const levels = computed(() => Array.from({ length: props.facility.max_level + 1 }, (_, level) => ({ title: level === 0 ? '未选择' : `目标 Lv.${level}`, value: level })))
+const selected = ref(props.facility.selectedLevel)
+const levels = computed(() => Array.from({ length: props.facility.maxLevel + 1 }, (_, level) => ({ title: level === 0 ? '未选择' : `目标 Lv.${level}`, value: level })))
 
 function update(level: number) { selected.value = level; emit('change', props.facility.id, level) }
 </script>
@@ -15,7 +15,7 @@ function update(level: number) { selected.value = level; emit('change', props.fa
     <v-card-item>
       <template #prepend><v-avatar color="secondary" variant="tonal" icon="mdi-hammer-wrench" /></template>
       <v-card-title>{{ facility.name }}</v-card-title>
-      <v-card-subtitle>最高等级 Lv.{{ facility.max_level }}</v-card-subtitle>
+      <v-card-subtitle>最高等级 Lv.{{ facility.maxLevel }}</v-card-subtitle>
     </v-card-item>
     <v-card-text>
       <v-select :items="levels" label="升级目标" density="comfortable" hide-details :model-value="selected" @update:model-value="update" />

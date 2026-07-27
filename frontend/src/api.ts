@@ -1,6 +1,6 @@
 export interface User { id: number; username: string }
 export interface Prerequisite { facilityId: string; facilityName: string; level: number; satisfied: boolean }
-export interface Facility { id: string; name: string; max_level: number; selected_level: number; prerequisites: Prerequisite[] }
+export interface Facility { id: string; name: string; maxLevel: number; selectedLevel: number; prerequisites: Prerequisite[] }
 export interface Material { id: string; name: string; quantity: number; checked: boolean }
 export interface Catalog { facilities: Facility[]; materials: Material[] }
 

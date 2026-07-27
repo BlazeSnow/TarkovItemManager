@@ -19,9 +19,9 @@ async function changeFacility(id: string, level: number) {
   if (!data.value) return
   const facility = data.value.facilities.find((item) => item.id === id)
   if (!facility) return
-  facility.selected_level = level; savingFacilities.value = true
+  facility.selectedLevel = level; savingFacilities.value = true
   try {
-    await api.saveFacilities(data.value.facilities.map((item) => ({ facilityId: item.id, level: item.selected_level })))
+    await api.saveFacilities(data.value.facilities.map((item) => ({ facilityId: item.id, level: item.selectedLevel })))
     data.value = await api.catalog()
   } catch (reason) { error.value = reason instanceof Error ? reason.message : '保存失败'; await load() }
   finally { savingFacilities.value = false }

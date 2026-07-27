@@ -729,6 +729,31 @@ mod tests {
         );
     }
     #[test]
+    fn catalog_response_uses_camel_case_fields() {
+        let catalog = Catalog::load(Path::new("../dataset")).unwrap();
+        let response = build_catalog(
+            &catalog,
+            &HashMap::from([
+                (String::from("workbench"), 1),
+                (String::from("generator"), 1),
+            ]),
+            &HashSet::new(),
+        );
+        let value = serde_json::to_value(response).unwrap();
+        let workbench = value["facilities"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .find(|facility| facility["id"] == "workbench")
+            .unwrap();
+
+        assert_eq!(workbench["maxLevel"], 1);
+        assert_eq!(workbench["selectedLevel"], 1);
+        assert_eq!(workbench["prerequisites"][0]["facilityId"], "generator");
+        assert_eq!(workbench["prerequisites"][0]["facilityName"], "发电机");
+    }
+
+    #[test]
     fn password_hash_round_trip() {
         let hash = hash_password("a-secure-password").unwrap();
         assert!(verify_password("a-secure-password", &hash).is_ok());
