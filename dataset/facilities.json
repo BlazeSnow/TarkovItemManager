@@ -1,0 +1,9 @@
+{
+  "$schema": "./schema/facilities.schema.json",
+  "version": 1,
+  "facilities": [
+    { "id": "generator", "name": "Generator" },
+    { "id": "workbench", "name": "Workbench" },
+    { "id": "medstation", "name": "Medstation" }
+  ]
+}

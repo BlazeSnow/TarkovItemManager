@@ -1,0 +1,10 @@
+{
+  "$schema": "./schema/items.schema.json",
+  "version": 1,
+  "items": [
+    { "id": "corrugated-hose", "name": "Corrugated hose" },
+    { "id": "screw-nut", "name": "Screw nut" },
+    { "id": "power-cord", "name": "Powercord" },
+    { "id": "saline-solution", "name": "Saline solution" }
+  ]
+}
