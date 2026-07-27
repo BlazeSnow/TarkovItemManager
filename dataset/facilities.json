@@ -1,9 +1,106 @@
-{
-  "$schema": "./schema/facilities.schema.json",
-  "version": 1,
-  "facilities": [
-    { "id": "generator", "name": "Generator" },
-    { "id": "workbench", "name": "Workbench" },
-    { "id": "medstation", "name": "Medstation" }
-  ]
-}
+[
+  {
+    "ID": 0,
+    "name": "靶场"
+  },
+  {
+    "ID": 1,
+    "name": "工作台"
+  },
+  {
+    "ID": 2,
+    "name": "卫生间"
+  },
+  {
+    "ID": 3,
+    "name": "情报中心"
+  },
+  {
+    "ID": 4,
+    "name": "仓库"
+  },
+  {
+    "ID": 5,
+    "name": "比特币矿场"
+  },
+  {
+    "ID": 6,
+    "name": "通风"
+  },
+  {
+    "ID": 7,
+    "name": "照明"
+  },
+  {
+    "ID": 8,
+    "name": "集水器"
+  },
+  {
+    "ID": 9,
+    "name": "酿酒处"
+  },
+  {
+    "ID": 10,
+    "name": "医疗站"
+  },
+  {
+    "ID": 11,
+    "name": "休息区"
+  },
+  {
+    "ID": 12,
+    "name": "供暖"
+  },
+  {
+    "ID": 13,
+    "name": "空气过滤单元"
+  },
+  {
+    "ID": 14,
+    "name": "营养部"
+  },
+  {
+    "ID": 15,
+    "name": "太阳能"
+  },
+  {
+    "ID": 16,
+    "name": "发电机"
+  },
+  {
+    "ID": 17,
+    "name": "Scav宝箱"
+  },
+  {
+    "ID": 18,
+    "name": "安保"
+  },
+  {
+    "ID": 19,
+    "name": "易碎墙"
+  },
+  {
+    "ID": 20,
+    "name": "健身区"
+  },
+  {
+    "ID": 21,
+    "name": "图书馆"
+  },
+  {
+    "ID": 22,
+    "name": "武器架"
+  },
+  {
+    "ID": 23,
+    "name": "荣耀展柜"
+  },
+  {
+    "ID": 24,
+    "name": "装备架"
+  },
+  {
+    "ID": 25,
+    "name": "仪式圈"
+  }
+]

@@ -1,9 +1,0 @@
-{
-  "$schema": "./schema/facilities-cn.schema.json",
-  "version": 1,
-  "facilities": [
-    { "id": "generator", "name": "发电机" },
-    { "id": "workbench", "name": "工作台" },
-    { "id": "medstation", "name": "医疗站" }
-  ]
-}
