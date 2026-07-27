@@ -1,6 +1,7 @@
-:root { font-family: Inter, "Microsoft YaHei", sans-serif; color: #f1f5f2; background: #15191e; }
+:root { font-family: Inter, "Microsoft YaHei", sans-serif; color: rgb(var(--v-theme-on-background)); background: rgb(var(--v-theme-background)); }
+html, body, #app { min-height: 100%; background: rgb(var(--v-theme-background)); }
 body { margin: 0; min-width: 320px; }
-a { color: #74c69d; text-decoration: none; }
+a { color: rgb(var(--v-theme-primary)); text-decoration: none; }
 .auth-layout { min-height: calc(100vh - 112px); }
 .auth-panel { width: min(100%, 420px); border-radius: 8px; }
 .workspace { max-width: 1200px; }

@@ -9,9 +9,9 @@ import './styles.css'
 
 const vuetify = createVuetify({
   theme: {
-    defaultTheme: 'tarkov',
+    defaultTheme: 'tarkovDark',
     themes: {
-      tarkov: {
+      tarkovDark: {
         dark: true,
         colors: {
           background: '#15191e',
@@ -20,6 +20,17 @@ const vuetify = createVuetify({
           secondary: '#d4a64b',
           error: '#e76f51',
           success: '#74c69d',
+        },
+      },
+      tarkovLight: {
+        dark: false,
+        colors: {
+          background: '#f5f7f5',
+          surface: '#ffffff',
+          primary: '#277a52',
+          secondary: '#9b6a10',
+          error: '#bf3e2d',
+          success: '#277a52',
         },
       },
     },
