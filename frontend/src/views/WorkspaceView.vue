@@ -9,10 +9,72 @@ const data = ref<Catalog | null>(null)
 const loading = ref(true)
 const saving = ref(false)
 const error = ref('')
-async function load() { loading.value = true; error.value = ''; try { data.value = await api.catalog() } catch (reason) { error.value = reason instanceof Error ? reason.message : '无法加载数据' } finally { loading.value = false } }
-async function saveFacilities(id: number, level: number) { if (!data.value) return; const facility = data.value.facilities.find(item => item.id === id); if (!facility) return; facility.currentLevel = level; saving.value = true; try { await api.saveFacilityLevels(data.value.facilities.map(item => ({ facilityId: item.id, level: item.currentLevel }))); await load() } catch (reason) { error.value = reason instanceof Error ? reason.message : '保存失败'; await load() } finally { saving.value = false } }
-async function saveMerchant(id: number, level: number) { if (!data.value) return; const merchant = data.value.merchants.find(item => item.id === id); if (!merchant) return; merchant.level = level; saving.value = true; try { await api.saveMerchantLevels(data.value.merchants.map(item => ({ merchantId: item.id, level: item.level }))); await load() } catch (reason) { error.value = reason instanceof Error ? reason.message : '保存失败'; await load() } finally { saving.value = false } }
-async function saveSkill(name: string, level: number) { if (!data.value) return; const skill = data.value.skills.find(item => item.name === name); if (!skill) return; skill.level = level; saving.value = true; try { await api.saveSkillLevels(data.value.skills.map(item => ({ name: item.name, level: item.level }))); await load() } catch (reason) { error.value = reason instanceof Error ? reason.message : '保存失败'; await load() } finally { saving.value = false } }
+
+async function load(preserveContent = false) {
+  const showLoading = !preserveContent || !data.value
+  if (showLoading) loading.value = true
+  if (!preserveContent) error.value = ''
+
+  try {
+    data.value = await api.catalog()
+  } catch (reason) {
+    error.value = reason instanceof Error ? reason.message : '无法加载数据'
+  } finally {
+    if (showLoading) loading.value = false
+  }
+}
+
+async function saveFacilities(id: number, level: number) {
+  if (!data.value) return
+  const facility = data.value.facilities.find(item => item.id === id)
+  if (!facility) return
+
+  facility.currentLevel = level
+  saving.value = true
+  try {
+    await api.saveFacilityLevels(data.value.facilities.map(item => ({ facilityId: item.id, level: item.currentLevel })))
+  } catch (reason) {
+    error.value = reason instanceof Error ? reason.message : '保存失败'
+  } finally {
+    await load(true)
+    saving.value = false
+  }
+}
+
+async function saveMerchant(id: number, level: number) {
+  if (!data.value) return
+  const merchant = data.value.merchants.find(item => item.id === id)
+  if (!merchant) return
+
+  merchant.level = level
+  saving.value = true
+  try {
+    await api.saveMerchantLevels(data.value.merchants.map(item => ({ merchantId: item.id, level: item.level })))
+  } catch (reason) {
+    error.value = reason instanceof Error ? reason.message : '保存失败'
+  } finally {
+    await load(true)
+    saving.value = false
+  }
+}
+
+async function saveSkill(name: string, level: number) {
+  if (!data.value) return
+  const skill = data.value.skills.find(item => item.name === name)
+  if (!skill) return
+
+  skill.level = level
+  saving.value = true
+  try {
+    await api.saveSkillLevels(data.value.skills.map(item => ({ name: item.name, level: item.level })))
+  } catch (reason) {
+    error.value = reason instanceof Error ? reason.message : '保存失败'
+  } finally {
+    await load(true)
+    saving.value = false
+  }
+}
+
 onMounted(load)
 </script>
 
