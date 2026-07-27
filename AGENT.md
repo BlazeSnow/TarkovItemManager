@@ -18,11 +18,9 @@
 ## 静态数据集
 
 1. 静态数据集位于dataset目录
-2. [items](./dataset/items.json)存储了所有物品id、物品官方英文名
-3. [items_cn](./dataset/items.cn.json)存储了所有物品id、物品官方中文名
-4. [facilities](./dataset/facilities.json)存储了藏身处各设施id、官方英文名
-5. [facilities_cn](./dataset/facilities.cn.json)存储了藏身处各设施id、官方中文名
-6. [hideout](./dataset/hideout.json)存储了藏身处各设施的id、各等级升级所需物品id与个数、是否需要战局中带出（带勾，Found in Raid）、各等级前置条件
+2. items.json存储了所有物品id、物品官方中文名
+3. facilities.json存储了藏身处各设施id、官方中文名
+4. hideout.json存储了藏身处各设施的id、各等级升级所需物品id与个数、是否需要战局中带出（带勾，Found in Raid）、各等级前置条件
 
 ## 数据库
 
