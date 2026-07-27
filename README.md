@@ -1,4 +1,4 @@
-# TarkovItemManager
+# Tarkov Item Manager
 
 用于规划藏身处升级目标并汇总所需材料的 Web 应用。项目采用 Vue 3 + Vuetify 前端、Rust + Axum API 和 SQLite 持久化，按 AGPL-3.0-or-later 发布。
 

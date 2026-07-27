@@ -27,7 +27,7 @@ async function submit() {
 <template>
   <v-container class="auth-layout d-flex align-center justify-center">
     <v-sheet class="auth-panel pa-6" border>
-      <div class="text-overline text-secondary mb-2">TarkovItemManager</div>
+      <div class="text-overline text-secondary mb-2">Tarkov Item Manager</div>
       <h1 class="text-h5 mb-6">{{ registerMode ? '创建本地账户' : '登录工作区' }}</h1>
       <v-alert v-if="error" class="mb-4" density="compact" type="error">{{ error }}</v-alert>
       <v-form @submit.prevent="submit">

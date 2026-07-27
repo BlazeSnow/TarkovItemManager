@@ -1,4 +1,4 @@
-# TarkovItemManager AI编程指导文件
+# Tarkov Item Manager AI编程指导文件
 
 1. 未经明确许可，禁止修订本文件
 2. 文件应以UTF-8编码进行存储和处理
