@@ -1,0 +1,46 @@
+[
+    {
+        "ID": 0,
+        "name": "Prapor"
+    },
+    {
+        "ID": 1,
+        "name": "Therapist"
+    },
+    {
+        "ID": 2,
+        "name": "Fence"
+    },
+    {
+        "ID": 3,
+        "name": "Skier"
+    },
+    {
+        "ID": 4,
+        "name": "Peacekeeper"
+    },
+    {
+        "ID": 5,
+        "name": "Mechanic"
+    },
+    {
+        "ID": 6,
+        "name": "Ragman"
+    },
+    {
+        "ID": 7,
+        "name": "Jaeger"
+    },
+    {
+        "ID": 8,
+        "name": "Lightkeeper"
+    },
+    {
+        "ID": 9,
+        "name": "竞技场裁判"
+    },
+    {
+        "ID": 10,
+        "name": "BTR司机"
+    }
+]
