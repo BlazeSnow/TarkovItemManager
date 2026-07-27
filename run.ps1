@@ -1,11 +1,23 @@
 $root = $PSScriptRoot
 
+function Test-ListeningPort([int]$Port) {
+    return $null -ne (Get-NetTCPConnection -LocalPort $Port -State Listen -ErrorAction SilentlyContinue)
+}
+
 if (-not (Get-Command cargo -ErrorAction SilentlyContinue)) {
     throw 'Cargo is not available in PATH. Install Rust first.'
 }
 
 if (-not (Get-Command npm -ErrorAction SilentlyContinue)) {
     throw 'npm is not available in PATH. Install Node.js first.'
+}
+
+if (Test-ListeningPort 3000) {
+    throw 'Port 3000 is already in use. Stop the existing API process before running this script.'
+}
+
+if (Test-ListeningPort 5173) {
+    throw 'Port 5173 is already in use. Stop the existing Vite process before running this script.'
 }
 
 if (-not (Test-Path "$root\frontend\node_modules")) {
@@ -28,7 +40,24 @@ SECURE_COOKIES=false
 }
 
 Start-Process powershell -ArgumentList '-NoExit', '-Command', "Set-Location '$root\backend'; cargo run"
-Start-Process powershell -ArgumentList '-NoExit', '-Command', "Set-Location '$root\frontend'; npm run dev -- --host 127.0.0.1"
+
+$apiReady = $false
+for ($attempt = 0; $attempt -lt 30; $attempt++) {
+    Start-Sleep -Seconds 1
+    try {
+        if ((Invoke-WebRequest -UseBasicParsing 'http://127.0.0.1:3000/api/health').Content -eq 'ok') {
+            $apiReady = $true
+            break
+        }
+    } catch {
+    }
+}
+
+if (-not $apiReady) {
+    throw 'The API did not become ready on port 3000. Check the API window for errors.'
+}
+
+Start-Process powershell -ArgumentList '-NoExit', '-Command', "Set-Location '$root\frontend'; npm run dev -- --host 127.0.0.1 --strictPort"
 
 Write-Host 'Frontend: http://127.0.0.1:5173/login'
 Write-Host 'API:      http://127.0.0.1:3000/api/health'
