@@ -6,6 +6,7 @@ frontend/tsconfig.tsbuildinfo
 backend/target/
 backend/data/
 data/
+pubdev/
 .env
 .env.local
 **/.env
