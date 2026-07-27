@@ -1,17 +1,17 @@
 $root = $PSScriptRoot
 
 if (-not (Get-Command cargo -ErrorAction SilentlyContinue)) {
-    throw '未找到 cargo，请先安装 Rust。'
+    throw 'Cargo is not available in PATH. Install Rust first.'
 }
 
 if (-not (Get-Command npm -ErrorAction SilentlyContinue)) {
-    throw '未找到 npm，请先安装 Node.js。'
+    throw 'npm is not available in PATH. Install Node.js first.'
 }
 
 if (-not (Test-Path "$root\frontend\node_modules")) {
     npm install --prefix "$root\frontend"
     if ($LASTEXITCODE -ne 0) {
-        throw '前端依赖安装失败。'
+        throw 'Frontend dependency installation failed.'
     }
 }
 
@@ -30,5 +30,5 @@ SECURE_COOKIES=false
 Start-Process powershell -ArgumentList '-NoExit', '-Command', "Set-Location '$root\backend'; cargo run"
 Start-Process powershell -ArgumentList '-NoExit', '-Command', "Set-Location '$root\frontend'; npm run dev -- --host 127.0.0.1"
 
-Write-Host '前端: http://127.0.0.1:5173/login'
-Write-Host 'API:  http://127.0.0.1:3000/api/health'
+Write-Host 'Frontend: http://127.0.0.1:5173/login'
+Write-Host 'API:      http://127.0.0.1:3000/api/health'
