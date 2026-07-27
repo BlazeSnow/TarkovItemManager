@@ -15,7 +15,7 @@ CREATE TABLE IF NOT EXISTS sessions (
 
 CREATE INDEX IF NOT EXISTS sessions_token_hash_index ON sessions(token_hash);
 
-CREATE TABLE IF NOT EXISTS facility_targets (
+CREATE TABLE IF NOT EXISTS facility_levels (
     user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
     facility_id TEXT NOT NULL,
     level INTEGER NOT NULL CHECK (level >= 0),

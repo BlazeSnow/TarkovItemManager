@@ -305,7 +305,7 @@ struct UserResponse {
     username: String,
 }
 #[derive(Deserialize)]
-struct FacilityTargetInput {
+struct FacilityLevelInput {
     #[serde(rename = "facilityId")]
     facility_id: String,
     level: i64,
@@ -326,12 +326,13 @@ struct FacilityResponse {
     id: String,
     name: String,
     max_level: i64,
-    selected_level: i64,
+    current_level: i64,
     prerequisites: Vec<PrerequisiteResponse>,
 }
 #[derive(Serialize)]
 #[serde(rename_all = "camelCase")]
 struct PrerequisiteResponse {
+    upgrade_level: i64,
     facility_id: String,
     facility_name: String,
     level: i64,
@@ -382,7 +383,7 @@ async fn main() -> Result<()> {
         .route("/api/auth/logout", post(logout))
         .route("/api/auth/me", get(me))
         .route("/api/catalog", get(get_catalog))
-        .route("/api/progress/facilities", put(save_facility_targets))
+        .route("/api/progress/facilities", put(save_facility_levels))
         .route("/api/progress/materials", put(save_checked_materials))
         .fallback_service(
             ServeDir::new("frontend/dist")
@@ -468,8 +469,8 @@ async fn get_catalog(
     headers: HeaderMap,
 ) -> ApiResult<Json<CatalogResponse>> {
     let (user_id, _) = authenticated_user(&state, &headers).await?;
-    let targets: HashMap<String, i64> =
-        sqlx::query_as("SELECT facility_id, level FROM facility_targets WHERE user_id = ?")
+    let current_levels: HashMap<String, i64> =
+        sqlx::query_as("SELECT facility_id, level FROM facility_levels WHERE user_id = ?")
             .bind(user_id)
             .fetch_all(&state.pool)
             .await
@@ -484,12 +485,16 @@ async fn get_catalog(
             .map_err(internal)?
             .into_iter()
             .collect();
-    Ok(Json(build_catalog(&state.catalog, &targets, &checked)))
+    Ok(Json(build_catalog(
+        &state.catalog,
+        &current_levels,
+        &checked,
+    )))
 }
-async fn save_facility_targets(
+async fn save_facility_levels(
     State(state): State<AppState>,
     headers: HeaderMap,
-    Json(inputs): Json<Vec<FacilityTargetInput>>,
+    Json(inputs): Json<Vec<FacilityLevelInput>>,
 ) -> ApiResult<StatusCode> {
     let (user_id, _) = authenticated_user(&state, &headers).await?;
     let max_levels = maximum_levels(&state.catalog.upgrades);
@@ -504,13 +509,13 @@ async fn save_facility_targets(
         values.insert(input.facility_id, input.level);
     }
     let mut transaction = state.pool.begin().await.map_err(internal)?;
-    sqlx::query("DELETE FROM facility_targets WHERE user_id = ?")
+    sqlx::query("DELETE FROM facility_levels WHERE user_id = ?")
         .bind(user_id)
         .execute(&mut *transaction)
         .await
         .map_err(internal)?;
     for (facility_id, level) in values {
-        sqlx::query("INSERT INTO facility_targets (user_id, facility_id, level) VALUES (?, ?, ?)")
+        sqlx::query("INSERT INTO facility_levels (user_id, facility_id, level) VALUES (?, ?, ?)")
             .bind(user_id)
             .bind(facility_id)
             .bind(level)
@@ -551,7 +556,7 @@ async fn save_checked_materials(
 
 fn build_catalog(
     catalog: &Catalog,
-    targets: &HashMap<String, i64>,
+    current_levels: &HashMap<String, i64>,
     checked: &HashSet<String>,
 ) -> CatalogResponse {
     let max_levels = maximum_levels(&catalog.upgrades);
@@ -559,32 +564,45 @@ fn build_catalog(
         .facilities
         .iter()
         .map(|(id, name)| {
-            let selected_level = *targets.get(id).unwrap_or(&0);
+            let current_level = *current_levels.get(id).unwrap_or(&0);
             let prerequisites = catalog
                 .upgrades
                 .iter()
-                .filter(|upgrade| upgrade.facility_id == *id && upgrade.level == selected_level)
-                .flat_map(|upgrade| &upgrade.prerequisites)
-                .map(|prerequisite| PrerequisiteResponse {
-                    facility_id: prerequisite.facility_id.clone(),
-                    facility_name: catalog.facilities[&prerequisite.facility_id].clone(),
-                    level: prerequisite.level,
-                    satisfied: targets.get(&prerequisite.facility_id).copied().unwrap_or(0)
-                        >= prerequisite.level,
+                .filter(|upgrade| upgrade.facility_id == *id && upgrade.level > current_level)
+                .flat_map(|upgrade| {
+                    upgrade
+                        .prerequisites
+                        .iter()
+                        .map(move |prerequisite| PrerequisiteResponse {
+                            upgrade_level: upgrade.level,
+                            facility_id: prerequisite.facility_id.clone(),
+                            facility_name: catalog.facilities[&prerequisite.facility_id].clone(),
+                            level: prerequisite.level,
+                            satisfied: current_levels
+                                .get(&prerequisite.facility_id)
+                                .copied()
+                                .unwrap_or(0)
+                                >= prerequisite.level,
+                        })
                 })
                 .collect();
             FacilityResponse {
                 id: id.clone(),
                 name: name.clone(),
                 max_level: max_levels[id],
-                selected_level,
+                current_level,
                 prerequisites,
             }
         })
         .collect();
     let mut quantities = BTreeMap::<String, i64>::new();
     for upgrade in &catalog.upgrades {
-        if upgrade.level <= targets.get(&upgrade.facility_id).copied().unwrap_or(0) {
+        if upgrade.level
+            > current_levels
+                .get(&upgrade.facility_id)
+                .copied()
+                .unwrap_or(0)
+        {
             for requirement in &upgrade.requirements {
                 *quantities.entry(requirement.item_id.clone()).or_default() += requirement.quantity;
             }
@@ -711,30 +729,68 @@ fn internal(error: impl std::fmt::Display) -> ApiProblem {
 mod tests {
     use super::*;
     #[test]
-    fn aggregates_selected_upgrades() {
+    fn aggregates_remaining_upgrades_to_max_level() {
+        let catalog = Catalog::load(Path::new("../dataset")).unwrap();
+        let response = build_catalog(&catalog, &HashMap::new(), &HashSet::new());
+
+        assert_eq!(material_quantity(&response, "power-cord"), 3);
+        assert_eq!(material_quantity(&response, "screw-nut"), 18);
+        assert_eq!(material_quantity(&response, "corrugated-hose"), 1);
+        assert_eq!(material_quantity(&response, "saline-solution"), 3);
+    }
+
+    #[test]
+    fn excludes_owned_upgrade_materials() {
+        let catalog = Catalog::load(Path::new("../dataset")).unwrap();
+        let response = build_catalog(
+            &catalog,
+            &HashMap::from([(String::from("generator"), 1)]),
+            &HashSet::new(),
+        );
+
+        assert_eq!(material_quantity(&response, "power-cord"), 1);
+        assert_eq!(material_quantity(&response, "screw-nut"), 14);
+        assert_eq!(material_quantity(&response, "corrugated-hose"), 1);
+    }
+
+    #[test]
+    fn maxed_facility_has_no_remaining_materials() {
         let catalog = Catalog::load(Path::new("../dataset")).unwrap();
         let response = build_catalog(
             &catalog,
             &HashMap::from([(String::from("generator"), 2)]),
             &HashSet::new(),
         );
-        assert_eq!(
-            response
-                .materials
-                .iter()
-                .find(|item| item.id == "screw-nut")
-                .unwrap()
-                .quantity,
-            12
-        );
+
+        assert_eq!(material_quantity(&response, "power-cord"), 1);
+        assert_eq!(material_quantity(&response, "screw-nut"), 6);
+        assert_eq!(material_quantity(&response, "corrugated-hose"), 0);
     }
+
     #[test]
-    fn catalog_response_uses_camel_case_fields() {
+    fn pending_upgrades_include_prerequisite_context() {
+        let catalog = Catalog::load(Path::new("../dataset")).unwrap();
+        let response = build_catalog(&catalog, &HashMap::new(), &HashSet::new());
+        let generator = response
+            .facilities
+            .iter()
+            .find(|facility| facility.id == "generator")
+            .unwrap();
+
+        assert_eq!(generator.prerequisites.len(), 1);
+        assert_eq!(generator.prerequisites[0].upgrade_level, 2);
+        assert_eq!(generator.prerequisites[0].facility_id, "generator");
+        assert_eq!(generator.prerequisites[0].level, 1);
+        assert!(!generator.prerequisites[0].satisfied);
+    }
+
+    #[test]
+    fn catalog_response_uses_current_level_fields() {
         let catalog = Catalog::load(Path::new("../dataset")).unwrap();
         let response = build_catalog(
             &catalog,
             &HashMap::from([
-                (String::from("workbench"), 1),
+                (String::from("workbench"), 0),
                 (String::from("generator"), 1),
             ]),
             &HashSet::new(),
@@ -748,9 +804,19 @@ mod tests {
             .unwrap();
 
         assert_eq!(workbench["maxLevel"], 1);
-        assert_eq!(workbench["selectedLevel"], 1);
+        assert_eq!(workbench["currentLevel"], 0);
+        assert_eq!(workbench["prerequisites"][0]["upgradeLevel"], 1);
         assert_eq!(workbench["prerequisites"][0]["facilityId"], "generator");
         assert_eq!(workbench["prerequisites"][0]["facilityName"], "发电机");
+    }
+
+    fn material_quantity(response: &CatalogResponse, item_id: &str) -> i64 {
+        response
+            .materials
+            .iter()
+            .find(|material| material.id == item_id)
+            .map(|material| material.quantity)
+            .unwrap_or(0)
     }
 
     #[test]

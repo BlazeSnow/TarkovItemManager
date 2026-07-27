@@ -4,8 +4,8 @@ import type { Facility } from '@/api'
 
 const props = defineProps<{ facility: Facility }>()
 const emit = defineEmits<{ change: [id: string, level: number] }>()
-const selected = ref(props.facility.selectedLevel)
-const levels = computed(() => Array.from({ length: props.facility.maxLevel + 1 }, (_, level) => ({ title: level === 0 ? '未选择' : `目标 Lv.${level}`, value: level })))
+const selected = ref(props.facility.currentLevel)
+const levels = computed(() => Array.from({ length: props.facility.maxLevel + 1 }, (_, level) => ({ title: `当前 Lv.${level}`, value: level })))
 
 function update(level: number) { selected.value = level; emit('change', props.facility.id, level) }
 </script>
@@ -18,11 +18,11 @@ function update(level: number) { selected.value = level; emit('change', props.fa
       <v-card-subtitle>最高等级 Lv.{{ facility.maxLevel }}</v-card-subtitle>
     </v-card-item>
     <v-card-text>
-      <v-select :items="levels" label="升级目标" density="comfortable" hide-details :model-value="selected" @update:model-value="update" />
+      <v-select :items="levels" label="当前等级" density="comfortable" hide-details :model-value="selected" @update:model-value="update" />
       <div v-if="facility.prerequisites.length" class="mt-4">
-        <div v-for="prerequisite in facility.prerequisites" :key="`${prerequisite.facilityId}-${prerequisite.level}`" class="d-flex align-center text-caption mb-1">
+        <div v-for="prerequisite in facility.prerequisites" :key="`${prerequisite.upgradeLevel}-${prerequisite.facilityId}-${prerequisite.level}`" class="d-flex align-center text-caption mb-1">
           <v-icon :color="prerequisite.satisfied ? 'success' : 'error'" size="16" :icon="prerequisite.satisfied ? 'mdi-check-circle' : 'mdi-alert-circle'" class="mr-1" />
-          {{ prerequisite.facilityName }}需达到 Lv.{{ prerequisite.level }}
+          升级至 Lv.{{ prerequisite.upgradeLevel }}：{{ prerequisite.facilityName }}需达到 Lv.{{ prerequisite.level }}
         </div>
       </div>
       <div v-else class="text-caption text-medium-emphasis mt-4">无前置条件</div>

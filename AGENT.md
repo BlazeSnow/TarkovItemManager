@@ -8,8 +8,8 @@
 
 1. 采用vue3架构
 2. UI库使用Vuetify
-3. 主界面显示各设施卡片，如有等级，则有选框
-4. 底部展示所需材料，允许筛选带勾
+3. 主界面显示各设施卡片，如有等级，则选择当前已有等级
+4. 底部展示从当前等级升级至满级所需材料，允许按是否需要战局中带出（带勾，Found in Raid）筛选
 
 ## 后端
 
@@ -20,9 +20,9 @@
 1. 静态数据集位于dataset目录
 2. [items](./dataset/items.json)存储了所有物品id、物品官方英文名
 3. [items_cn](./dataset/items.cn.json)存储了所有物品id、物品官方中文名
-4. [facilities](./dataset/facilities.json)存储了藏身处各设施id、官方英文名、各设施的前置设施id
+4. [facilities](./dataset/facilities.json)存储了藏身处各设施id、官方英文名
 5. [facilities_cn](./dataset/facilities.cn.json)存储了藏身处各设施id、官方中文名
-6. [hideout](./dataset/hideout.json)存储了藏身处各设施的id、各等级升级所需物品id与个数、是否带勾
+6. [hideout](./dataset/hideout.json)存储了藏身处各设施的id、各等级升级所需物品id与个数、是否需要战局中带出（带勾，Found in Raid）、各等级前置条件
 
 ## 数据库
 

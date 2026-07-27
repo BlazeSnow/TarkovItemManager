@@ -1,6 +1,6 @@
 export interface User { id: number; username: string }
-export interface Prerequisite { facilityId: string; facilityName: string; level: number; satisfied: boolean }
-export interface Facility { id: string; name: string; maxLevel: number; selectedLevel: number; prerequisites: Prerequisite[] }
+export interface Prerequisite { upgradeLevel: number; facilityId: string; facilityName: string; level: number; satisfied: boolean }
+export interface Facility { id: string; name: string; maxLevel: number; currentLevel: number; prerequisites: Prerequisite[] }
 export interface Material { id: string; name: string; quantity: number; checked: boolean }
 export interface Catalog { facilities: Facility[]; materials: Material[] }
 
@@ -20,6 +20,6 @@ export const api = {
   logout: () => request<void>('/api/auth/logout', { method: 'POST' }),
   me: () => request<User>('/api/auth/me'),
   catalog: () => request<Catalog>('/api/catalog'),
-  saveFacilities: (values: { facilityId: string; level: number }[]) => request<void>('/api/progress/facilities', { method: 'PUT', body: JSON.stringify(values) }),
+  saveFacilityLevels: (values: { facilityId: string; level: number }[]) => request<void>('/api/progress/facilities', { method: 'PUT', body: JSON.stringify(values) }),
   saveMaterials: (itemIds: string[]) => request<void>('/api/progress/materials', { method: 'PUT', body: JSON.stringify({ itemIds }) }),
 }
