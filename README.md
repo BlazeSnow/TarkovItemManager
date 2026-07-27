@@ -49,7 +49,6 @@ SECURE_COOKIES=false
 - `APP_ORIGIN`：开发环境的前端来源，用于 CORS。
 - `SESSION_SECRET`：至少 16 个字符，用于哈希会话令牌。生产环境必须设置为随机高强度值。
 - `SECURE_COOKIES`：HTTPS 部署时设为 `true`。
-- `SOURCE_URL`：前端的 AGPL 源码链接，前端构建时请使用 `VITE_SOURCE_URL` 设置。
 
 ## 数据集
 

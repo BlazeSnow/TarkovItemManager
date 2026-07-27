@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useAuthStore } from '@/stores/auth'
 const auth = useAuthStore()
-const sourceUrl = import.meta.env.VITE_SOURCE_URL || 'https://github.com/'
+const sourceUrl = 'https://github.com/BlazeSnow/TarkovItemManager'
 </script>
 
 <template>

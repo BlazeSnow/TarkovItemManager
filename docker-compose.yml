@@ -9,7 +9,6 @@ services:
       APP_ORIGIN: http://localhost:3000
       SESSION_SECRET: ${SESSION_SECRET:?Set SESSION_SECRET in your environment or .env file}
       SECURE_COOKIES: "false"
-      SOURCE_URL: ${SOURCE_URL:-https://github.com/}
     volumes:
       - tarkov-data:/data
 
