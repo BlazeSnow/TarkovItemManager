@@ -1,13 +1,11 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue'
+import { computed } from 'vue'
 import type { Facility } from '@/api'
 
-const props = defineProps<{ facility: Facility }>()
-const emit = defineEmits<{ change: [id: string, level: number] }>()
-const selected = ref(props.facility.currentLevel)
+const props = defineProps<{ facility: Facility; saving: boolean }>()
+const emit = defineEmits<{ change: [id: number, level: number] }>()
 const levels = computed(() => Array.from({ length: props.facility.maxLevel + 1 }, (_, level) => ({ title: `当前 Lv.${level}`, value: level })))
-
-function update(level: number) { selected.value = level; emit('change', props.facility.id, level) }
+function formatTime(seconds: number) { if (!seconds) return '即时'; const hours = seconds / 3600; return hours >= 24 ? `${hours / 24} 天` : `${hours} 小时` }
 </script>
 
 <template>
@@ -18,14 +16,17 @@ function update(level: number) { selected.value = level; emit('change', props.fa
       <v-card-subtitle>最高等级 Lv.{{ facility.maxLevel }}</v-card-subtitle>
     </v-card-item>
     <v-card-text>
-      <v-select :items="levels" label="当前等级" density="comfortable" hide-details :model-value="selected" @update:model-value="update" />
-      <div v-if="facility.prerequisites.length" class="mt-4">
-        <div v-for="prerequisite in facility.prerequisites" :key="`${prerequisite.upgradeLevel}-${prerequisite.facilityId}-${prerequisite.level}`" class="d-flex align-center text-caption mb-1">
-          <v-icon :color="prerequisite.satisfied ? 'success' : 'error'" size="16" :icon="prerequisite.satisfied ? 'mdi-check-circle' : 'mdi-alert-circle'" class="mr-1" />
-          升级至 Lv.{{ prerequisite.upgradeLevel }}：{{ prerequisite.facilityName }}需达到 Lv.{{ prerequisite.level }}
-        </div>
+      <v-select :items="levels" label="当前等级" density="comfortable" hide-details :disabled="saving" :model-value="facility.currentLevel" @update:model-value="emit('change', facility.id, Number($event))" />
+      <v-divider class="my-4" />
+      <div v-for="upgrade in facility.upgrades" :key="upgrade.level" class="upgrade-plan mb-4">
+        <div class="d-flex justify-space-between align-center mb-2"><strong>升级至 Lv.{{ upgrade.level }}</strong><span class="text-caption"><v-icon icon="mdi-clock-outline" size="15" class="mr-1" />{{ formatTime(upgrade.constructionTimeSeconds) }}</span></div>
+        <div v-if="upgrade.requirements.length" class="text-caption mb-2">{{ upgrade.requirements.map(item => `${item.name} x${item.quantity}${item.foundInRaid ? ' [带勾]' : ''}`).join(' · ') }}</div>
+        <div v-else class="text-caption text-medium-emphasis mb-2">无需材料</div>
+        <div v-for="gate in upgrade.facilityPrerequisites" :key="`f-${gate.facilityId}-${gate.level}`" class="gate-row text-caption"><v-icon :color="gate.satisfied ? 'success' : 'error'" :icon="gate.satisfied ? 'mdi-check-circle' : 'mdi-alert-circle'" size="16" />{{ gate.name }}需达到 Lv.{{ gate.level }}</div>
+        <div v-for="gate in upgrade.merchantPrerequisites" :key="`m-${gate.merchantId}-${gate.level}`" class="gate-row text-caption"><v-icon :color="gate.satisfied ? 'success' : 'error'" :icon="gate.satisfied ? 'mdi-check-circle' : 'mdi-alert-circle'" size="16" />{{ gate.name }}信誉需达到 Lv.{{ gate.level }}</div>
+        <div v-for="gate in upgrade.skillPrerequisites" :key="`s-${gate.name}-${gate.level}`" class="gate-row text-caption"><v-icon :color="gate.satisfied ? 'success' : 'error'" :icon="gate.satisfied ? 'mdi-check-circle' : 'mdi-alert-circle'" size="16" />{{ gate.name }}需达到 Lv.{{ gate.level }}</div>
       </div>
-      <div v-else class="text-caption text-medium-emphasis mt-4">无前置条件</div>
+      <div v-if="!facility.upgrades.length" class="text-caption text-success">已达到满级</div>
     </v-card-text>
   </v-card>
 </template>

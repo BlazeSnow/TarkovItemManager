@@ -7,5 +7,8 @@ a { color: rgb(var(--v-theme-primary)); text-decoration: none; }
 .workspace { max-width: 1200px; }
 .facility-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; }
 .facility-card { min-height: 220px; border-radius: 8px; }
-.materials-panel { border-radius: 8px; padding: 20px; }
-@media (max-width: 600px) { .workspace { padding-inline: 16px; } .materials-panel { margin-inline: -4px; padding: 16px; } }
+.materials-panel, .requirements-panel { border-radius: 8px; padding: 20px; }
+.condition-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; }
+.upgrade-plan { border-left: 2px solid rgb(var(--v-theme-secondary)); padding-left: 10px; }
+.gate-row { display: flex; align-items: center; gap: 4px; margin-top: 3px; }
+@media (max-width: 600px) { .workspace { padding-inline: 16px; } .materials-panel, .requirements-panel { margin-inline: -4px; padding: 16px; } }
