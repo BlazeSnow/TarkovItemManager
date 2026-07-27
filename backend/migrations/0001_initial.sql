@@ -17,13 +17,21 @@ CREATE INDEX IF NOT EXISTS sessions_token_hash_index ON sessions(token_hash);
 
 CREATE TABLE IF NOT EXISTS facility_levels (
     user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
-    facility_id TEXT NOT NULL,
+    facility_id INTEGER NOT NULL,
     level INTEGER NOT NULL CHECK (level >= 0),
     PRIMARY KEY (user_id, facility_id)
 );
 
-CREATE TABLE IF NOT EXISTS checked_materials (
+CREATE TABLE IF NOT EXISTS merchant_levels (
     user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
-    item_id TEXT NOT NULL,
-    PRIMARY KEY (user_id, item_id)
+    merchant_id INTEGER NOT NULL,
+    level INTEGER NOT NULL CHECK (level >= 0),
+    PRIMARY KEY (user_id, merchant_id)
+);
+
+CREATE TABLE IF NOT EXISTS skill_levels (
+    user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+    skill_name TEXT NOT NULL,
+    level INTEGER NOT NULL CHECK (level >= 0),
+    PRIMARY KEY (user_id, skill_name)
 );

@@ -11,19 +11,25 @@ use axum::{
     http::{HeaderMap, StatusCode},
 };
 use serde::Deserialize;
-use std::collections::{HashMap, HashSet};
+use std::collections::HashMap;
 #[derive(Deserialize)]
 pub struct FacilityLevelInput {
     #[serde(rename = "facilityId")]
-    facility_id: String,
+    facility_id: i64,
     level: i64,
 }
 #[derive(Deserialize)]
-pub struct CheckedMaterialsInput {
-    #[serde(rename = "itemIds")]
-    item_ids: Vec<String>,
+pub struct MerchantLevelInput {
+    #[serde(rename = "merchantId")]
+    merchant_id: i64,
+    level: i64,
 }
-pub async fn levels(
+#[derive(Deserialize)]
+pub struct SkillLevelInput {
+    name: String,
+    level: i64,
+}
+pub async fn facilities(
     State(state): State<AppState>,
     headers: HeaderMap,
     Json(inputs): Json<Vec<FacilityLevelInput>>,
@@ -36,23 +42,46 @@ pub async fn levels(
             return Err(bad_request("包含未知设施"));
         };
         if input.level < 0 || input.level > *limit {
-            return Err(bad_request(format!("{} 的等级不合法", input.facility_id)));
+            return Err(bad_request(format!(
+                "设施 {} 的等级不合法",
+                input.facility_id
+            )));
         }
         values.insert(input.facility_id, input.level);
     }
     db::progress::replace_levels(&state.pool, user_id, values).await?;
     Ok(StatusCode::NO_CONTENT)
 }
-pub async fn materials(
+pub async fn merchants(
     State(state): State<AppState>,
     headers: HeaderMap,
-    Json(input): Json<CheckedMaterialsInput>,
+    Json(inputs): Json<Vec<MerchantLevelInput>>,
 ) -> ApiResult<StatusCode> {
     let (user_id, _) = session::user(&state.pool, &state.config, &headers).await?;
-    let ids: HashSet<_> = input.item_ids.into_iter().collect();
-    if ids.iter().any(|id| !state.catalog.items.contains_key(id)) {
-        return Err(bad_request("包含未知物品"));
+    let mut values = HashMap::new();
+    for input in inputs {
+        if input.level < 0 || !state.catalog.merchants.contains_key(&input.merchant_id) {
+            return Err(bad_request("包含未知商人或非法等级"));
+        }
+        values.insert(input.merchant_id, input.level);
     }
-    db::progress::replace_checked(&state.pool, user_id, ids).await?;
+    db::progress::replace_merchant_levels(&state.pool, user_id, values).await?;
+    Ok(StatusCode::NO_CONTENT)
+}
+pub async fn skills(
+    State(state): State<AppState>,
+    headers: HeaderMap,
+    Json(inputs): Json<Vec<SkillLevelInput>>,
+) -> ApiResult<StatusCode> {
+    let (user_id, _) = session::user(&state.pool, &state.config, &headers).await?;
+    let supported = state.catalog.skill_names();
+    let mut values = HashMap::new();
+    for input in inputs {
+        if input.level < 0 || input.name.trim().is_empty() || !supported.contains(&input.name) {
+            return Err(bad_request("包含未知技能或非法等级"));
+        }
+        values.insert(input.name, input.level);
+    }
+    db::progress::replace_skill_levels(&state.pool, user_id, values).await?;
     Ok(StatusCode::NO_CONTENT)
 }

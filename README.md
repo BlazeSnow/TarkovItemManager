@@ -7,7 +7,8 @@
 - 本地账户注册、登录和安全会话 Cookie。
 - 记录每个设施当前已拥有等级，并展示前置条件状态。
 - 自动汇总从当前等级升级至各设施满级所需的剩余材料。
-- 勾选已拥有材料，并保存到当前用户账户。
+- 记录商人和技能等级，并据此显示每级升级的可用或受阻状态。
+- 区分带勾与非带勾材料，按剩余升级需求汇总展示。
 - 应用启动时检查数据集版本、关联 ID、重复定义和设施依赖循环。
 
 当前 `dataset/` 包含完整的 PVE 藏身处数据快照；PVP 数据、后续游戏版本或来源修订可能与其不同。
@@ -45,7 +46,7 @@ SECURE_COOKIES=false
 ```
 
 - `DATABASE_URL`：第一版完整支持 SQLite，例如 `sqlite:data/tarkov-item-manager.db`。PostgreSQL/MySQL 连接字符串会被明确拒绝，等待其迁移和集成测试实现。
-- `DATASET_DIR`：五个 JSON 数据集的目录。
+- `DATASET_DIR`：PVE 快照数据集的目录。
 - `APP_ORIGIN`：开发环境的前端来源，用于 CORS。
 - `SESSION_SECRET`：至少 16 个字符，用于哈希会话令牌。生产环境必须设置为随机高强度值。
 - `SECURE_COOKIES`：HTTPS 部署时设为 `true`。
@@ -54,7 +55,7 @@ SECURE_COOKIES=false
 
 `dataset/` 当前采用扁平数值 ID 主表：`items.json`、`facilities.json` 和 `merchants.json` 均为 `{ "ID": number, "name": string }` 数组。根 `hideout.json` 是 PVE 快照 manifest，包含 `schemaVersion`、模式、来源元数据和按数值设施 ID 排序的 `upgradeFiles`。每个 `dataset/hideout/<facilityID>.json` 是一个升级数组，保存该设施的全部升级记录。每条升级记录使用 `facilityID`、`level`、材料 `requirements`（`itemID`、`quantity`、`foundInRaid`）、设施/商人/技能/任务/版本包前置条件，以及 `constructionTimeSeconds`。
 
-PVE 材料、数量、带勾、建造时间和页面提供的设施/商人/技能条件来自 `eftarkov.com` 的设施详情页；Fandom MediaWiki API 用于来源补充与交叉核对。PVE 页面未提供结构化任务和版本包条件，因此对应数组当前为空。当前 Rust 后端仍读取旧版字符串 ID 数据格式；将 API 加载器迁移到该数值 PVE 数据契约是后续独立工作。用户当前拥有的设施等级和材料勾选状态保存在数据库中；材料清单自动计算至各设施满级。
+PVE 材料、数量、带勾、建造时间和页面提供的设施/商人/技能条件来自 `eftarkov.com` 的设施详情页；Fandom MediaWiki API 用于来源补充与交叉核对。PVE 页面未提供结构化任务和版本包条件，因此对应数组当前为空。后端启动时加载并验证该数值 PVE 数据契约。用户的设施、商人和技能等级保存在数据库中；材料清单按未完成升级自动计算至各设施满级，不保存材料拥有或完成状态。
 
 完整数据替换时，应保持以下约束：
 

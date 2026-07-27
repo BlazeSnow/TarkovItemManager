@@ -25,8 +25,9 @@ pub fn router(state: AppState) -> Router {
         .route("/api/auth/logout", post(auth::logout))
         .route("/api/auth/me", get(auth::me))
         .route("/api/catalog", get(catalog::get))
-        .route("/api/progress/facilities", put(progress::levels))
-        .route("/api/progress/materials", put(progress::materials))
+        .route("/api/progress/facilities", put(progress::facilities))
+        .route("/api/progress/merchants", put(progress::merchants))
+        .route("/api/progress/skills", put(progress::skills))
         .fallback_service(
             ServeDir::new("frontend/dist")
                 .not_found_service(ServeFile::new("frontend/dist/index.html")),

@@ -1,68 +1,157 @@
 use crate::{auth::session, catalog::progress, db, error::ApiResult, state::AppState};
 use axum::{Json, extract::State, http::HeaderMap};
 use serde::Serialize;
-
 #[derive(Serialize)]
+#[serde(rename_all = "camelCase")]
 pub struct CatalogResponse {
+    schema_version: u8,
+    game_mode: String,
+    retrieved_at: String,
     facilities: Vec<FacilityResponse>,
     materials: Vec<MaterialResponse>,
+    merchants: Vec<LevelResponse>,
+    skills: Vec<SkillResponse>,
 }
-
 #[derive(Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct FacilityResponse {
-    id: String,
+    id: i64,
     name: String,
     max_level: i64,
     current_level: i64,
-    prerequisites: Vec<PrerequisiteResponse>,
+    upgrades: Vec<UpgradeResponse>,
 }
-
 #[derive(Serialize)]
 #[serde(rename_all = "camelCase")]
-pub struct PrerequisiteResponse {
-    upgrade_level: i64,
-    facility_id: String,
-    facility_name: String,
+pub struct UpgradeResponse {
+    level: i64,
+    available: bool,
+    construction_time_seconds: i64,
+    requirements: Vec<RequirementResponse>,
+    facility_prerequisites: Vec<FacilityGateResponse>,
+    merchant_prerequisites: Vec<MerchantGateResponse>,
+    skill_prerequisites: Vec<SkillGateResponse>,
+    source_requirements_available: bool,
+}
+#[derive(Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct RequirementResponse {
+    item_id: i64,
+    name: String,
+    quantity: i64,
+    found_in_raid: bool,
+}
+#[derive(Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct FacilityGateResponse {
+    facility_id: i64,
+    name: String,
     level: i64,
     satisfied: bool,
 }
-
 #[derive(Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct MerchantGateResponse {
+    merchant_id: i64,
+    name: String,
+    level: i64,
+    satisfied: bool,
+}
+#[derive(Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct SkillGateResponse {
+    name: String,
+    level: i64,
+    satisfied: bool,
+}
+#[derive(Serialize)]
+#[serde(rename_all = "camelCase")]
 pub struct MaterialResponse {
-    id: String,
+    item_id: i64,
     name: String,
     quantity: i64,
-    checked: bool,
+    found_in_raid: bool,
 }
-
+#[derive(Serialize)]
+pub struct LevelResponse {
+    id: i64,
+    name: String,
+    level: i64,
+}
+#[derive(Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct SkillResponse {
+    name: String,
+    level: i64,
+}
 pub async fn get(
     State(state): State<AppState>,
     headers: HeaderMap,
 ) -> ApiResult<Json<CatalogResponse>> {
     let (user_id, _) = session::user(&state.pool, &state.config, &headers).await?;
     let levels = db::progress::load_levels(&state.pool, user_id).await?;
-    let checked = db::progress::load_checked(&state.pool, user_id).await?;
-    let result = progress::calculate(&state.catalog, &levels, &checked);
-
+    let merchant_levels = db::progress::load_merchant_levels(&state.pool, user_id).await?;
+    let skill_levels = db::progress::load_skill_levels(&state.pool, user_id).await?;
+    let result = progress::calculate(&state.catalog, &levels, &merchant_levels, &skill_levels);
     Ok(Json(CatalogResponse {
+        schema_version: state.catalog.schema_version,
+        game_mode: state.catalog.game_mode.clone(),
+        retrieved_at: state.catalog.retrieved_at.clone(),
         facilities: result
             .facilities
             .into_iter()
-            .map(|facility| FacilityResponse {
-                id: facility.id,
-                name: facility.name,
-                max_level: facility.max_level,
-                current_level: facility.current_level,
-                prerequisites: facility
-                    .prerequisites
+            .map(|f| FacilityResponse {
+                id: f.id,
+                name: f.name,
+                max_level: f.max_level,
+                current_level: f.current_level,
+                upgrades: f
+                    .upgrades
                     .into_iter()
-                    .map(|prerequisite| PrerequisiteResponse {
-                        upgrade_level: prerequisite.upgrade_level,
-                        facility_id: prerequisite.facility_id,
-                        facility_name: prerequisite.facility_name,
-                        level: prerequisite.level,
-                        satisfied: prerequisite.satisfied,
+                    .map(|u| UpgradeResponse {
+                        level: u.level,
+                        available: u.available,
+                        construction_time_seconds: u.construction_time_seconds,
+                        requirements: u
+                            .requirements
+                            .into_iter()
+                            .map(|r| RequirementResponse {
+                                item_id: r.item_id,
+                                name: r.name,
+                                quantity: r.quantity,
+                                found_in_raid: r.found_in_raid,
+                            })
+                            .collect(),
+                        facility_prerequisites: u
+                            .facility_prerequisites
+                            .into_iter()
+                            .map(|p| FacilityGateResponse {
+                                facility_id: p.facility_id,
+                                name: p.name,
+                                level: p.level,
+                                satisfied: p.satisfied,
+                            })
+                            .collect(),
+                        merchant_prerequisites: u
+                            .merchant_prerequisites
+                            .into_iter()
+                            .map(|p| MerchantGateResponse {
+                                merchant_id: p.merchant_id,
+                                name: p.name,
+                                level: p.level,
+                                satisfied: p.satisfied,
+                            })
+                            .collect(),
+                        skill_prerequisites: u
+                            .skill_prerequisites
+                            .into_iter()
+                            .map(|p| SkillGateResponse {
+                                name: p.name,
+                                level: p.level,
+                                satisfied: p.satisfied,
+                            })
+                            .collect(),
+                        source_requirements_available: u.source_requirements_available,
                     })
                     .collect(),
             })
@@ -70,68 +159,31 @@ pub async fn get(
         materials: result
             .materials
             .into_iter()
-            .map(|material| MaterialResponse {
-                id: material.id,
-                name: material.name,
-                quantity: material.quantity,
-                checked: material.checked,
+            .map(|m| MaterialResponse {
+                item_id: m.item_id,
+                name: m.name,
+                quantity: m.quantity,
+                found_in_raid: m.found_in_raid,
+            })
+            .collect(),
+        merchants: state
+            .catalog
+            .merchants
+            .iter()
+            .map(|(&id, name)| LevelResponse {
+                id,
+                name: name.clone(),
+                level: merchant_levels.get(&id).copied().unwrap_or(0),
+            })
+            .collect(),
+        skills: state
+            .catalog
+            .skill_names()
+            .into_iter()
+            .map(|name| SkillResponse {
+                level: skill_levels.get(&name).copied().unwrap_or(0),
+                name,
             })
             .collect(),
     }))
-}
-
-#[cfg(test)]
-mod tests {
-    use std::{
-        collections::{HashMap, HashSet},
-        path::Path,
-    };
-
-    use super::*;
-    use crate::catalog::Catalog;
-
-    #[test]
-    fn response_preserves_current_level_json_contract() {
-        let catalog = Catalog::load(Path::new("../dataset")).unwrap();
-        let result = progress::calculate(
-            &catalog,
-            &HashMap::from([(String::from("generator"), 1)]),
-            &HashSet::new(),
-        );
-        let response = CatalogResponse {
-            facilities: result
-                .facilities
-                .into_iter()
-                .map(|facility| FacilityResponse {
-                    id: facility.id,
-                    name: facility.name,
-                    max_level: facility.max_level,
-                    current_level: facility.current_level,
-                    prerequisites: facility
-                        .prerequisites
-                        .into_iter()
-                        .map(|prerequisite| PrerequisiteResponse {
-                            upgrade_level: prerequisite.upgrade_level,
-                            facility_id: prerequisite.facility_id,
-                            facility_name: prerequisite.facility_name,
-                            level: prerequisite.level,
-                            satisfied: prerequisite.satisfied,
-                        })
-                        .collect(),
-                })
-                .collect(),
-            materials: Vec::new(),
-        };
-        let value = serde_json::to_value(response).unwrap();
-        let generator = value["facilities"]
-            .as_array()
-            .unwrap()
-            .iter()
-            .find(|facility| facility["id"] == "generator")
-            .unwrap();
-
-        assert_eq!(generator["currentLevel"], 1);
-        assert_eq!(generator["prerequisites"][0]["upgradeLevel"], 2);
-        assert_eq!(generator["prerequisites"][0]["facilityId"], "generator");
-    }
 }
