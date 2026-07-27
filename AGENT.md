@@ -18,9 +18,11 @@
 ## 静态数据集
 
 1. 静态数据集位于dataset目录
-2. items.json存储了所有物品id、物品官方中文名
-3. facilities.json存储了藏身处各设施id、官方中文名
-4. hideout.json存储了藏身处各设施的id、各等级升级所需物品id与个数、是否需要战局中带出（带勾，Found in Raid）、各等级前置条件
+2. items.json存储所有物品的数值ID和官方中文名
+3. facilities.json存储藏身处设施的数值ID和官方中文名
+4. merchants.json存储商人的数值ID和名称
+5. hideout.json存储 PVE 快照元数据及各设施等级升级记录：材料物品ID、个数、是否需要战局中带出（带勾，Found in Raid）、设施/商人/技能/任务/版本包前置条件和建造时间
+6. 静态数据当前采用扁平数值ID契约；后端加载器适配应作为独立改造，不得混入数据整理工作
 
 ## 数据库
 

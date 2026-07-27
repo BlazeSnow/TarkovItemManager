@@ -10,7 +10,7 @@
 - 勾选已拥有材料，并保存到当前用户账户。
 - 应用启动时检查数据集版本、关联 ID、重复定义和设施依赖循环。
 
-当前 `dataset/` 中仅包含用于验证完整流程的示例数据，不代表游戏中的完整或最新物品与藏身处需求。
+当前 `dataset/` 包含完整的 PVE 藏身处数据快照；PVP 数据、后续游戏版本或来源修订可能与其不同。
 
 ## 开发环境
 
@@ -52,14 +52,18 @@ SECURE_COOKIES=false
 
 ## 数据集
 
-`dataset/schema/` 提供版本 1 JSON Schema。静态数据只描述不可变规则：物品、翻译、设施、升级材料和带等级的前置条件。用户当前拥有的设施等级和材料勾选状态保存在数据库中；材料清单自动计算至各设施满级。
+`dataset/` 当前采用扁平数值 ID 主表：`items.json`、`facilities.json` 和 `merchants.json` 均为 `{ "ID": number, "name": string }` 数组。`hideout.json` 是 PVE 快照根对象，包含 `schemaVersion`、模式、来源元数据和升级记录。每条升级记录使用 `facilityID`、`level`、材料 `requirements`（`itemID`、`quantity`、`foundInRaid`）、设施/商人/技能/任务/版本包前置条件，以及 `constructionTimeSeconds`。
+
+PVE 材料、数量、带勾、建造时间和页面提供的设施/商人/技能条件来自 `eftarkov.com` 的设施详情页；Fandom MediaWiki API 用于来源补充与交叉核对。PVE 页面未提供结构化任务和版本包条件，因此对应数组当前为空。当前 Rust 后端仍读取旧版字符串 ID 数据格式；将 API 加载器迁移到该数值 PVE 数据契约是后续独立工作。用户当前拥有的设施等级和材料勾选状态保存在数据库中；材料清单自动计算至各设施满级。
 
 完整数据替换时，应保持以下约束：
 
-- ID 为非空稳定字符串，中文/英文文件使用相同 ID 集合。
-- 材料数量与升级等级均为正整数。
-- 每个 `{ facilityId, level }` 只定义一次。
-- 前置条件必须指向存在的设施等级，且不可形成循环。
+- ID 为连续非负整数；所有 `facilityID`、`itemID` 和 `merchantID` 必须解析到对应主表。
+- 材料数量和等级为正整数，建造时间为非负整数秒数。
+- `foundInRaid` 必须是布尔值，且只属于单条升级材料需求。
+- 每个 `{ facilityID, level }` 只定义一次。
+- 设施前置条件必须指向存在的升级等级，且不可形成循环。
+- 来源名称归并必须记录在 `hideout.json` 的 `sources.notes` 中。
 
 ## Docker
 
