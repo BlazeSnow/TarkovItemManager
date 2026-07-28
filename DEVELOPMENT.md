@@ -38,7 +38,6 @@ cargo run
 
 ```dotenv
 DATABASE_URL=sqlite:data/tarkov-item-manager.db?mode=rwc
-DATASET_DIR=../dataset
 APP_ORIGIN=http://localhost:5173
 LISTEN_ADDR=0.0.0.0:3000
 SESSION_SECRET=replace-with-a-long-random-secret
@@ -46,21 +45,22 @@ SECURE_COOKIES=false
 ```
 
 - `DATABASE_URL`：第一版完整支持 SQLite，例如 `sqlite:data/tarkov-item-manager.db`。PostgreSQL/MySQL 连接字符串会被明确拒绝，等待其迁移和集成测试实现。
-- `DATASET_DIR`：PVE 快照数据集的目录。
+- `DATASET_DIR`：可选的外部 PVE 快照目录；未设置时使用编译进程序的数据集。显式设置后若目录无效或数据校验失败，应用会拒绝启动。
 - `APP_ORIGIN`：开发环境的前端来源，用于 CORS。
 - `SESSION_SECRET`：至少 16 个字符，用于哈希会话令牌。生产环境必须设置为随机高强度值。
 - `SECURE_COOKIES`：HTTPS 部署时设为 `true`。
 
 ## 数据集
 
-`dataset/` 当前采用扁平数值 ID 主表：`items.json`、`facilities.json` 和 `merchants.json` 均为 `{ "ID": number, "name": string }` 数组。根 `hideout.json` 是 PVE 快照 manifest，包含 `schemaVersion`、模式、来源元数据和按数值设施 ID 排序的 `upgradeFiles`。每个 `dataset/hideout/<facilityID>.json` 是一个升级数组，保存该设施的全部升级记录。每条升级记录使用 `facilityID`、`level`、材料 `requirements`（`itemID`、`quantity`、`foundInRaid`）、设施/商人/技能/任务/版本包前置条件，以及 `constructionTimeSeconds`。
+`dataset/` 当前采用扁平数值 ID 主表：`items.json`、`facilities.json` 和 `merchants.json` 均为 `{ "ID": number, "name": string }` 数组；`skills.json` 为 `{ "ID": number, "name": string, "maxLevel": number }` 数组，保存完整技能目录。根 `hideout.json` 是 PVE 快照 manifest，包含 `schemaVersion`、模式、来源元数据和按数值设施 ID 排序的 `upgradeFiles`。每个 `dataset/hideout/<facilityID>.json` 是一个升级数组，保存该设施的全部升级记录。每条升级记录使用 `facilityID`、`level`、材料 `requirements`（`itemID`、`quantity`、`foundInRaid`）、设施/商人/技能/任务/版本包前置条件，以及 `constructionTimeSeconds`。
 
-PVE 材料、数量、带勾、建造时间和页面提供的设施/商人/技能条件来自 `eftarkov.com` 的设施详情页；Fandom MediaWiki API 用于来源补充与交叉核对。PVE 页面未提供结构化任务和版本包条件，因此对应数组当前为空。后端启动时加载并验证该数值 PVE 数据契约。用户的设施、商人和技能等级保存在数据库中；材料清单按未完成升级自动计算至各设施满级，不保存材料拥有或完成状态。
+PVE 材料、数量、带勾、建造时间和页面提供的设施/商人/技能条件来自 `eftarkov.com` 的设施详情页；Fandom MediaWiki API 用于来源补充与交叉核对。PVE 页面未提供结构化任务和版本包条件，因此对应数组当前为空。后端启动时加载并验证编译进程序的数值 PVE 数据契约；显式设置 `DATASET_DIR` 可严格覆盖为外部快照。用户的设施、商人和技能等级保存在数据库中；材料清单按未完成升级自动计算至各设施满级，不保存材料拥有或完成状态。
 
 完整数据替换时，应保持以下约束：
 
-- ID 为连续非负整数；所有 `facilityID`、`itemID` 和 `merchantID` 必须解析到对应主表。
-- 材料数量和等级为正整数，建造时间为非负整数秒数。
+- ID 为连续非负整数；所有 `facilityID`、`itemID` 和 `merchantID` 必须解析到对应主表，所有技能前置名称必须存在于 `skills.json`。
+- `skills.json` 的名称不可重复，`maxLevel` 必须为正整数，技能前置等级不可超过该技能上限。
+- 材料数量和设施等级为正整数，建造时间为非负整数秒数。
 - `foundInRaid` 必须是布尔值，且只属于单条升级材料需求。
 - 每个 `{ facilityID, level }` 只定义一次。
 - 设施前置条件必须指向存在的升级等级，且不可形成循环。
@@ -85,7 +85,7 @@ docker compose up --build
 .\pubdev.ps1
 ```
 
-脚本会在根目录生成 `TarkovItemManager-<tag>.7z`。归档包含应用程序、前端资源、数据集和 `start.cmd`；不包含 `pubdev/.env`、`pubdev/data/` 中的会话密钥、账户或用户进度。
+脚本会在根目录生成 `TarkovItemManager-<tag>.7z`。归档包含应用程序、前端资源和 `start.cmd`；PVE 数据集已嵌入可执行文件，不包含 `pubdev/.env`、`pubdev/data/` 中的会话密钥、账户或用户进度。
 
 ## 验证
 

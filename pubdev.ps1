@@ -68,8 +68,7 @@ New-Item -ItemType Directory -Force -Path (Join-Path $publishRoot 'data') | Out-
 
 $generatedPaths = @(
     (Join-Path $publishRoot 'tarkov-item-manager.exe'),
-    (Join-Path $publishRoot 'frontend'),
-    (Join-Path $publishRoot 'dataset')
+    (Join-Path $publishRoot 'frontend')
 )
 foreach ($path in $generatedPaths) {
     if (Test-Path $path) {
@@ -80,7 +79,6 @@ foreach ($path in $generatedPaths) {
 Copy-Item (Join-Path $backendRoot 'target\release\tarkov-item-manager.exe') (Join-Path $publishRoot 'tarkov-item-manager.exe')
 New-Item -ItemType Directory -Force -Path (Join-Path $publishRoot 'frontend') | Out-Null
 Copy-Item (Join-Path $frontendRoot 'dist') (Join-Path $publishRoot 'frontend\dist') -Recurse
-Copy-Item (Join-Path $root 'dataset') (Join-Path $publishRoot 'dataset') -Recurse
 
 $envFile = Join-Path $publishRoot '.env'
 if (-not (Test-Path $envFile)) {
@@ -90,7 +88,6 @@ if (-not (Test-Path $envFile)) {
 
     @"
 DATABASE_URL=sqlite:data/tarkov-item-manager.db?mode=rwc
-DATASET_DIR=dataset
 APP_ORIGIN=http://127.0.0.1:3000
 LISTEN_ADDR=127.0.0.1:3000
 SESSION_SECRET=$sessionSecret
@@ -109,7 +106,7 @@ echo Tarkov Item Manager: http://127.0.0.1:3000/login
 Push-Location $publishRoot
 try {
     Invoke-CheckedCommand 'Release archive creation' {
-        & $sevenZip a -t7z $archive 'tarkov-item-manager.exe' 'frontend' 'dataset' 'start.cmd'
+        & $sevenZip a -t7z $archive 'tarkov-item-manager.exe' 'frontend' 'start.cmd'
     }
 } finally {
     Pop-Location

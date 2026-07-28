@@ -7,7 +7,7 @@ export interface Upgrade { level: number; available: boolean; constructionTimeSe
 export interface Facility { id: number; name: string; maxLevel: number; currentLevel: number; upgrades: Upgrade[] }
 export interface Material { itemId: number; name: string; quantity: number; foundInRaid: boolean }
 export interface LevelEntry { id: number; name: string; level: number }
-export interface SkillEntry { name: string; level: number }
+export interface SkillEntry { name: string; maxLevel: number; level: number }
 export interface Catalog { schemaVersion: number; gameMode: string; retrievedAt: string; facilities: Facility[]; materials: Material[]; merchants: LevelEntry[]; skills: SkillEntry[] }
 
 async function request<T>(path: string, options: RequestInit = {}): Promise<T> {

@@ -15,7 +15,10 @@ use sqlx::{SqlitePool, sqlite::SqlitePoolOptions};
 use crate::{catalog::Catalog, config::Config, state::AppState};
 
 pub async fn build_app(config: Config) -> Result<Router> {
-    let catalog = Catalog::load(&config.dataset_dir)?;
+    let catalog = match &config.dataset_dir {
+        Some(dir) => Catalog::load_external(dir)?,
+        None => Catalog::load_embedded()?,
+    };
     if config.database_url.starts_with("sqlite:data/") {
         fs::create_dir_all("data").context("无法创建 SQLite 数据目录")?;
     }

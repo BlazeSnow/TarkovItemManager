@@ -82,6 +82,7 @@ pub struct LevelResponse {
 #[serde(rename_all = "camelCase")]
 pub struct SkillResponse {
     name: String,
+    max_level: i64,
     level: i64,
 }
 pub async fn get(
@@ -178,11 +179,12 @@ pub async fn get(
             .collect(),
         skills: state
             .catalog
-            .skill_names()
+            .hideout_skills()
             .into_iter()
-            .map(|name| SkillResponse {
-                level: skill_levels.get(&name).copied().unwrap_or(0),
-                name,
+            .map(|skill| SkillResponse {
+                name: skill.name.clone(),
+                max_level: skill.max_level,
+                level: skill_levels.get(&skill.name).copied().unwrap_or(0),
             })
             .collect(),
     }))
