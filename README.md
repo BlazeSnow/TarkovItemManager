@@ -77,6 +77,16 @@ docker compose up --build
 
 访问 `http://localhost:3000`。SQLite 数据会保存到名为 `tarkov-data` 的 Docker 卷；容器重建不会清除该卷。
 
+## 本地发布
+
+先使用 `./tag.ps1` 创建并推送版本标签，再安装 7-Zip 并运行：
+
+```powershell
+.\pubdev.ps1
+```
+
+脚本会在根目录生成 `TarkovItemManager-<tag>.7z`。归档包含应用程序、前端资源、数据集和 `start.cmd`；不包含 `pubdev/.env`、`pubdev/data/` 中的会话密钥、账户或用户进度。
+
 ## 验证
 
 ```bash

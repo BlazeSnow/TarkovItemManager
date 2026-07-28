@@ -11,6 +11,46 @@ function Invoke-CheckedCommand([string]$Description, [scriptblock]$Command) {
     }
 }
 
+function Invoke-Git([string[]]$Arguments) {
+    $output = & git @Arguments
+    if ($LASTEXITCODE -ne 0) {
+        throw "git $($Arguments -join ' ') failed."
+    }
+    return $output
+}
+
+function Find-SevenZip {
+    $command = Get-Command 7z -ErrorAction SilentlyContinue
+    if ($command) {
+        return $command.Source
+    }
+
+    $candidates = @(
+        (Join-Path $env:ProgramFiles '7-Zip\7z.exe'),
+        (Join-Path ${env:ProgramFiles(x86)} '7-Zip\7z.exe')
+    )
+    return $candidates | Where-Object { Test-Path $_ } | Select-Object -First 1
+}
+
+if (-not (Get-Command git -ErrorAction SilentlyContinue)) {
+    throw 'Git is not available in PATH.'
+}
+
+$tagOutput = & git describe --tags --abbrev=0
+if ($LASTEXITCODE -ne 0 -or -not $tagOutput) {
+    throw 'No Git tag is available. Run .\tag.ps1 before creating a release archive.'
+}
+$tag = $tagOutput.Trim()
+
+$sevenZip = Find-SevenZip
+if (-not $sevenZip) {
+    throw '7-Zip is not available. Install 7-Zip or add 7z to PATH.'
+}
+
+$archive = Join-Path $root "TarkovItemManager-$tag.7z"
+if (Test-Path $archive) {
+    throw "Release archive already exists: $archive"
+}
 if (-not (Get-Command cargo -ErrorAction SilentlyContinue)) {
     throw 'Cargo is not available in PATH. Install Rust first.'
 }
@@ -66,5 +106,18 @@ echo Tarkov Item Manager: http://127.0.0.1:3000/login
 "%~dp0tarkov-item-manager.exe"
 '@ | Set-Content -Encoding ascii (Join-Path $publishRoot 'start.cmd')
 
+Push-Location $publishRoot
+try {
+    Invoke-CheckedCommand 'Release archive creation' {
+        & $sevenZip a -t7z $archive 'tarkov-item-manager.exe' 'frontend' 'dataset' 'start.cmd'
+    }
+} finally {
+    Pop-Location
+}
+
+if (-not (Test-Path $archive)) {
+    throw "Release archive was not created: $archive"
+}
+
 Write-Host "Test release created at: $publishRoot"
-Write-Host 'Start it with pubdev\start.cmd, then open http://127.0.0.1:3000/login'
+Write-Host "Release archive created at: $archive"
