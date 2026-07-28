@@ -74,10 +74,12 @@ pub async fn skills(
     Json(inputs): Json<Vec<SkillLevelInput>>,
 ) -> ApiResult<StatusCode> {
     let (user_id, _) = session::user(&state.pool, &state.config, &headers).await?;
-    let supported = state.catalog.skill_names();
     let mut values = HashMap::new();
     for input in inputs {
-        if input.level < 0 || input.name.trim().is_empty() || !supported.contains(&input.name) {
+        let Some(skill) = state.catalog.skill_by_name(&input.name) else {
+            return Err(bad_request("包含未知技能或非法等级"));
+        };
+        if input.level < 0 || input.level > skill.max_level {
             return Err(bad_request("包含未知技能或非法等级"));
         }
         values.insert(input.name, input.level);

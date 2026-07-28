@@ -52,14 +52,15 @@ SECURE_COOKIES=false
 
 ## 数据集
 
-`dataset/` 当前采用扁平数值 ID 主表：`items.json`、`facilities.json` 和 `merchants.json` 均为 `{ "ID": number, "name": string }` 数组。根 `hideout.json` 是 PVE 快照 manifest，包含 `schemaVersion`、模式、来源元数据和按数值设施 ID 排序的 `upgradeFiles`。每个 `dataset/hideout/<facilityID>.json` 是一个升级数组，保存该设施的全部升级记录。每条升级记录使用 `facilityID`、`level`、材料 `requirements`（`itemID`、`quantity`、`foundInRaid`）、设施/商人/技能/任务/版本包前置条件，以及 `constructionTimeSeconds`。
+`dataset/` 当前采用扁平数值 ID 主表：`items.json`、`facilities.json` 和 `merchants.json` 均为 `{ "ID": number, "name": string }` 数组；`skills.json` 为 `{ "ID": number, "name": string, "maxLevel": number }` 数组，保存完整技能目录。根 `hideout.json` 是 PVE 快照 manifest，包含 `schemaVersion`、模式、来源元数据和按数值设施 ID 排序的 `upgradeFiles`。每个 `dataset/hideout/<facilityID>.json` 是一个升级数组，保存该设施的全部升级记录。每条升级记录使用 `facilityID`、`level`、材料 `requirements`（`itemID`、`quantity`、`foundInRaid`）、设施/商人/技能/任务/版本包前置条件，以及 `constructionTimeSeconds`。
 
 PVE 材料、数量、带勾、建造时间和页面提供的设施/商人/技能条件来自 `eftarkov.com` 的设施详情页；Fandom MediaWiki API 用于来源补充与交叉核对。PVE 页面未提供结构化任务和版本包条件，因此对应数组当前为空。后端启动时加载并验证编译进程序的数值 PVE 数据契约；显式设置 `DATASET_DIR` 可严格覆盖为外部快照。用户的设施、商人和技能等级保存在数据库中；材料清单按未完成升级自动计算至各设施满级，不保存材料拥有或完成状态。
 
 完整数据替换时，应保持以下约束：
 
-- ID 为连续非负整数；所有 `facilityID`、`itemID` 和 `merchantID` 必须解析到对应主表。
-- 材料数量和等级为正整数，建造时间为非负整数秒数。
+- ID 为连续非负整数；所有 `facilityID`、`itemID` 和 `merchantID` 必须解析到对应主表，所有技能前置名称必须存在于 `skills.json`。
+- `skills.json` 的名称不可重复，`maxLevel` 必须为正整数，技能前置等级不可超过该技能上限。
+- 材料数量和设施等级为正整数，建造时间为非负整数秒数。
 - `foundInRaid` 必须是布尔值，且只属于单条升级材料需求。
 - 每个 `{ facilityID, level }` 只定义一次。
 - 设施前置条件必须指向存在的升级等级，且不可形成循环。

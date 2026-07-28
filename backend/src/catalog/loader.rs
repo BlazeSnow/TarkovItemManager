@@ -18,6 +18,15 @@ struct NamedRecord {
 }
 
 #[derive(Debug, Deserialize)]
+struct SkillRecord {
+    #[serde(rename = "ID")]
+    id: i64,
+    name: String,
+    #[serde(rename = "maxLevel")]
+    max_level: i64,
+}
+
+#[derive(Debug, Deserialize)]
 struct Manifest {
     #[serde(rename = "schemaVersion")]
     schema_version: u8,
@@ -98,7 +107,14 @@ pub struct Catalog {
     pub items: BTreeMap<i64, String>,
     pub facilities: BTreeMap<i64, String>,
     pub merchants: BTreeMap<i64, String>,
+    pub skills: BTreeMap<i64, Skill>,
     pub upgrades: Vec<Upgrade>,
+}
+
+#[derive(Debug, Clone)]
+pub struct Skill {
+    pub name: String,
+    pub max_level: i64,
 }
 
 trait DatasetSource {
@@ -140,6 +156,7 @@ impl Catalog {
         let items = load_named(source, Path::new("items.json"), "items")?;
         let facilities = load_named(source, Path::new("facilities.json"), "facilities")?;
         let merchants = load_named(source, Path::new("merchants.json"), "merchants")?;
+        let skills = load_skills(source)?;
         let manifest: Manifest = read_json(source, Path::new("hideout.json"), "hideout manifest")?;
         if manifest.schema_version != 1 {
             bail!(
@@ -183,7 +200,7 @@ impl Catalog {
             upgrades.extend(shard);
         }
         upgrades.sort_by_key(|upgrade| (upgrade.facility_id, upgrade.level));
-        validate(&items, &facilities, &merchants, &upgrades)?;
+        validate(&items, &facilities, &merchants, &skills, &upgrades)?;
 
         Ok(Self {
             schema_version: manifest.schema_version,
@@ -192,25 +209,25 @@ impl Catalog {
             items,
             facilities,
             merchants,
+            skills,
             upgrades,
         })
     }
 
-    pub fn skill_names(&self) -> Vec<String> {
-        let mut skills: Vec<_> = self
+    pub fn hideout_skills(&self) -> Vec<&Skill> {
+        let names: HashSet<_> = self
             .upgrades
             .iter()
-            .flat_map(|upgrade| {
-                upgrade
-                    .skill_prerequisites
-                    .iter()
-                    .map(|skill| skill.name.clone())
-            })
-            .collect::<HashSet<_>>()
-            .into_iter()
+            .flat_map(|upgrade| upgrade.skill_prerequisites.iter().map(|skill| &skill.name))
             .collect();
-        skills.sort();
-        skills
+        self.skills
+            .values()
+            .filter(|skill| names.contains(&skill.name))
+            .collect()
+    }
+
+    pub fn skill_by_name(&self, name: &str) -> Option<&Skill> {
+        self.skills.values().find(|skill| skill.name == name)
     }
 }
 
@@ -232,6 +249,33 @@ fn load_named(
     Ok(result)
 }
 
+fn load_skills(source: &impl DatasetSource) -> Result<BTreeMap<i64, Skill>> {
+    let records: Vec<SkillRecord> = read_json(source, Path::new("skills.json"), "skills")?;
+    let mut result = BTreeMap::new();
+    let mut names = HashSet::new();
+    for record in records {
+        if record.id < 0
+            || record.name.trim().is_empty()
+            || record.max_level < 1
+            || !names.insert(record.name.clone())
+            || result
+                .insert(
+                    record.id,
+                    Skill {
+                        name: record.name,
+                        max_level: record.max_level,
+                    },
+                )
+                .is_some()
+        {
+            bail!("skills 包含无效或重复 ID 或名称");
+        }
+    }
+    if result.is_empty() {
+        bail!("skills 不能为空");
+    }
+    Ok(result)
+}
 fn read_json<T: for<'a> Deserialize<'a>>(
     source: &impl DatasetSource,
     path: &Path,
@@ -245,6 +289,7 @@ fn validate(
     items: &BTreeMap<i64, String>,
     facilities: &BTreeMap<i64, String>,
     merchants: &BTreeMap<i64, String>,
+    skills: &BTreeMap<i64, Skill>,
     upgrades: &[Upgrade],
 ) -> Result<()> {
     let keys: HashSet<_> = upgrades
@@ -300,9 +345,17 @@ fn validate(
             }
         }
         for skill in &upgrade.skill_prerequisites {
-            if skill.name.trim().is_empty() || skill.level < 1 {
+            let Some(skill_record) = skills.values().find(|record| record.name == skill.name)
+            else {
                 bail!(
-                    "技能前置条件无效: {} Lv.{}",
+                    "技能前置条件引用无效: {} Lv.{}",
+                    upgrade.facility_id,
+                    upgrade.level
+                );
+            };
+            if skill.level < 1 || skill.level > skill_record.max_level {
+                bail!(
+                    "技能前置条件等级无效: {} Lv.{}",
                     upgrade.facility_id,
                     upgrade.level
                 );
