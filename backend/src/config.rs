@@ -5,7 +5,7 @@ use anyhow::{Result, bail};
 #[derive(Clone)]
 pub struct Config {
     pub database_url: String,
-    pub dataset_dir: PathBuf,
+    pub dataset_dir: Option<PathBuf>,
     pub app_origin: String,
     pub session_secret: String,
     pub secure_cookies: bool,
@@ -25,11 +25,16 @@ impl Config {
         if session_secret.len() < 16 {
             bail!("SESSION_SECRET 至少需要 16 个字符");
         }
+        let dataset_dir = env::var_os("DATASET_DIR").map(PathBuf::from);
+        if dataset_dir
+            .as_ref()
+            .is_some_and(|path| path.as_os_str().is_empty())
+        {
+            bail!("DATASET_DIR 不能为空");
+        }
         Ok(Self {
             database_url,
-            dataset_dir: env::var("DATASET_DIR")
-                .map(PathBuf::from)
-                .unwrap_or_else(|_| PathBuf::from("../dataset")),
+            dataset_dir,
             app_origin: env::var("APP_ORIGIN")
                 .unwrap_or_else(|_| "http://localhost:5173".to_string()),
             session_secret,

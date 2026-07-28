@@ -29,7 +29,6 @@ $envFile = "$root\backend\.env"
 if (-not (Test-Path $envFile)) {
     @'
 DATABASE_URL=sqlite:data/tarkov-item-manager.db?mode=rwc
-DATASET_DIR=../dataset
 APP_ORIGIN=http://localhost:5173
 LISTEN_ADDR=0.0.0.0:3000
 SESSION_SECRET=local-development-secret-change-me
