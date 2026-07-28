@@ -1,0 +1,148 @@
+[
+  {
+    "facilityID": 1,
+    "level": 1,
+    "requirements": [
+      {
+        "itemID": 105,
+        "quantity": 1,
+        "foundInRaid": false
+      },
+      {
+        "itemID": 54,
+        "quantity": 2,
+        "foundInRaid": false
+      },
+      {
+        "itemID": 53,
+        "quantity": 2,
+        "foundInRaid": false
+      }
+    ],
+    "facilityPrerequisites": [],
+    "merchantPrerequisites": [],
+    "skillPrerequisites": [],
+    "taskPrerequisites": [],
+    "editionPrerequisites": [],
+    "constructionTimeSeconds": 0,
+    "source": {
+      "page": "https://www.eftarkov.com/news/web_100.html",
+      "sourceFacilityName": "工作台",
+      "sourceRequirementsAvailable": true,
+      "taskAndEditionConditionsProvided": false
+    }
+  },
+  {
+    "facilityID": 1,
+    "level": 2,
+    "requirements": [
+      {
+        "itemID": 54,
+        "quantity": 10,
+        "foundInRaid": false
+      },
+      {
+        "itemID": 71,
+        "quantity": 3,
+        "foundInRaid": false
+      },
+      {
+        "itemID": 85,
+        "quantity": 3,
+        "foundInRaid": true
+      },
+      {
+        "itemID": 108,
+        "quantity": 1,
+        "foundInRaid": true
+      },
+      {
+        "itemID": 15,
+        "quantity": 2,
+        "foundInRaid": true
+      }
+    ],
+    "facilityPrerequisites": [
+      {
+        "facilityID": 1,
+        "level": 1
+      },
+      {
+        "facilityID": 7,
+        "level": 2
+      }
+    ],
+    "merchantPrerequisites": [
+      {
+        "merchantID": 5,
+        "level": 2
+      }
+    ],
+    "skillPrerequisites": [],
+    "taskPrerequisites": [],
+    "editionPrerequisites": [],
+    "constructionTimeSeconds": 10800,
+    "source": {
+      "page": "https://www.eftarkov.com/news/web_100.html",
+      "sourceFacilityName": "工作台",
+      "sourceRequirementsAvailable": true,
+      "taskAndEditionConditionsProvided": false
+    }
+  },
+  {
+    "facilityID": 1,
+    "level": 3,
+    "requirements": [
+      {
+        "itemID": 98,
+        "quantity": 2,
+        "foundInRaid": true
+      },
+      {
+        "itemID": 29,
+        "quantity": 5,
+        "foundInRaid": false
+      },
+      {
+        "itemID": 3,
+        "quantity": 1,
+        "foundInRaid": true
+      },
+      {
+        "itemID": 0,
+        "quantity": 395000,
+        "foundInRaid": false
+      }
+    ],
+    "facilityPrerequisites": [
+      {
+        "facilityID": 1,
+        "level": 2
+      },
+      {
+        "facilityID": 4,
+        "level": 2
+      },
+      {
+        "facilityID": 16,
+        "level": 2
+      }
+    ],
+    "merchantPrerequisites": [
+      {
+        "merchantID": 5,
+        "level": 3
+      }
+    ],
+    "skillPrerequisites": [],
+    "taskPrerequisites": [],
+    "editionPrerequisites": [],
+    "constructionTimeSeconds": 39600,
+    "source": {
+      "page": "https://www.eftarkov.com/news/web_100.html",
+      "sourceFacilityName": "工作台",
+      "sourceRequirementsAvailable": true,
+      "taskAndEditionConditionsProvided": false
+    }
+  }
+]

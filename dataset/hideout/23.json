@@ -1,0 +1,185 @@
+[
+  {
+    "facilityID": 23,
+    "level": 1,
+    "requirements": [
+      {
+        "itemID": 45,
+        "quantity": 5,
+        "foundInRaid": false
+      },
+      {
+        "itemID": 81,
+        "quantity": 5,
+        "foundInRaid": false
+      },
+      {
+        "itemID": 89,
+        "quantity": 1,
+        "foundInRaid": true
+      },
+      {
+        "itemID": 10,
+        "quantity": 5,
+        "foundInRaid": false
+      },
+      {
+        "itemID": 63,
+        "quantity": 5,
+        "foundInRaid": false
+      },
+      {
+        "itemID": 57,
+        "quantity": 1,
+        "foundInRaid": true
+      }
+    ],
+    "facilityPrerequisites": [
+      {
+        "facilityID": 7,
+        "level": 2
+      },
+      {
+        "facilityID": 19,
+        "level": 6
+      }
+    ],
+    "merchantPrerequisites": [
+      {
+        "merchantID": 5,
+        "level": 2
+      }
+    ],
+    "skillPrerequisites": [],
+    "taskPrerequisites": [],
+    "editionPrerequisites": [],
+    "constructionTimeSeconds": 43200,
+    "source": {
+      "page": "https://www.eftarkov.com/news/web_122.html",
+      "sourceFacilityName": "荣耀展柜",
+      "sourceRequirementsAvailable": true,
+      "taskAndEditionConditionsProvided": false
+    }
+  },
+  {
+    "facilityID": 23,
+    "level": 2,
+    "requirements": [
+      {
+        "itemID": 98,
+        "quantity": 1,
+        "foundInRaid": true
+      },
+      {
+        "itemID": 27,
+        "quantity": 3,
+        "foundInRaid": false
+      },
+      {
+        "itemID": 39,
+        "quantity": 10,
+        "foundInRaid": false
+      },
+      {
+        "itemID": 82,
+        "quantity": 6,
+        "foundInRaid": false
+      },
+      {
+        "itemID": 112,
+        "quantity": 2,
+        "foundInRaid": false
+      },
+      {
+        "itemID": 85,
+        "quantity": 1,
+        "foundInRaid": true
+      },
+      {
+        "itemID": 40,
+        "quantity": 1,
+        "foundInRaid": true
+      },
+      {
+        "itemID": 34,
+        "quantity": 1,
+        "foundInRaid": true
+      },
+      {
+        "itemID": 120,
+        "quantity": 5,
+        "foundInRaid": false
+      }
+    ],
+    "facilityPrerequisites": [],
+    "merchantPrerequisites": [],
+    "skillPrerequisites": [],
+    "taskPrerequisites": [],
+    "editionPrerequisites": [],
+    "constructionTimeSeconds": 64800,
+    "source": {
+      "page": "https://www.eftarkov.com/news/web_122.html",
+      "sourceFacilityName": "荣耀展柜",
+      "sourceRequirementsAvailable": true,
+      "taskAndEditionConditionsProvided": false
+    }
+  },
+  {
+    "facilityID": 23,
+    "level": 3,
+    "requirements": [
+      {
+        "itemID": 104,
+        "quantity": 3,
+        "foundInRaid": true
+      },
+      {
+        "itemID": 116,
+        "quantity": 6,
+        "foundInRaid": false
+      },
+      {
+        "itemID": 41,
+        "quantity": 15,
+        "foundInRaid": false
+      },
+      {
+        "itemID": 39,
+        "quantity": 15,
+        "foundInRaid": false
+      },
+      {
+        "itemID": 14,
+        "quantity": 5,
+        "foundInRaid": false
+      },
+      {
+        "itemID": 15,
+        "quantity": 1,
+        "foundInRaid": true
+      },
+      {
+        "itemID": 108,
+        "quantity": 1,
+        "foundInRaid": true
+      },
+      {
+        "itemID": 60,
+        "quantity": 1,
+        "foundInRaid": true
+      }
+    ],
+    "facilityPrerequisites": [],
+    "merchantPrerequisites": [],
+    "skillPrerequisites": [],
+    "taskPrerequisites": [],
+    "editionPrerequisites": [],
+    "constructionTimeSeconds": 86400,
+    "source": {
+      "page": "https://www.eftarkov.com/news/web_122.html",
+      "sourceFacilityName": "荣耀展柜",
+      "sourceRequirementsAvailable": true,
+      "taskAndEditionConditionsProvided": false
+    }
+  }
+]

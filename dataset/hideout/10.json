@@ -1,0 +1,172 @@
+[
+  {
+    "facilityID": 10,
+    "level": 1,
+    "requirements": [
+      {
+        "itemID": 83,
+        "quantity": 1,
+        "foundInRaid": false
+      },
+      {
+        "itemID": 84,
+        "quantity": 1,
+        "foundInRaid": false
+      },
+      {
+        "itemID": 110,
+        "quantity": 1,
+        "foundInRaid": false
+      },
+      {
+        "itemID": 70,
+        "quantity": 2,
+        "foundInRaid": false
+      },
+      {
+        "itemID": 0,
+        "quantity": 50000,
+        "foundInRaid": false
+      }
+    ],
+    "facilityPrerequisites": [],
+    "merchantPrerequisites": [],
+    "skillPrerequisites": [],
+    "taskPrerequisites": [],
+    "editionPrerequisites": [],
+    "constructionTimeSeconds": 0,
+    "source": {
+      "page": "https://www.eftarkov.com/news/web_109.html",
+      "sourceFacilityName": "医疗站",
+      "sourceRequirementsAvailable": true,
+      "taskAndEditionConditionsProvided": false
+    }
+  },
+  {
+    "facilityID": 10,
+    "level": 2,
+    "requirements": [
+      {
+        "itemID": 99,
+        "quantity": 10,
+        "foundInRaid": false
+      },
+      {
+        "itemID": 87,
+        "quantity": 2,
+        "foundInRaid": true
+      },
+      {
+        "itemID": 80,
+        "quantity": 6,
+        "foundInRaid": false
+      },
+      {
+        "itemID": 86,
+        "quantity": 3,
+        "foundInRaid": true
+      },
+      {
+        "itemID": 0,
+        "quantity": 150000,
+        "foundInRaid": false
+      }
+    ],
+    "facilityPrerequisites": [
+      {
+        "facilityID": 10,
+        "level": 1
+      },
+      {
+        "facilityID": 16,
+        "level": 1
+      }
+    ],
+    "merchantPrerequisites": [
+      {
+        "merchantID": 1,
+        "level": 2
+      }
+    ],
+    "skillPrerequisites": [
+      {
+        "name": "健康",
+        "level": 2
+      }
+    ],
+    "taskPrerequisites": [],
+    "editionPrerequisites": [],
+    "constructionTimeSeconds": 10800,
+    "source": {
+      "page": "https://www.eftarkov.com/news/web_109.html",
+      "sourceFacilityName": "医疗站",
+      "sourceRequirementsAvailable": true,
+      "taskAndEditionConditionsProvided": false
+    }
+  },
+  {
+    "facilityID": 10,
+    "level": 3,
+    "requirements": [
+      {
+        "itemID": 80,
+        "quantity": 10,
+        "foundInRaid": false
+      },
+      {
+        "itemID": 37,
+        "quantity": 1,
+        "foundInRaid": true
+      },
+      {
+        "itemID": 106,
+        "quantity": 1,
+        "foundInRaid": false
+      },
+      {
+        "itemID": 0,
+        "quantity": 500000,
+        "foundInRaid": false
+      }
+    ],
+    "facilityPrerequisites": [
+      {
+        "facilityID": 2,
+        "level": 2
+      },
+      {
+        "facilityID": 10,
+        "level": 2
+      },
+      {
+        "facilityID": 16,
+        "level": 2
+      }
+    ],
+    "merchantPrerequisites": [
+      {
+        "merchantID": 1,
+        "level": 3
+      },
+      {
+        "merchantID": 3,
+        "level": 2
+      }
+    ],
+    "skillPrerequisites": [
+      {
+        "name": "活力",
+        "level": 3
+      }
+    ],
+    "taskPrerequisites": [],
+    "editionPrerequisites": [],
+    "constructionTimeSeconds": 43200,
+    "source": {
+      "page": "https://www.eftarkov.com/news/web_109.html",
+      "sourceFacilityName": "医疗站",
+      "sourceRequirementsAvailable": true,
+      "taskAndEditionConditionsProvided": false
+    }
+  }
+]

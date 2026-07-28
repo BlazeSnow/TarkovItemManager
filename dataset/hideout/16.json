@@ -1,0 +1,147 @@
+[
+  {
+    "facilityID": 16,
+    "level": 1,
+    "requirements": [
+      {
+        "itemID": 32,
+        "quantity": 1,
+        "foundInRaid": false
+      },
+      {
+        "itemID": 0,
+        "quantity": 100000,
+        "foundInRaid": false
+      }
+    ],
+    "facilityPrerequisites": [
+      {
+        "facilityID": 18,
+        "level": 1
+      }
+    ],
+    "merchantPrerequisites": [],
+    "skillPrerequisites": [],
+    "taskPrerequisites": [],
+    "editionPrerequisites": [],
+    "constructionTimeSeconds": 0,
+    "source": {
+      "page": "https://www.eftarkov.com/news/web_115.html",
+      "sourceFacilityName": "发电机",
+      "sourceRequirementsAvailable": true,
+      "taskAndEditionConditionsProvided": false
+    }
+  },
+  {
+    "facilityID": 16,
+    "level": 2,
+    "requirements": [
+      {
+        "itemID": 73,
+        "quantity": 10,
+        "foundInRaid": false
+      },
+      {
+        "itemID": 13,
+        "quantity": 15,
+        "foundInRaid": false
+      },
+      {
+        "itemID": 93,
+        "quantity": 1,
+        "foundInRaid": true
+      },
+      {
+        "itemID": 11,
+        "quantity": 1,
+        "foundInRaid": true
+      }
+    ],
+    "facilityPrerequisites": [
+      {
+        "facilityID": 6,
+        "level": 2
+      },
+      {
+        "facilityID": 16,
+        "level": 1
+      },
+      {
+        "facilityID": 18,
+        "level": 2
+      }
+    ],
+    "merchantPrerequisites": [],
+    "skillPrerequisites": [],
+    "taskPrerequisites": [],
+    "editionPrerequisites": [],
+    "constructionTimeSeconds": 18000,
+    "source": {
+      "page": "https://www.eftarkov.com/news/web_115.html",
+      "sourceFacilityName": "发电机",
+      "sourceRequirementsAvailable": true,
+      "taskAndEditionConditionsProvided": false
+    }
+  },
+  {
+    "facilityID": 16,
+    "level": 3,
+    "requirements": [
+      {
+        "itemID": 73,
+        "quantity": 12,
+        "foundInRaid": false
+      },
+      {
+        "itemID": 32,
+        "quantity": 16,
+        "foundInRaid": false
+      },
+      {
+        "itemID": 41,
+        "quantity": 10,
+        "foundInRaid": false
+      },
+      {
+        "itemID": 11,
+        "quantity": 3,
+        "foundInRaid": true
+      },
+      {
+        "itemID": 23,
+        "quantity": 5,
+        "foundInRaid": true
+      }
+    ],
+    "facilityPrerequisites": [
+      {
+        "facilityID": 6,
+        "level": 3
+      },
+      {
+        "facilityID": 16,
+        "level": 2
+      },
+      {
+        "facilityID": 18,
+        "level": 3
+      }
+    ],
+    "merchantPrerequisites": [
+      {
+        "merchantID": 5,
+        "level": 3
+      }
+    ],
+    "skillPrerequisites": [],
+    "taskPrerequisites": [],
+    "editionPrerequisites": [],
+    "constructionTimeSeconds": 57600,
+    "source": {
+      "page": "https://www.eftarkov.com/news/web_115.html",
+      "sourceFacilityName": "发电机",
+      "sourceRequirementsAvailable": true,
+      "taskAndEditionConditionsProvided": false
+    }
+  }
+]

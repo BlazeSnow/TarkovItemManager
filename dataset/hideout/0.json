@@ -1,0 +1,189 @@
+[
+  {
+    "facilityID": 0,
+    "level": 1,
+    "requirements": [
+      {
+        "itemID": 41,
+        "quantity": 1,
+        "foundInRaid": false
+      },
+      {
+        "itemID": 54,
+        "quantity": 1,
+        "foundInRaid": false
+      },
+      {
+        "itemID": 53,
+        "quantity": 1,
+        "foundInRaid": false
+      }
+    ],
+    "facilityPrerequisites": [
+      {
+        "facilityID": 7,
+        "level": 1
+      }
+    ],
+    "merchantPrerequisites": [],
+    "skillPrerequisites": [],
+    "taskPrerequisites": [],
+    "editionPrerequisites": [],
+    "constructionTimeSeconds": 3600,
+    "source": {
+      "page": "https://www.eftarkov.com/news/web_99.html",
+      "sourceFacilityName": "靶场",
+      "sourceRequirementsAvailable": true,
+      "taskAndEditionConditionsProvided": false
+    }
+  },
+  {
+    "facilityID": 0,
+    "level": 2,
+    "requirements": [
+      {
+        "itemID": 41,
+        "quantity": 8,
+        "foundInRaid": false
+      },
+      {
+        "itemID": 64,
+        "quantity": 1,
+        "foundInRaid": true
+      },
+      {
+        "itemID": 13,
+        "quantity": 6,
+        "foundInRaid": false
+      },
+      {
+        "itemID": 82,
+        "quantity": 3,
+        "foundInRaid": false
+      },
+      {
+        "itemID": 112,
+        "quantity": 3,
+        "foundInRaid": false
+      },
+      {
+        "itemID": 39,
+        "quantity": 6,
+        "foundInRaid": false
+      },
+      {
+        "itemID": 119,
+        "quantity": 3,
+        "foundInRaid": false
+      },
+      {
+        "itemID": 85,
+        "quantity": 1,
+        "foundInRaid": true
+      },
+      {
+        "itemID": 11,
+        "quantity": 3,
+        "foundInRaid": true
+      },
+      {
+        "itemID": 15,
+        "quantity": 1,
+        "foundInRaid": true
+      }
+    ],
+    "facilityPrerequisites": [
+      {
+        "facilityID": 0,
+        "level": 1
+      },
+      {
+        "facilityID": 1,
+        "level": 2
+      },
+      {
+        "facilityID": 7,
+        "level": 3
+      }
+    ],
+    "merchantPrerequisites": [],
+    "skillPrerequisites": [],
+    "taskPrerequisites": [],
+    "editionPrerequisites": [],
+    "constructionTimeSeconds": 86400,
+    "source": {
+      "page": "https://www.eftarkov.com/news/web_99.html",
+      "sourceFacilityName": "靶场",
+      "sourceRequirementsAvailable": true,
+      "taskAndEditionConditionsProvided": false
+    }
+  },
+  {
+    "facilityID": 0,
+    "level": 3,
+    "requirements": [
+      {
+        "itemID": 13,
+        "quantity": 10,
+        "foundInRaid": false
+      },
+      {
+        "itemID": 88,
+        "quantity": 5,
+        "foundInRaid": false
+      },
+      {
+        "itemID": 41,
+        "quantity": 5,
+        "foundInRaid": false
+      },
+      {
+        "itemID": 12,
+        "quantity": 5,
+        "foundInRaid": false
+      },
+      {
+        "itemID": 73,
+        "quantity": 5,
+        "foundInRaid": false
+      },
+      {
+        "itemID": 105,
+        "quantity": 1,
+        "foundInRaid": false
+      },
+      {
+        "itemID": 14,
+        "quantity": 5,
+        "foundInRaid": false
+      },
+      {
+        "itemID": 34,
+        "quantity": 1,
+        "foundInRaid": true
+      },
+      {
+        "itemID": 108,
+        "quantity": 1,
+        "foundInRaid": true
+      }
+    ],
+    "facilityPrerequisites": [
+      {
+        "facilityID": 0,
+        "level": 2
+      }
+    ],
+    "merchantPrerequisites": [],
+    "skillPrerequisites": [],
+    "taskPrerequisites": [],
+    "editionPrerequisites": [],
+    "constructionTimeSeconds": 86400,
+    "source": {
+      "page": "https://www.eftarkov.com/news/web_99.html",
+      "sourceFacilityName": "靶场",
+      "sourceRequirementsAvailable": true,
+      "taskAndEditionConditionsProvided": false
+    }
+  }
+]

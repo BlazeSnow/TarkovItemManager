@@ -1,0 +1,64 @@
+[
+  {
+    "facilityID": 15,
+    "level": 1,
+    "requirements": [
+      {
+        "itemID": 48,
+        "quantity": 10,
+        "foundInRaid": false
+      },
+      {
+        "itemID": 47,
+        "quantity": 10,
+        "foundInRaid": false
+      },
+      {
+        "itemID": 68,
+        "quantity": 3,
+        "foundInRaid": true
+      },
+      {
+        "itemID": 72,
+        "quantity": 6,
+        "foundInRaid": false
+      },
+      {
+        "itemID": 91,
+        "quantity": 1,
+        "foundInRaid": false
+      },
+      {
+        "itemID": 2,
+        "quantity": 25000,
+        "foundInRaid": false
+      }
+    ],
+    "facilityPrerequisites": [
+      {
+        "facilityID": 1,
+        "level": 3
+      },
+      {
+        "facilityID": 16,
+        "level": 3
+      }
+    ],
+    "merchantPrerequisites": [
+      {
+        "merchantID": 4,
+        "level": 4
+      }
+    ],
+    "skillPrerequisites": [],
+    "taskPrerequisites": [],
+    "editionPrerequisites": [],
+    "constructionTimeSeconds": 259200,
+    "source": {
+      "page": "https://www.eftarkov.com/news/web_114.html",
+      "sourceFacilityName": "太阳能",
+      "sourceRequirementsAvailable": true,
+      "taskAndEditionConditionsProvided": false
+    }
+  }
+]

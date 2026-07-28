@@ -1,0 +1,158 @@
+[
+  {
+    "facilityID": 5,
+    "level": 1,
+    "requirements": [
+      {
+        "itemID": 116,
+        "quantity": 10,
+        "foundInRaid": false
+      },
+      {
+        "itemID": 95,
+        "quantity": 15,
+        "foundInRaid": false
+      },
+      {
+        "itemID": 118,
+        "quantity": 2,
+        "foundInRaid": false
+      },
+      {
+        "itemID": 14,
+        "quantity": 15,
+        "foundInRaid": false
+      },
+      {
+        "itemID": 23,
+        "quantity": 10,
+        "foundInRaid": true
+      }
+    ],
+    "facilityPrerequisites": [
+      {
+        "facilityID": 3,
+        "level": 2
+      }
+    ],
+    "merchantPrerequisites": [],
+    "skillPrerequisites": [],
+    "taskPrerequisites": [],
+    "editionPrerequisites": [],
+    "constructionTimeSeconds": 122400,
+    "source": {
+      "page": "https://www.eftarkov.com/news/web_104.html",
+      "sourceFacilityName": "比特币矿场",
+      "sourceRequirementsAvailable": true,
+      "taskAndEditionConditionsProvided": false
+    }
+  },
+  {
+    "facilityID": 5,
+    "level": 2,
+    "requirements": [
+      {
+        "itemID": 95,
+        "quantity": 15,
+        "foundInRaid": false
+      },
+      {
+        "itemID": 88,
+        "quantity": 15,
+        "foundInRaid": true
+      },
+      {
+        "itemID": 73,
+        "quantity": 10,
+        "foundInRaid": false
+      },
+      {
+        "itemID": 48,
+        "quantity": 5,
+        "foundInRaid": false
+      },
+      {
+        "itemID": 23,
+        "quantity": 10,
+        "foundInRaid": false
+      }
+    ],
+    "facilityPrerequisites": [
+      {
+        "facilityID": 5,
+        "level": 1
+      },
+      {
+        "facilityID": 16,
+        "level": 3
+      }
+    ],
+    "merchantPrerequisites": [],
+    "skillPrerequisites": [],
+    "taskPrerequisites": [],
+    "editionPrerequisites": [],
+    "constructionTimeSeconds": 180000,
+    "source": {
+      "page": "https://www.eftarkov.com/news/web_104.html",
+      "sourceFacilityName": "比特币矿场",
+      "sourceRequirementsAvailable": true,
+      "taskAndEditionConditionsProvided": false
+    }
+  },
+  {
+    "facilityID": 5,
+    "level": 3,
+    "requirements": [
+      {
+        "itemID": 30,
+        "quantity": 15,
+        "foundInRaid": false
+      },
+      {
+        "itemID": 95,
+        "quantity": 25,
+        "foundInRaid": true
+      },
+      {
+        "itemID": 78,
+        "quantity": 10,
+        "foundInRaid": false
+      },
+      {
+        "itemID": 11,
+        "quantity": 10,
+        "foundInRaid": false
+      },
+      {
+        "itemID": 5,
+        "quantity": 2,
+        "foundInRaid": false
+      }
+    ],
+    "facilityPrerequisites": [
+      {
+        "facilityID": 5,
+        "level": 2
+      },
+      {
+        "facilityID": 8,
+        "level": 3
+      },
+      {
+        "facilityID": 15,
+        "level": 1
+      }
+    ],
+    "merchantPrerequisites": [],
+    "skillPrerequisites": [],
+    "taskPrerequisites": [],
+    "editionPrerequisites": [],
+    "constructionTimeSeconds": 381600,
+    "source": {
+      "page": "https://www.eftarkov.com/news/web_104.html",
+      "sourceFacilityName": "比特币矿场",
+      "sourceRequirementsAvailable": true,
+      "taskAndEditionConditionsProvided": false
+    }
+  }
+]

@@ -1,0 +1,196 @@
+[
+  {
+    "facilityID": 19,
+    "level": 1,
+    "requirements": [],
+    "facilityPrerequisites": [
+      {
+        "facilityID": 8,
+        "level": 1
+      },
+      {
+        "facilityID": 10,
+        "level": 1
+      }
+    ],
+    "merchantPrerequisites": [],
+    "skillPrerequisites": [],
+    "taskPrerequisites": [],
+    "editionPrerequisites": [],
+    "constructionTimeSeconds": 0,
+    "source": {
+      "page": "https://www.eftarkov.com/news/web_118.html",
+      "sourceFacilityName": "易碎墙",
+      "sourceRequirementsAvailable": true,
+      "taskAndEditionConditionsProvided": false
+    }
+  },
+  {
+    "facilityID": 19,
+    "level": 2,
+    "requirements": [],
+    "facilityPrerequisites": [
+      {
+        "facilityID": 19,
+        "level": 1
+      }
+    ],
+    "merchantPrerequisites": [],
+    "skillPrerequisites": [],
+    "taskPrerequisites": [],
+    "editionPrerequisites": [],
+    "constructionTimeSeconds": 43200,
+    "source": {
+      "page": "https://www.eftarkov.com/news/web_118.html",
+      "sourceFacilityName": "易碎墙",
+      "sourceRequirementsAvailable": true,
+      "taskAndEditionConditionsProvided": false
+    }
+  },
+  {
+    "facilityID": 19,
+    "level": 3,
+    "requirements": [],
+    "facilityPrerequisites": [
+      {
+        "facilityID": 19,
+        "level": 2
+      }
+    ],
+    "merchantPrerequisites": [],
+    "skillPrerequisites": [],
+    "taskPrerequisites": [],
+    "editionPrerequisites": [],
+    "constructionTimeSeconds": 86400,
+    "source": {
+      "page": "https://www.eftarkov.com/news/web_118.html",
+      "sourceFacilityName": "易碎墙",
+      "sourceRequirementsAvailable": true,
+      "taskAndEditionConditionsProvided": false
+    }
+  },
+  {
+    "facilityID": 19,
+    "level": 4,
+    "requirements": [
+      {
+        "itemID": 100,
+        "quantity": 1,
+        "foundInRaid": false
+      }
+    ],
+    "facilityPrerequisites": [
+      {
+        "facilityID": 19,
+        "level": 3
+      }
+    ],
+    "merchantPrerequisites": [],
+    "skillPrerequisites": [],
+    "taskPrerequisites": [],
+    "editionPrerequisites": [],
+    "constructionTimeSeconds": 10800,
+    "source": {
+      "page": "https://www.eftarkov.com/news/web_118.html",
+      "sourceFacilityName": "易碎墙",
+      "sourceRequirementsAvailable": true,
+      "taskAndEditionConditionsProvided": false
+    }
+  },
+  {
+    "facilityID": 19,
+    "level": 5,
+    "requirements": [
+      {
+        "itemID": 42,
+        "quantity": 1,
+        "foundInRaid": true
+      },
+      {
+        "itemID": 85,
+        "quantity": 1,
+        "foundInRaid": true
+      }
+    ],
+    "facilityPrerequisites": [
+      {
+        "facilityID": 19,
+        "level": 4
+      }
+    ],
+    "merchantPrerequisites": [],
+    "skillPrerequisites": [],
+    "taskPrerequisites": [],
+    "editionPrerequisites": [],
+    "constructionTimeSeconds": 10800,
+    "source": {
+      "page": "https://www.eftarkov.com/news/web_118.html",
+      "sourceFacilityName": "易碎墙",
+      "sourceRequirementsAvailable": true,
+      "taskAndEditionConditionsProvided": false
+    }
+  },
+  {
+    "facilityID": 19,
+    "level": 6,
+    "requirements": [
+      {
+        "itemID": 27,
+        "quantity": 1,
+        "foundInRaid": false
+      },
+      {
+        "itemID": 98,
+        "quantity": 1,
+        "foundInRaid": true
+      },
+      {
+        "itemID": 41,
+        "quantity": 5,
+        "foundInRaid": false
+      },
+      {
+        "itemID": 13,
+        "quantity": 2,
+        "foundInRaid": false
+      },
+      {
+        "itemID": 10,
+        "quantity": 2,
+        "foundInRaid": false
+      },
+      {
+        "itemID": 7,
+        "quantity": 2,
+        "foundInRaid": false
+      },
+      {
+        "itemID": 120,
+        "quantity": 1,
+        "foundInRaid": false
+      },
+      {
+        "itemID": 85,
+        "quantity": 1,
+        "foundInRaid": true
+      }
+    ],
+    "facilityPrerequisites": [
+      {
+        "facilityID": 19,
+        "level": 5
+      }
+    ],
+    "merchantPrerequisites": [],
+    "skillPrerequisites": [],
+    "taskPrerequisites": [],
+    "editionPrerequisites": [],
+    "constructionTimeSeconds": 43200,
+    "source": {
+      "page": "https://www.eftarkov.com/news/web_118.html",
+      "sourceFacilityName": "易碎墙",
+      "sourceRequirementsAvailable": true,
+      "taskAndEditionConditionsProvided": false
+    }
+  }
+]

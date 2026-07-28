@@ -1,0 +1,138 @@
+[
+  {
+    "facilityID": 12,
+    "level": 1,
+    "requirements": [
+      {
+        "itemID": 44,
+        "quantity": 2,
+        "foundInRaid": false
+      },
+      {
+        "itemID": 0,
+        "quantity": 25000,
+        "foundInRaid": false
+      }
+    ],
+    "facilityPrerequisites": [],
+    "merchantPrerequisites": [],
+    "skillPrerequisites": [],
+    "taskPrerequisites": [],
+    "editionPrerequisites": [],
+    "constructionTimeSeconds": 0,
+    "source": {
+      "page": "https://www.eftarkov.com/news/web_111.html",
+      "sourceFacilityName": "供暖",
+      "sourceRequirementsAvailable": true,
+      "taskAndEditionConditionsProvided": false
+    }
+  },
+  {
+    "facilityID": 12,
+    "level": 2,
+    "requirements": [
+      {
+        "itemID": 103,
+        "quantity": 2,
+        "foundInRaid": true
+      },
+      {
+        "itemID": 96,
+        "quantity": 5,
+        "foundInRaid": false
+      },
+      {
+        "itemID": 25,
+        "quantity": 5,
+        "foundInRaid": false
+      },
+      {
+        "itemID": 0,
+        "quantity": 50000,
+        "foundInRaid": false
+      }
+    ],
+    "facilityPrerequisites": [
+      {
+        "facilityID": 6,
+        "level": 1
+      },
+      {
+        "facilityID": 12,
+        "level": 1
+      }
+    ],
+    "merchantPrerequisites": [],
+    "skillPrerequisites": [
+      {
+        "name": "耐力",
+        "level": 1
+      }
+    ],
+    "taskPrerequisites": [],
+    "editionPrerequisites": [],
+    "constructionTimeSeconds": 7200,
+    "source": {
+      "page": "https://www.eftarkov.com/news/web_111.html",
+      "sourceFacilityName": "供暖",
+      "sourceRequirementsAvailable": true,
+      "taskAndEditionConditionsProvided": false
+    }
+  },
+  {
+    "facilityID": 12,
+    "level": 3,
+    "requirements": [
+      {
+        "itemID": 13,
+        "quantity": 10,
+        "foundInRaid": false
+      },
+      {
+        "itemID": 55,
+        "quantity": 10,
+        "foundInRaid": false
+      },
+      {
+        "itemID": 73,
+        "quantity": 4,
+        "foundInRaid": true
+      },
+      {
+        "itemID": 46,
+        "quantity": 2,
+        "foundInRaid": true
+      }
+    ],
+    "facilityPrerequisites": [
+      {
+        "facilityID": 1,
+        "level": 2
+      },
+      {
+        "facilityID": 12,
+        "level": 2
+      },
+      {
+        "facilityID": 16,
+        "level": 2
+      }
+    ],
+    "merchantPrerequisites": [
+      {
+        "merchantID": 6,
+        "level": 2
+      }
+    ],
+    "skillPrerequisites": [],
+    "taskPrerequisites": [],
+    "editionPrerequisites": [],
+    "constructionTimeSeconds": 28800,
+    "source": {
+      "page": "https://www.eftarkov.com/news/web_111.html",
+      "sourceFacilityName": "供暖",
+      "sourceRequirementsAvailable": true,
+      "taskAndEditionConditionsProvided": false
+    }
+  }
+]

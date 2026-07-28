@@ -1,0 +1,123 @@
+$ErrorActionPreference = 'Stop'
+$root = $PSScriptRoot
+$publishRoot = Join-Path $root 'pubdev'
+$frontendRoot = Join-Path $root 'frontend'
+$backendRoot = Join-Path $root 'backend'
+
+function Invoke-CheckedCommand([string]$Description, [scriptblock]$Command) {
+    & $Command
+    if ($LASTEXITCODE -ne 0) {
+        throw "$Description failed."
+    }
+}
+
+function Invoke-Git([string[]]$Arguments) {
+    $output = & git @Arguments
+    if ($LASTEXITCODE -ne 0) {
+        throw "git $($Arguments -join ' ') failed."
+    }
+    return $output
+}
+
+function Find-SevenZip {
+    $command = Get-Command 7z -ErrorAction SilentlyContinue
+    if ($command) {
+        return $command.Source
+    }
+
+    $candidates = @(
+        (Join-Path $env:ProgramFiles '7-Zip\7z.exe'),
+        (Join-Path ${env:ProgramFiles(x86)} '7-Zip\7z.exe')
+    )
+    return $candidates | Where-Object { Test-Path $_ } | Select-Object -First 1
+}
+
+if (-not (Get-Command git -ErrorAction SilentlyContinue)) {
+    throw 'Git is not available in PATH.'
+}
+
+$tagOutput = & git describe --tags --abbrev=0
+if ($LASTEXITCODE -ne 0 -or -not $tagOutput) {
+    throw 'No Git tag is available. Run .\tag.ps1 before creating a release archive.'
+}
+$tag = $tagOutput.Trim()
+
+$sevenZip = Find-SevenZip
+if (-not $sevenZip) {
+    throw '7-Zip is not available. Install 7-Zip or add 7z to PATH.'
+}
+
+$archive = Join-Path $root "TarkovItemManager-$tag.7z"
+if (Test-Path $archive) {
+    throw "Release archive already exists: $archive"
+}
+if (-not (Get-Command cargo -ErrorAction SilentlyContinue)) {
+    throw 'Cargo is not available in PATH. Install Rust first.'
+}
+
+if (-not (Get-Command pnpm -ErrorAction SilentlyContinue)) {
+    throw 'pnpm is not available in PATH. Install pnpm first.'
+}
+
+Invoke-CheckedCommand 'Frontend dependency installation' { pnpm --dir $frontendRoot install --frozen-lockfile }
+Invoke-CheckedCommand 'Frontend production build' { pnpm --dir $frontendRoot run build }
+Invoke-CheckedCommand 'Backend release build' { cargo build --release --manifest-path (Join-Path $backendRoot 'Cargo.toml') }
+
+New-Item -ItemType Directory -Force -Path $publishRoot | Out-Null
+New-Item -ItemType Directory -Force -Path (Join-Path $publishRoot 'data') | Out-Null
+
+$generatedPaths = @(
+    (Join-Path $publishRoot 'tarkov-item-manager.exe'),
+    (Join-Path $publishRoot 'frontend'),
+    (Join-Path $publishRoot 'dataset')
+)
+foreach ($path in $generatedPaths) {
+    if (Test-Path $path) {
+        Remove-Item -Recurse -Force $path
+    }
+}
+
+Copy-Item (Join-Path $backendRoot 'target\release\tarkov-item-manager.exe') (Join-Path $publishRoot 'tarkov-item-manager.exe')
+New-Item -ItemType Directory -Force -Path (Join-Path $publishRoot 'frontend') | Out-Null
+Copy-Item (Join-Path $frontendRoot 'dist') (Join-Path $publishRoot 'frontend\dist') -Recurse
+Copy-Item (Join-Path $root 'dataset') (Join-Path $publishRoot 'dataset') -Recurse
+
+$envFile = Join-Path $publishRoot '.env'
+if (-not (Test-Path $envFile)) {
+    $randomBytes = New-Object byte[] 32
+    [System.Security.Cryptography.RandomNumberGenerator]::Create().GetBytes($randomBytes)
+    $sessionSecret = [Convert]::ToBase64String($randomBytes)
+
+    @"
+DATABASE_URL=sqlite:data/tarkov-item-manager.db?mode=rwc
+DATASET_DIR=dataset
+APP_ORIGIN=http://127.0.0.1:3000
+LISTEN_ADDR=127.0.0.1:3000
+SESSION_SECRET=$sessionSecret
+SECURE_COOKIES=false
+"@ | Set-Content -Encoding utf8 $envFile
+}
+
+@'
+@echo off
+setlocal
+cd /d "%~dp0"
+echo Tarkov Item Manager: http://127.0.0.1:3000/login
+"%~dp0tarkov-item-manager.exe"
+'@ | Set-Content -Encoding ascii (Join-Path $publishRoot 'start.cmd')
+
+Push-Location $publishRoot
+try {
+    Invoke-CheckedCommand 'Release archive creation' {
+        & $sevenZip a -t7z $archive 'tarkov-item-manager.exe' 'frontend' 'dataset' 'start.cmd'
+    }
+} finally {
+    Pop-Location
+}
+
+if (-not (Test-Path $archive)) {
+    throw "Release archive was not created: $archive"
+}
+
+Write-Host "Test release created at: $publishRoot"
+Write-Host "Release archive created at: $archive"

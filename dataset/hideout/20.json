@@ -1,0 +1,68 @@
+[
+  {
+    "facilityID": 20,
+    "level": 1,
+    "requirements": [
+      {
+        "itemID": 54,
+        "quantity": 5,
+        "foundInRaid": false
+      },
+      {
+        "itemID": 53,
+        "quantity": 5,
+        "foundInRaid": false
+      },
+      {
+        "itemID": 45,
+        "quantity": 5,
+        "foundInRaid": false
+      },
+      {
+        "itemID": 4,
+        "quantity": 1,
+        "foundInRaid": false
+      },
+      {
+        "itemID": 42,
+        "quantity": 1,
+        "foundInRaid": true
+      },
+      {
+        "itemID": 15,
+        "quantity": 1,
+        "foundInRaid": true
+      },
+      {
+        "itemID": 85,
+        "quantity": 1,
+        "foundInRaid": true
+      }
+    ],
+    "facilityPrerequisites": [
+      {
+        "facilityID": 6,
+        "level": 2
+      },
+      {
+        "facilityID": 7,
+        "level": 2
+      },
+      {
+        "facilityID": 19,
+        "level": 6
+      }
+    ],
+    "merchantPrerequisites": [],
+    "skillPrerequisites": [],
+    "taskPrerequisites": [],
+    "editionPrerequisites": [],
+    "constructionTimeSeconds": 14400,
+    "source": {
+      "page": "https://www.eftarkov.com/news/web_119.html",
+      "sourceFacilityName": "健身区",
+      "sourceRequirementsAvailable": true,
+      "taskAndEditionConditionsProvided": false
+    }
+  }
+]

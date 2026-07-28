@@ -1,0 +1,55 @@
+[
+  {
+    "facilityID": 25,
+    "level": 1,
+    "requirements": [
+      {
+        "itemID": 10,
+        "quantity": 5,
+        "foundInRaid": true
+      },
+      {
+        "itemID": 28,
+        "quantity": 3,
+        "foundInRaid": true
+      },
+      {
+        "itemID": 115,
+        "quantity": 1,
+        "foundInRaid": true
+      },
+      {
+        "itemID": 64,
+        "quantity": 1,
+        "foundInRaid": true
+      },
+      {
+        "itemID": 119,
+        "quantity": 1,
+        "foundInRaid": false
+      },
+      {
+        "itemID": 111,
+        "quantity": 1,
+        "foundInRaid": true
+      }
+    ],
+    "facilityPrerequisites": [
+      {
+        "facilityID": 18,
+        "level": 2
+      }
+    ],
+    "merchantPrerequisites": [],
+    "skillPrerequisites": [],
+    "taskPrerequisites": [],
+    "editionPrerequisites": [],
+    "constructionTimeSeconds": 21600,
+    "source": {
+      "page": "https://www.eftarkov.com/news/web_124.html",
+      "sourceFacilityName": "仪式圈",
+      "sourceRequirementsAvailable": true,
+      "taskAndEditionConditionsProvided": false
+    }
+  }
+]

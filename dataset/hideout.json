@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "gameMode": "PVE",
+  "retrievedAt": "2026-07-27",
+  "sources": {
+    "primary": "https://www.eftarkov.com/news/web_204.html",
+    "facilityPages": "https://www.eftarkov.com/news/web_99.html through https://www.eftarkov.com/news/web_124.html",
+    "supplemental": "https://escapefromtarkov.fandom.com/api.php?action=parse&page=Hideout&prop=wikitext&format=json",
+    "supplementalRevision": "347215",
+    "notes": [
+      "Materials, quantities, Found in Raid flags, construction time, facility prerequisites, merchant prerequisites, and skill prerequisites are derived from eftarkov PVE pages.",
+      "Task and edition conditions are retained as empty arrays because the PVE source pages did not provide structured values.",
+      "Source name normalization: 加热器 maps to facilities.json entry 供暖 (ID 12); Scav 宝箱 maps to Scav宝箱 (ID 17); WIFI摄像头 maps to items.json entry WiFi摄像头."
+    ]
+  },
+  "upgradeFiles": [
+    "hideout/0.json",
+    "hideout/1.json",
+    "hideout/2.json",
+    "hideout/3.json",
+    "hideout/4.json",
+    "hideout/5.json",
+    "hideout/6.json",
+    "hideout/7.json",
+    "hideout/8.json",
+    "hideout/9.json",
+    "hideout/10.json",
+    "hideout/11.json",
+    "hideout/12.json",
+    "hideout/13.json",
+    "hideout/14.json",
+    "hideout/15.json",
+    "hideout/16.json",
+    "hideout/17.json",
+    "hideout/18.json",
+    "hideout/19.json",
+    "hideout/20.json",
+    "hideout/21.json",
+    "hideout/22.json",
+    "hideout/23.json",
+    "hideout/24.json",
+    "hideout/25.json"
+  ]
+}

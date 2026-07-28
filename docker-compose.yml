@@ -1,0 +1,16 @@
+services:
+  app:
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      DATABASE_URL: sqlite:/data/tarkov-item-manager.db?mode=rwc
+      DATASET_DIR: /app/dataset
+      APP_ORIGIN: http://localhost:3000
+      SESSION_SECRET: ${SESSION_SECRET:?Set SESSION_SECRET in your environment or .env file}
+      SECURE_COOKIES: "false"
+    volumes:
+      - tarkov-data:/data
+
+volumes:
+  tarkov-data:

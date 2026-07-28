@@ -1,0 +1,17 @@
+.idea/
+.zcode/
+node_modules/
+frontend/dist/
+frontend/tsconfig.tsbuildinfo
+backend/target/
+backend/data/
+data/
+pubdev/
+TarkovItemManager-*.7z
+.env
+.env.local
+**/.env
+**/.env.local
+.env.*
+!/.env.example
+!**/.env.example
