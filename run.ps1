@@ -8,8 +8,8 @@ if (-not (Get-Command cargo -ErrorAction SilentlyContinue)) {
     throw 'Cargo is not available in PATH. Install Rust first.'
 }
 
-if (-not (Get-Command npm -ErrorAction SilentlyContinue)) {
-    throw 'npm is not available in PATH. Install Node.js first.'
+if (-not (Get-Command pnpm -ErrorAction SilentlyContinue)) {
+    throw 'pnpm is not available in PATH. Install pnpm first.'
 }
 
 if (Test-ListeningPort 3000) {
@@ -20,11 +20,9 @@ if (Test-ListeningPort 5173) {
     throw 'Port 5173 is already in use. Stop the existing Vite process before running this script.'
 }
 
-if (-not (Test-Path "$root\frontend\node_modules")) {
-    npm install --prefix "$root\frontend"
-    if ($LASTEXITCODE -ne 0) {
-        throw 'Frontend dependency installation failed.'
-    }
+pnpm install --dir "$root\frontend" --frozen-lockfile
+if ($LASTEXITCODE -ne 0) {
+    throw 'Frontend dependency installation failed.'
 }
 
 $envFile = "$root\backend\.env"
@@ -57,7 +55,7 @@ if (-not $apiReady) {
     throw 'The API did not become ready on port 3000. Check the API window for errors.'
 }
 
-Start-Process powershell -ArgumentList '-NoExit', '-Command', "Set-Location '$root\frontend'; npm run dev -- --host 127.0.0.1 --strictPort"
+Start-Process powershell -ArgumentList '-NoExit', '-Command', "Set-Location '$root\frontend'; pnpm dev -- --host 127.0.0.1 --strictPort"
 
 Write-Host 'Frontend: http://127.0.0.1:5173/login'
 Write-Host 'API:      http://127.0.0.1:3000/api/health'

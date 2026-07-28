@@ -15,12 +15,12 @@
 
 ## 开发环境
 
-需要 Node.js 22+、npm 和 Rust stable。所有源码和 JSON 文件均以 UTF-8 处理；读取外部 GBK 数据时应先显式转码。
+需要 Node.js 22+（含 Corepack）、pnpm 和 Rust stable。所有源码和 JSON 文件均以 UTF-8 处理；读取外部 GBK 数据时应先显式转码。
 
 ```bash
 cd frontend
-npm install
-npm run dev
+pnpm install
+pnpm dev
 ```
 
 另开一个终端启动 API：
@@ -85,7 +85,7 @@ cargo fmt --check
 cargo test
 
 cd ../frontend
-npm run build
+pnpm build
 ```
 
 容器镜像构建命令：

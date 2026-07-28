@@ -1,9 +1,10 @@
 FROM node:22-alpine AS frontend-build
 WORKDIR /app/frontend
-COPY frontend/package*.json ./
-RUN npm ci
+RUN corepack enable
+COPY frontend/package.json frontend/pnpm-lock.yaml ./
+RUN pnpm install --frozen-lockfile
 COPY frontend ./
-RUN npm run build
+RUN pnpm run build
 
 FROM rust:1.97-alpine AS backend-build
 RUN apk add --no-cache musl-dev

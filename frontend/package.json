@@ -1,6 +1,7 @@
 {
   "name": "tarkov-item-manager",
   "private": true,
+  "packageManager": "pnpm@11.17.0",
   "type": "module",
   "scripts": {
     "dev": "vite",

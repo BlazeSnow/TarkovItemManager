@@ -15,15 +15,12 @@ if (-not (Get-Command cargo -ErrorAction SilentlyContinue)) {
     throw 'Cargo is not available in PATH. Install Rust first.'
 }
 
-if (-not (Get-Command npm -ErrorAction SilentlyContinue)) {
-    throw 'npm is not available in PATH. Install Node.js first.'
+if (-not (Get-Command pnpm -ErrorAction SilentlyContinue)) {
+    throw 'pnpm is not available in PATH. Install pnpm first.'
 }
 
-if (-not (Test-Path (Join-Path $frontendRoot 'node_modules'))) {
-    Invoke-CheckedCommand 'Frontend dependency installation' { npm install --prefix $frontendRoot }
-}
-
-Invoke-CheckedCommand 'Frontend production build' { npm run build --prefix $frontendRoot }
+Invoke-CheckedCommand 'Frontend dependency installation' { pnpm --dir $frontendRoot install --frozen-lockfile }
+Invoke-CheckedCommand 'Frontend production build' { pnpm --dir $frontendRoot run build }
 Invoke-CheckedCommand 'Backend release build' { cargo build --release --manifest-path (Join-Path $backendRoot 'Cargo.toml') }
 
 New-Item -ItemType Directory -Force -Path $publishRoot | Out-Null
