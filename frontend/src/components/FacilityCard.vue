@@ -6,7 +6,13 @@ import { formatQuantity } from '@/format'
 const props = defineProps<{ facility: Facility; saving: boolean }>()
 const emit = defineEmits<{ change: [id: number, level: number] }>()
 const levels = computed(() => Array.from({ length: props.facility.maxLevel + 1 }, (_, level) => ({ title: `当前 Lv.${level}`, value: level })))
-function formatTime(seconds: number) { if (!seconds) return '即时'; const hours = seconds / 3600; return hours >= 24 ? `${hours / 24} 天` : `${hours} 小时` }
+function formatTime(seconds: number) {
+  if (!seconds) return '即时'
+  const days = Math.floor(seconds / 86400)
+  const hours = Math.floor((seconds % 86400) / 3600)
+  if (days && hours) return `${days} 天 ${hours} 小时`
+  return days ? `${days} 天` : `${hours} 小时`
+}
 </script>
 
 <template>
