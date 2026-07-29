@@ -9,6 +9,7 @@ pub struct Config {
     pub app_origin: String,
     pub session_secret: String,
     pub secure_cookies: bool,
+    pub auto_open_browser: bool,
 }
 
 impl Config {
@@ -41,6 +42,9 @@ impl Config {
             secure_cookies: env::var("SECURE_COOKIES")
                 .map(|value| value == "true")
                 .unwrap_or(false),
+            auto_open_browser: env::var("AUTO_OPEN_BROWSER")
+                .map(|value| value == "true")
+                .unwrap_or(true),
         })
     }
 }

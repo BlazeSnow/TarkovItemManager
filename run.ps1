@@ -20,9 +20,13 @@ if (Test-ListeningPort 5173) {
     throw 'Port 5173 is already in use. Stop the existing Vite process before running this script.'
 }
 
-pnpm install --dir "$root\frontend" --frozen-lockfile
+pnpm --dir "$root\frontend" install --frozen-lockfile
 if ($LASTEXITCODE -ne 0) {
     throw 'Frontend dependency installation failed.'
+}
+pnpm --dir "$root\frontend" run build
+if ($LASTEXITCODE -ne 0) {
+    throw 'Frontend production build failed.'
 }
 
 $envFile = "$root\backend\.env"
@@ -33,6 +37,7 @@ APP_ORIGIN=http://localhost:5173
 LISTEN_ADDR=0.0.0.0:3000
 SESSION_SECRET=local-development-secret-change-me
 SECURE_COOKIES=false
+AUTO_OPEN_BROWSER=false
 '@ | Set-Content -Encoding utf8 $envFile
 }
 
