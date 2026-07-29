@@ -20,6 +20,7 @@
 ```bash
 cd frontend
 pnpm install
+pnpm build
 pnpm dev
 ```
 
@@ -30,7 +31,7 @@ cd backend
 cargo run
 ```
 
-开发时前端地址为 `http://localhost:5173`，Vite 会将 `/api` 转发到 `http://localhost:3000`。
+开发时前端地址为 `http://localhost:5173`，Vite 会将 `/api` 转发到 `http://localhost:3000`。前端变更后需重新运行 `pnpm build`，供 Rust 将生产资源嵌入二进制。
 
 ## 环境变量
 
@@ -49,6 +50,7 @@ SECURE_COOKIES=false
 - `APP_ORIGIN`：开发环境的前端来源，用于 CORS。
 - `SESSION_SECRET`：至少 16 个字符，用于哈希会话令牌。生产环境必须设置为随机高强度值。
 - `SECURE_COOKIES`：HTTPS 部署时设为 `true`。
+- `DESKTOP_APP`：默认 `true`，桌面应用模式下服务成功绑定端口后会打开本机默认浏览器；开发脚本和 Docker 环境显式设为 `false`。
 
 ## 数据集
 
@@ -79,13 +81,13 @@ docker compose up --build
 
 ## 本地发布
 
-先使用 `./tag.ps1` 创建并推送版本标签，再安装 7-Zip 并运行：
+先使用 `./tag.ps1` 创建并推送版本标签，然后运行：
 
 ```powershell
 .\pubdev.ps1
 ```
 
-脚本会在根目录生成 `TarkovItemManager-<tag>.7z`。归档包含应用程序、前端资源和 `start.cmd`；PVE 数据集已嵌入可执行文件，不包含 `pubdev/.env`、`pubdev/data/` 中的会话密钥、账户或用户进度。
+`pubdev.ps1` 会显示最近可达的 Git tag。输入精确的小写 `y` 后，脚本生成只包含 `tarkov-item-manager.exe` 的 `TarkovItemManager-<tag>.zip`；正式版本包同名时不会覆盖。输入其他内容，或没有可达 tag 时，脚本生成并覆盖 `TarkovItemManager-dev.zip`。前端资源和 PVE 数据集已嵌入可执行文件；直接启动 exe 会在本机浏览器打开应用。归档不包含 `pubdev/.env`、`pubdev/data/` 中的会话密钥、账户或用户进度。
 
 ## 验证
 

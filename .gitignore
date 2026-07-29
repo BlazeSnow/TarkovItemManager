@@ -8,6 +8,8 @@ backend/data/
 data/
 pubdev/
 TarkovItemManager-*.7z
+TarkovItemManager-*.zip
+TarkovItemManager-dev/
 .env
 .env.local
 **/.env

@@ -13,15 +13,15 @@ COPY dataset /app/dataset
 COPY backend/Cargo.toml backend/Cargo.lock* ./
 COPY backend/src ./src
 COPY backend/migrations ./migrations
+COPY --from=frontend-build /app/frontend/dist /app/frontend/dist
 RUN cargo build --release
 
 FROM alpine:3.21
 RUN addgroup -S app && adduser -S app -G app
 WORKDIR /app
 COPY --from=backend-build /app/backend/target/release/tarkov-item-manager /usr/local/bin/tarkov-item-manager
-COPY --from=frontend-build /app/frontend/dist ./frontend/dist
 RUN mkdir /data && chown -R app:app /app /data
 USER app
-ENV DATABASE_URL=sqlite:/data/tarkov-item-manager.db LISTEN_ADDR=0.0.0.0:3000
+ENV DATABASE_URL=sqlite:/data/tarkov-item-manager.db LISTEN_ADDR=0.0.0.0:3000 DESKTOP_APP=false
 EXPOSE 3000
 CMD ["tarkov-item-manager"]

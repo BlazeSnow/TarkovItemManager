@@ -19,37 +19,30 @@ function Invoke-Git([string[]]$Arguments) {
     return $output
 }
 
-function Find-SevenZip {
-    $command = Get-Command 7z -ErrorAction SilentlyContinue
-    if ($command) {
-        return $command.Source
-    }
-
-    $candidates = @(
-        (Join-Path $env:ProgramFiles '7-Zip\7z.exe'),
-        (Join-Path ${env:ProgramFiles(x86)} '7-Zip\7z.exe')
-    )
-    return $candidates | Where-Object { Test-Path $_ } | Select-Object -First 1
-}
-
 if (-not (Get-Command git -ErrorAction SilentlyContinue)) {
     throw 'Git is not available in PATH.'
 }
 
 $tagOutput = & git describe --tags --abbrev=0
-if ($LASTEXITCODE -ne 0 -or -not $tagOutput) {
-    throw 'No Git tag is available. Run .\tag.ps1 before creating a release archive.'
+$version = 'dev'
+if ($LASTEXITCODE -eq 0 -and $tagOutput) {
+    $tag = $tagOutput.Trim()
+    Write-Host "Candidate release version: $tag"
+    if ((Read-Host 'Enter y to use this version') -ceq 'y') {
+        $version = $tag
+    } else {
+        Write-Host 'Using development version.'
+    }
+} else {
+    Write-Host 'No Git tag is available. Using development version.'
 }
-$tag = $tagOutput.Trim()
 
-$sevenZip = Find-SevenZip
-if (-not $sevenZip) {
-    throw '7-Zip is not available. Install 7-Zip or add 7z to PATH.'
-}
-
-$archive = Join-Path $root "TarkovItemManager-$tag.7z"
-if (Test-Path $archive) {
+$archive = Join-Path $root "TarkovItemManager-$version.zip"
+if ($version -ne 'dev' -and (Test-Path $archive)) {
     throw "Release archive already exists: $archive"
+}
+if ($version -eq 'dev' -and (Test-Path $archive)) {
+    Remove-Item -Force $archive
 }
 if (-not (Get-Command cargo -ErrorAction SilentlyContinue)) {
     throw 'Cargo is not available in PATH. Install Rust first.'
@@ -61,6 +54,7 @@ if (-not (Get-Command pnpm -ErrorAction SilentlyContinue)) {
 
 Invoke-CheckedCommand 'Frontend dependency installation' { pnpm --dir $frontendRoot install --frozen-lockfile }
 Invoke-CheckedCommand 'Frontend production build' { pnpm --dir $frontendRoot run build }
+$env:TARKOV_ITEM_MANAGER_VERSION = $version
 Invoke-CheckedCommand 'Backend release build' { cargo build --release --manifest-path (Join-Path $backendRoot 'Cargo.toml') }
 
 New-Item -ItemType Directory -Force -Path $publishRoot | Out-Null
@@ -68,7 +62,7 @@ New-Item -ItemType Directory -Force -Path (Join-Path $publishRoot 'data') | Out-
 
 $generatedPaths = @(
     (Join-Path $publishRoot 'tarkov-item-manager.exe'),
-    (Join-Path $publishRoot 'frontend')
+    (Join-Path $publishRoot 'start.cmd')
 )
 foreach ($path in $generatedPaths) {
     if (Test-Path $path) {
@@ -77,8 +71,6 @@ foreach ($path in $generatedPaths) {
 }
 
 Copy-Item (Join-Path $backendRoot 'target\release\tarkov-item-manager.exe') (Join-Path $publishRoot 'tarkov-item-manager.exe')
-New-Item -ItemType Directory -Force -Path (Join-Path $publishRoot 'frontend') | Out-Null
-Copy-Item (Join-Path $frontendRoot 'dist') (Join-Path $publishRoot 'frontend\dist') -Recurse
 
 $envFile = Join-Path $publishRoot '.env'
 if (-not (Test-Path $envFile)) {
@@ -90,27 +82,13 @@ if (-not (Test-Path $envFile)) {
 DATABASE_URL=sqlite:data/tarkov-item-manager.db?mode=rwc
 APP_ORIGIN=http://127.0.0.1:3000
 LISTEN_ADDR=127.0.0.1:3000
+DESKTOP_APP=true
 SESSION_SECRET=$sessionSecret
 SECURE_COOKIES=false
 "@ | Set-Content -Encoding utf8 $envFile
 }
 
-@'
-@echo off
-setlocal
-cd /d "%~dp0"
-echo Tarkov Item Manager: http://127.0.0.1:3000/login
-"%~dp0tarkov-item-manager.exe"
-'@ | Set-Content -Encoding ascii (Join-Path $publishRoot 'start.cmd')
-
-Push-Location $publishRoot
-try {
-    Invoke-CheckedCommand 'Release archive creation' {
-        & $sevenZip a -t7z $archive 'tarkov-item-manager.exe' 'frontend' 'start.cmd'
-    }
-} finally {
-    Pop-Location
-}
+Compress-Archive -LiteralPath (Join-Path $publishRoot 'tarkov-item-manager.exe') -DestinationPath $archive -CompressionLevel Optimal -ErrorAction Stop
 
 if (-not (Test-Path $archive)) {
     throw "Release archive was not created: $archive"
