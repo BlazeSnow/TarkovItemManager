@@ -24,14 +24,25 @@ if (-not (Get-Command git -ErrorAction SilentlyContinue)) {
 }
 
 $tagOutput = & git describe --tags --abbrev=0
-if ($LASTEXITCODE -ne 0 -or -not $tagOutput) {
-    throw 'No Git tag is available. Run .\tag.ps1 before creating a release archive.'
+$version = 'dev'
+if ($LASTEXITCODE -eq 0 -and $tagOutput) {
+    $tag = $tagOutput.Trim()
+    Write-Host "Candidate release version: $tag"
+    if ((Read-Host 'Enter y to use this version') -ceq 'y') {
+        $version = $tag
+    } else {
+        Write-Host 'Using development version.'
+    }
+} else {
+    Write-Host 'No Git tag is available. Using development version.'
 }
-$tag = $tagOutput.Trim()
 
-$archive = Join-Path $root "TarkovItemManager-$tag.zip"
-if (Test-Path $archive) {
+$archive = Join-Path $root "TarkovItemManager-$version.zip"
+if ($version -ne 'dev' -and (Test-Path $archive)) {
     throw "Release archive already exists: $archive"
+}
+if ($version -eq 'dev' -and (Test-Path $archive)) {
+    Remove-Item -Force $archive
 }
 if (-not (Get-Command cargo -ErrorAction SilentlyContinue)) {
     throw 'Cargo is not available in PATH. Install Rust first.'

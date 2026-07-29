@@ -87,7 +87,7 @@ docker compose up --build
 .\pubdev.ps1
 ```
 
-脚本会在根目录生成只包含 `tarkov-item-manager.exe` 的 `TarkovItemManager-<tag>.zip`。前端资源和 PVE 数据集已嵌入可执行文件；直接启动 exe 会在本机浏览器打开应用。归档不包含 `pubdev/.env`、`pubdev/data/` 中的会话密钥、账户或用户进度。
+`pubdev.ps1` 会显示最近可达的 Git tag。输入精确的小写 `y` 后，脚本生成只包含 `tarkov-item-manager.exe` 的 `TarkovItemManager-<tag>.zip`；正式版本包同名时不会覆盖。输入其他内容，或没有可达 tag 时，脚本生成并覆盖 `TarkovItemManager-dev.zip`。前端资源和 PVE 数据集已嵌入可执行文件；直接启动 exe 会在本机浏览器打开应用。归档不包含 `pubdev/.env`、`pubdev/data/` 中的会话密钥、账户或用户进度。
 
 ## 验证
 
