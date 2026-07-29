@@ -82,7 +82,7 @@ if (-not (Test-Path $envFile)) {
 DATABASE_URL=sqlite:data/tarkov-item-manager.db?mode=rwc
 APP_ORIGIN=http://127.0.0.1:3000
 LISTEN_ADDR=127.0.0.1:3000
-AUTO_OPEN_BROWSER=true
+DESKTOP_APP=true
 SESSION_SECRET=$sessionSecret
 SECURE_COOKIES=false
 "@ | Set-Content -Encoding utf8 $envFile

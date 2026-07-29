@@ -26,7 +26,7 @@ async fn main() -> Result<()> {
         app_version()
     );
     tracing::info!(%browser_url, "服务已启动");
-    if config.auto_open_browser {
+    if config.desktop_app {
         if let Err(error) = open::that(&browser_url) {
             tracing::warn!(%browser_url, %error, "无法自动打开浏览器");
         }

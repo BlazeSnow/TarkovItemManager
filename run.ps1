@@ -37,7 +37,7 @@ APP_ORIGIN=http://localhost:5173
 LISTEN_ADDR=0.0.0.0:3000
 SESSION_SECRET=local-development-secret-change-me
 SECURE_COOKIES=false
-AUTO_OPEN_BROWSER=false
+DESKTOP_APP=false
 '@ | Set-Content -Encoding utf8 $envFile
 }
 

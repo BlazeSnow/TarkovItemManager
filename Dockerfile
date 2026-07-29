@@ -22,6 +22,6 @@ WORKDIR /app
 COPY --from=backend-build /app/backend/target/release/tarkov-item-manager /usr/local/bin/tarkov-item-manager
 RUN mkdir /data && chown -R app:app /app /data
 USER app
-ENV DATABASE_URL=sqlite:/data/tarkov-item-manager.db LISTEN_ADDR=0.0.0.0:3000 AUTO_OPEN_BROWSER=false
+ENV DATABASE_URL=sqlite:/data/tarkov-item-manager.db LISTEN_ADDR=0.0.0.0:3000 DESKTOP_APP=false
 EXPOSE 3000
 CMD ["tarkov-item-manager"]
