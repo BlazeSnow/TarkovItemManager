@@ -54,6 +54,7 @@ if (-not (Get-Command pnpm -ErrorAction SilentlyContinue)) {
 
 Invoke-CheckedCommand 'Frontend dependency installation' { pnpm --dir $frontendRoot install --frozen-lockfile }
 Invoke-CheckedCommand 'Frontend production build' { pnpm --dir $frontendRoot run build }
+$env:TARKOV_ITEM_MANAGER_VERSION = $version
 Invoke-CheckedCommand 'Backend release build' { cargo build --release --manifest-path (Join-Path $backendRoot 'Cargo.toml') }
 
 New-Item -ItemType Directory -Force -Path $publishRoot | Out-Null
