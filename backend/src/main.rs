@@ -5,6 +5,7 @@ use tarkov_item_manager::{build_app, config::Config};
 use tracing_subscriber::EnvFilter;
 
 const APP_NAME: &str = "Tarkov Item Manager";
+const REPOSITORY_URL: &str = "https://github.com/BlazeSnow/TarkovItemManager";
 
 #[tokio::main]
 async fn main() -> Result<()> {
@@ -21,7 +22,7 @@ async fn main() -> Result<()> {
     let listener = tokio::net::TcpListener::bind(address).await?;
     let browser_url = local_browser_url(listener.local_addr()?.port());
     println!(
-        "{APP_NAME}\nVersion: {}\nOpen: {browser_url}",
+        "{APP_NAME}\nVersion: {}\nRepository: {REPOSITORY_URL}\n\nOpen: {browser_url}",
         app_version()
     );
     tracing::info!(%browser_url, "服务已启动");
