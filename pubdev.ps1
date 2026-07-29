@@ -19,19 +19,6 @@ function Invoke-Git([string[]]$Arguments) {
     return $output
 }
 
-function Find-SevenZip {
-    $command = Get-Command 7z -ErrorAction SilentlyContinue
-    if ($command) {
-        return $command.Source
-    }
-
-    $candidates = @(
-        (Join-Path $env:ProgramFiles '7-Zip\7z.exe'),
-        (Join-Path ${env:ProgramFiles(x86)} '7-Zip\7z.exe')
-    )
-    return $candidates | Where-Object { Test-Path $_ } | Select-Object -First 1
-}
-
 if (-not (Get-Command git -ErrorAction SilentlyContinue)) {
     throw 'Git is not available in PATH.'
 }
@@ -42,12 +29,7 @@ if ($LASTEXITCODE -ne 0 -or -not $tagOutput) {
 }
 $tag = $tagOutput.Trim()
 
-$sevenZip = Find-SevenZip
-if (-not $sevenZip) {
-    throw '7-Zip is not available. Install 7-Zip or add 7z to PATH.'
-}
-
-$archive = Join-Path $root "TarkovItemManager-$tag.7z"
+$archive = Join-Path $root "TarkovItemManager-$tag.zip"
 if (Test-Path $archive) {
     throw "Release archive already exists: $archive"
 }
@@ -94,14 +76,7 @@ SECURE_COOKIES=false
 "@ | Set-Content -Encoding utf8 $envFile
 }
 
-Push-Location $publishRoot
-try {
-    Invoke-CheckedCommand 'Release archive creation' {
-        & $sevenZip a -t7z $archive 'tarkov-item-manager.exe'
-    }
-} finally {
-    Pop-Location
-}
+Compress-Archive -LiteralPath (Join-Path $publishRoot 'tarkov-item-manager.exe') -DestinationPath $archive -CompressionLevel Optimal -ErrorAction Stop
 
 if (-not (Test-Path $archive)) {
     throw "Release archive was not created: $archive"

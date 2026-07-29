@@ -81,13 +81,13 @@ docker compose up --build
 
 ## 本地发布
 
-先使用 `./tag.ps1` 创建并推送版本标签，再安装 7-Zip 并运行：
+先使用 `./tag.ps1` 创建并推送版本标签，然后运行：
 
 ```powershell
 .\pubdev.ps1
 ```
 
-脚本会在根目录生成只包含 `tarkov-item-manager.exe` 的 `TarkovItemManager-<tag>.7z`。前端资源和 PVE 数据集已嵌入可执行文件；直接启动 exe 会在本机浏览器打开应用。归档不包含 `pubdev/.env`、`pubdev/data/` 中的会话密钥、账户或用户进度。
+脚本会在根目录生成只包含 `tarkov-item-manager.exe` 的 `TarkovItemManager-<tag>.zip`。前端资源和 PVE 数据集已嵌入可执行文件；直接启动 exe 会在本机浏览器打开应用。归档不包含 `pubdev/.env`、`pubdev/data/` 中的会话密钥、账户或用户进度。
 
 ## 验证
 
