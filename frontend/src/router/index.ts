@@ -1,11 +1,13 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import LoginView from '@/views/LoginView.vue'
 import WorkspaceView from '@/views/WorkspaceView.vue'
+import SettingsView from '@/views/SettingsView.vue'
 import { useAuthStore } from '@/stores/auth'
 
 const router = createRouter({ history: createWebHistory(), routes: [
   { path: '/login', component: LoginView, meta: { guest: true } },
   { path: '/', component: WorkspaceView, meta: { auth: true } },
+  { path: '/settings', component: SettingsView, meta: { auth: true } },
 ] })
 
 router.beforeEach(async (to) => {
