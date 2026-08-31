@@ -1,11 +1,8 @@
 use std::{env, net::SocketAddr};
 
 use anyhow::Result;
-use tarkov_item_manager::{build_app, config::Config};
+use tarkov_item_manager::{APP_NAME, REPOSITORY_URL, app_version, build_app, config::Config};
 use tracing_subscriber::EnvFilter;
-
-const APP_NAME: &str = "Tarkov Item Manager";
-const REPOSITORY_URL: &str = "https://github.com/BlazeSnow/TarkovItemManager";
 
 #[tokio::main]
 async fn main() -> Result<()> {
@@ -35,10 +32,6 @@ async fn main() -> Result<()> {
     Ok(())
 }
 
-fn app_version() -> &'static str {
-    option_env!("TARKOV_ITEM_MANAGER_VERSION").unwrap_or("dev")
-}
-
 fn local_browser_url(port: u16) -> String {
     format!("http://localhost:{port}/login")
 }
@@ -48,8 +41,8 @@ mod tests {
     use super::{app_version, local_browser_url};
 
     #[test]
-    fn defaults_to_development_version() {
-        assert_eq!(app_version(), "dev");
+    fn defaults_to_package_version() {
+        assert_eq!(app_version(), env!("CARGO_PKG_VERSION"));
     }
 
     #[test]

@@ -76,3 +76,29 @@ pub async fn me(
     let (id, username) = session::user(&state.pool, &state.config, &headers).await?;
     Ok(Json(UserResponse { id, username }))
 }
+#[derive(Deserialize)]
+pub struct PasswordChange {
+    #[serde(rename = "currentPassword")]
+    current_password: String,
+    #[serde(rename = "newPassword")]
+    new_password: String,
+}
+pub async fn change_password(
+    State(state): State<AppState>,
+    headers: HeaderMap,
+    Json(input): Json<PasswordChange>,
+) -> ApiResult<StatusCode> {
+    let (user_id, username) = session::user(&state.pool, &state.config, &headers).await?;
+    if !(8..=128).contains(&input.new_password.len()) {
+        return Err(bad_request("新密码需为 8-128 个字符"));
+    }
+    let Some((_, _, hash)) = users::find(&state.pool, &username).await? else {
+        return Err(ApiProblem(StatusCode::UNAUTHORIZED, "用户不存在".into()));
+    };
+    password::verify(&input.current_password, &hash)
+        .map_err(|_| ApiProblem(StatusCode::UNAUTHORIZED, "当前密码错误".into()))?;
+    let new_hash = password::hash(&input.new_password).map_err(crate::error::internal)?;
+    users::update_password(&state.pool, user_id, &new_hash).await?;
+    session::delete_others(&state.pool, &state.config, user_id, &headers).await?;
+    Ok(StatusCode::NO_CONTENT)
+}

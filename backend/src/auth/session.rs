@@ -86,3 +86,20 @@ pub async fn delete(
     )
         .into_response())
 }
+pub async fn delete_others(
+    pool: &SqlitePool,
+    config: &Config,
+    user_id: i64,
+    headers: &HeaderMap,
+) -> ApiResult<()> {
+    let Some(current) = token(headers) else {
+        return Err(unauthorized());
+    };
+    sqlx::query("DELETE FROM sessions WHERE user_id = ? AND token_hash != ?")
+        .bind(user_id)
+        .bind(hash(&config.session_secret, &current))
+        .execute(pool)
+        .await
+        .map_err(internal)?;
+    Ok(())
+}

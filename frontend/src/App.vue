@@ -12,6 +12,10 @@ const themeOptions: { value: ThemePreference; label: string; icon: string }[] = 
   { value: 'light', label: '浅色', icon: 'mdi-white-balance-sunny' },
   { value: 'dark', label: '深色', icon: 'mdi-weather-night' },
 ]
+const navItems = [
+  { title: '主页', icon: 'mdi-home', to: '/' },
+  { title: '设置', icon: 'mdi-cog-outline', to: '/settings' },
+]
 </script>
 
 <template>
@@ -36,6 +40,11 @@ const themeOptions: { value: ThemePreference; label: string; icon: string }[] = 
         </template>
       </template>
     </v-app-bar>
+    <v-navigation-drawer v-if="auth.user" color="surface" border>
+      <v-list nav density="comfortable">
+        <v-list-item v-for="item in navItems" :key="item.to" :prepend-icon="item.icon" :title="item.title" :to="item.to" :exact="item.to === '/'" />
+      </v-list>
+    </v-navigation-drawer>
     <v-main><router-view /></v-main>
     <v-footer class="text-caption d-flex justify-space-between" color="surface" border>
       <span>Tarkov Item Manager</span>

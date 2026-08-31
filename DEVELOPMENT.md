@@ -50,7 +50,7 @@ SECURE_COOKIES=false
 - `APP_ORIGIN`：开发环境的前端来源，用于 CORS。
 - `SESSION_SECRET`：至少 16 个字符，用于哈希会话令牌。生产环境必须设置为随机高强度值。
 - `SECURE_COOKIES`：HTTPS 部署时设为 `true`。
-- `DESKTOP_APP`：默认 `true`，桌面应用模式下服务成功绑定端口后会打开本机默认浏览器；开发脚本和 Docker 环境显式设为 `false`。
+- `DESKTOP_APP`：默认 `true`，桌面应用模式下服务成功绑定端口后会打开本机默认浏览器；开发脚本显式设为 `false`。
 
 ## 数据集
 
@@ -68,28 +68,13 @@ PVE 材料、数量、带勾、建造时间和页面提供的设施/商人/技�
 - 设施前置条件必须指向存在的升级等级，且不可形成循环。
 - 来源名称归并必须记录在 `hideout.json` 的 `sources.notes` 中。
 
-## Docker
+## 发布
 
-Docker/Compose 可用时，先提供会话密钥：
-
-```bash
-export SESSION_SECRET='replace-with-a-long-random-secret'
-docker compose up --build
-```
-
-访问 `http://localhost:3000`。SQLite 数据会保存到名为 `tarkov-data` 的 Docker 卷；容器重建不会清除该卷。
-
-## 本地发布
-
-先使用 `./tag.ps1` 创建并推送版本标签，然后运行：
-
-```powershell
-.\pubdev.ps1
-```
-
-`pubdev.ps1` 会显示最近可达的 Git tag。输入精确的小写 `y` 后，脚本生成只包含 `tarkov-item-manager.exe` 的 `TarkovItemManager-<tag>.zip`；正式版本包同名时不会覆盖。输入其他内容，或没有可达 tag 时，脚本生成并覆盖 `TarkovItemManager-dev.zip`。前端资源和 PVE 数据集已嵌入可执行文件；直接启动 exe 会在本机浏览器打开应用。归档不包含 `pubdev/.env`、`pubdev/data/` 中的会话密钥、账户或用户进度。
+仓库根目录的 `VERSION` 文件保存下一个待发布标签（如 `v2026.8.31-beta.1`）。`./syncVersion.ps1` 把去掉 `v` 前缀的版本号同步到后端 `Cargo.toml`、前端 `package.json` 并刷新 `Cargo.lock`。发布流程：修改 VERSION → 运行 `./syncVersion.ps1` → 提交 → `./tag.ps1` 创建并推送标签（读取 VERSION，校验格式且不允许重复）→ GitHub 上的 `release.yml` 校验标签与文件一致并创建 Release（版本号带 `-` 后缀标记为预发布），随后在 Windows x64、Linux x64 和 macOS ARM 上构建、把对应 zip 附带到该 Release；也支持在 Actions 页面手动触发（仅产出构建工件，不创建 Release）。
 
 ## 验证
+
+后端为 Rust 单元测试（数据集加载、密码哈希、内嵌前端服务）加 `tests/api.rs` HTTP 集成测试（注册/登录/会话、修改密码与会话吊销、目录与进度接口），前端使用 Vitest + @vue/test-utils（API 封装、auth store、格式化、材料面板筛选）：
 
 ```bash
 cd backend
@@ -97,11 +82,17 @@ cargo fmt --check
 cargo test
 
 cd ../frontend
+pnpm test
 pnpm build
 ```
 
-容器镜像构建命令：
+## 发版前手动测试
 
-```bash
-docker build -t tarkov-item-manager .
-```
+项目不设 CI 测试工作流，除运行上述自动化命令外，每次发版前在浏览器中手动过一遍以下检查：
+
+1. 注册新账户、登录、退出后重新登录。
+2. 主页加载设施卡片；调整设施、商人、技能等级并刷新后数值保留。
+3. 剩余材料汇总随等级变化，带勾/非带勾筛选正常。
+4. 设置页修改密码：当前密码错误被拒绝；修改成功后旧密码无法登录、新密码可登录；其他已登录会话被退出。
+5. 设置页显示软件名称、版本号和仓库链接。
+6. 浅色/深色主题与跟随系统切换正常。

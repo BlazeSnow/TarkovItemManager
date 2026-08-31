@@ -35,4 +35,4 @@
 
 ## 发布
 
-1. 软件最后将发布至DockerHub
+1. 软件使用GitHub Action发布

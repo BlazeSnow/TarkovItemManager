@@ -19,3 +19,12 @@ pub async fn find(pool: &SqlitePool, username: &str) -> ApiResult<Option<(i64, S
         .await
         .map_err(internal)
 }
+pub async fn update_password(pool: &SqlitePool, id: i64, password_hash: &str) -> ApiResult<()> {
+    sqlx::query("UPDATE users SET password_hash = ? WHERE id = ?")
+        .bind(password_hash)
+        .bind(id)
+        .execute(pool)
+        .await
+        .map_err(internal)?;
+    Ok(())
+}

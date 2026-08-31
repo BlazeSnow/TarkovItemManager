@@ -1,6 +1,6 @@
 [package]
 name = "tarkov-item-manager"
-version = "0.0.0"
+version = "2026.8.31-beta.1"
 edition = "2024"
 
 [dependencies]
@@ -24,4 +24,6 @@ tracing = "0.1"
 tracing-subscriber = { version = "0.3", features = ["env-filter"] }
 
 [dev-dependencies]
+http-body-util = "0.1"
 tempfile = "3"
+tower = { version = "0.5", features = ["util"] }
