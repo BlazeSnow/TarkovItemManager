@@ -18,7 +18,27 @@ pub const APP_NAME: &str = "Tarkov Item Manager";
 pub const REPOSITORY_URL: &str = "https://github.com/BlazeSnow/TarkovItemManager";
 
 pub fn app_version() -> &'static str {
-    option_env!("TARKOV_ITEM_MANAGER_VERSION").unwrap_or("dev")
+    version_from_env(option_env!("TARKOV_ITEM_MANAGER_VERSION"))
+        .unwrap_or(env!("CARGO_PKG_VERSION"))
+}
+
+fn version_from_env(raw: Option<&'static str>) -> Option<&'static str> {
+    raw.map(|value| value.strip_prefix('v').unwrap_or(value))
+}
+
+#[cfg(test)]
+mod tests {
+    use super::version_from_env;
+
+    #[test]
+    fn strips_release_tag_prefix() {
+        assert_eq!(
+            version_from_env(Some("v2026.8.31-beta.1")),
+            Some("2026.8.31-beta.1")
+        );
+        assert_eq!(version_from_env(Some("dev")), Some("dev"));
+        assert_eq!(version_from_env(None), None);
+    }
 }
 
 pub async fn build_app(config: Config) -> Result<Router> {

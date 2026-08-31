@@ -41,8 +41,8 @@ mod tests {
     use super::{app_version, local_browser_url};
 
     #[test]
-    fn defaults_to_development_version() {
-        assert_eq!(app_version(), "dev");
+    fn defaults_to_package_version() {
+        assert_eq!(app_version(), env!("CARGO_PKG_VERSION"));
     }
 
     #[test]
