@@ -12,8 +12,20 @@ jobs:
   publish:
     runs-on: ubuntu-latest
     steps:
+    - uses: actions/checkout@v7
+
+    - name: Verify tag matches VERSION
+      env:
+        TAG: ${{ github.ref_name }}
+      run: |
+        version="$(tr -d '[:space:]' < VERSION)"
+        if [ -z "$version" ] || [ "$version" != "$TAG" ]; then
+          echo "::error::Tag $TAG does not match VERSION file content '$version'."
+          exit 1
+        fi
+
     - name: Create Release
       uses: ncipollo/release-action@v1
       with:
         tag: ${{ github.ref_name }}
-        prerelease: true
+        prerelease: ${{ contains(github.ref_name, '-beta') }}

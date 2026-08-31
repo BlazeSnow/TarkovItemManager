@@ -14,22 +14,21 @@ if (-not (Get-Command git -ErrorAction SilentlyContinue)) {
     throw 'Git is not available in PATH.'
 }
 
-$baseTag = "v$(Get-Date -Format 'yyyy.M.d')"
-$pattern = "^$([regex]::Escape($baseTag))\.(\d+)$"
-$existingTags = @(
-    Invoke-Git @('tag', '--list', "$baseTag.*")
-    Invoke-Git @('ls-remote', '--tags', 'origin', "refs/tags/$baseTag.*") |
-        ForEach-Object { ($_ -split "`t")[-1] -replace '^refs/tags/', '' -replace '\^\{\}$', '' }
-) | Where-Object { $_ -match $pattern } | Select-Object -Unique
-
-$nextSequence = 0
-foreach ($existingTag in $existingTags) {
-    if ($existingTag -match $pattern) {
-        $nextSequence = [Math]::Max($nextSequence, [int]$Matches[1] + 1)
-    }
+$versionFile = Join-Path $root 'VERSION'
+if (-not (Test-Path $versionFile)) {
+    throw 'VERSION file not found in repository root.'
+}
+$tag = (Get-Content $versionFile -Raw).Trim()
+if ($tag -notmatch '^v\d+\.\d+\.\d+(-[0-9A-Za-z.\-]+)?$') {
+    throw "VERSION content '$tag' is not a valid tag like v2026.8.31 or v2026.8.31-beta.1."
 }
 
-$tag = "$baseTag.$nextSequence"
+$localTag = Invoke-Git @('tag', '--list', $tag) | Where-Object { $_ }
+$remoteTag = Invoke-Git @('ls-remote', '--tags', 'origin', "refs/tags/$tag") | Where-Object { $_ }
+if ($localTag -or $remoteTag) {
+    throw "Tag $tag already exists locally or on origin."
+}
+
 $commit = (Invoke-Git @('rev-parse', '--short', 'HEAD')).Trim()
 Write-Host "Will create tag $tag for commit $commit."
 $confirmation = Read-Host 'Enter y to create and push this tag'
