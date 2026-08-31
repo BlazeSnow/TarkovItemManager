@@ -14,6 +14,13 @@ use sqlx::{SqlitePool, sqlite::SqlitePoolOptions};
 
 use crate::{catalog::Catalog, config::Config, state::AppState};
 
+pub const APP_NAME: &str = "Tarkov Item Manager";
+pub const REPOSITORY_URL: &str = "https://github.com/BlazeSnow/TarkovItemManager";
+
+pub fn app_version() -> &'static str {
+    option_env!("TARKOV_ITEM_MANAGER_VERSION").unwrap_or("dev")
+}
+
 pub async fn build_app(config: Config) -> Result<Router> {
     let catalog = match &config.dataset_dir {
         Some(dir) => Catalog::load_external(dir)?,

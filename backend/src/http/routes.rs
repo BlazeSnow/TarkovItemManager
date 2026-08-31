@@ -1,5 +1,5 @@
 use crate::{
-    http::{auth, catalog, progress},
+    http::{auth, catalog, progress, version},
     state::AppState,
 };
 use axum::{
@@ -27,6 +27,8 @@ pub fn router(state: AppState) -> Router {
         .route("/api/auth/login", post(auth::login))
         .route("/api/auth/logout", post(auth::logout))
         .route("/api/auth/me", get(auth::me))
+        .route("/api/auth/password", put(auth::change_password))
+        .route("/api/version", get(version::get))
         .route("/api/catalog", get(catalog::get))
         .route("/api/progress/facilities", put(progress::facilities))
         .route("/api/progress/merchants", put(progress::merchants))

@@ -1,11 +1,8 @@
 use std::{env, net::SocketAddr};
 
 use anyhow::Result;
-use tarkov_item_manager::{build_app, config::Config};
+use tarkov_item_manager::{APP_NAME, REPOSITORY_URL, app_version, build_app, config::Config};
 use tracing_subscriber::EnvFilter;
-
-const APP_NAME: &str = "Tarkov Item Manager";
-const REPOSITORY_URL: &str = "https://github.com/BlazeSnow/TarkovItemManager";
 
 #[tokio::main]
 async fn main() -> Result<()> {
@@ -33,10 +30,6 @@ async fn main() -> Result<()> {
     }
     axum::serve(listener, app).await?;
     Ok(())
-}
-
-fn app_version() -> &'static str {
-    option_env!("TARKOV_ITEM_MANAGER_VERSION").unwrap_or("dev")
 }
 
 fn local_browser_url(port: u16) -> String {
