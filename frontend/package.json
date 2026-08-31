@@ -1,5 +1,6 @@
 {
   "name": "tarkov-item-manager",
+  "version": "2026.8.31-beta.1",
   "private": true,
   "packageManager": "pnpm@11.24.0",
   "type": "module",
