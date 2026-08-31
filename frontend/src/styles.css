@@ -8,7 +8,8 @@ a { color: rgb(var(--v-theme-primary)); text-decoration: none; }
 .facility-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; }
 .facility-card { min-height: 220px; border-radius: 8px; }
 .materials-panel, .requirements-panel { border-radius: 8px; padding: 20px; }
-.settings-placeholder { border-radius: 8px; }
+.about-row { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 10px 0; }
+.about-row + .about-row { border-top: 1px solid rgba(var(--v-border-color), var(--v-border-opacity)); }
 .requirements-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; }
 .condition-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; }
 .upgrade-plan { border-left: 2px solid rgb(var(--v-theme-secondary)); padding-left: 10px; }
