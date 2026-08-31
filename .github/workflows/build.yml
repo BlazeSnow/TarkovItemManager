@@ -1,0 +1,126 @@
+name: Build
+
+on:
+  push:
+    tags:
+    - 'v*'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+        - os: ubuntu-latest
+          platform: linux-x64
+          binary: tarkov-item-manager
+        - os: windows-latest
+          platform: windows-x64
+          binary: tarkov-item-manager.exe
+        - os: macos-latest
+          platform: macos-arm64
+          binary: tarkov-item-manager
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    - name: Setup Node
+      uses: actions/setup-node@v4
+      with:
+        node-version: 22
+
+    - name: Enable pnpm
+      env:
+        COREPACK_ENABLE_DOWNLOAD_PROMPT: 0
+      run: corepack enable
+
+    - name: Resolve version
+      id: version
+      shell: bash
+      env:
+        REF_TYPE: ${{ github.ref_type }}
+        REF_NAME: ${{ github.ref_name }}
+      run: |
+        if [ "$REF_TYPE" = "tag" ]; then
+          version="$REF_NAME"
+        else
+          version="$(tr -d '[:space:]' < VERSION)"
+        fi
+        echo "version=$version" >> "$GITHUB_OUTPUT"
+
+    - name: Install frontend dependencies
+      working-directory: frontend
+      run: pnpm install --frozen-lockfile
+
+    - name: Build frontend
+      working-directory: frontend
+      run: pnpm build
+
+    - name: Setup Rust
+      uses: dtolnay/rust-toolchain@stable
+
+    - name: Rust cache
+      uses: Swatinem/rust-cache@v2
+
+    - name: Build backend
+      shell: bash
+      env:
+        TARKOV_ITEM_MANAGER_VERSION: ${{ steps.version.outputs.version }}
+      run: cargo build --release --manifest-path backend/Cargo.toml
+
+    - name: Package (Windows)
+      if: runner.os == 'Windows'
+      shell: pwsh
+      env:
+        VERSION_NAME: ${{ steps.version.outputs.version }}
+        PLATFORM: ${{ matrix.platform }}
+        BINARY: ${{ matrix.binary }}
+      run: |
+        $name = "TarkovItemManager-$env:VERSION_NAME-$env:PLATFORM"
+        New-Item -ItemType Directory -Path $name | Out-Null
+        Copy-Item "backend/target/release/$env:BINARY" "$name/"
+        Compress-Archive -Path $name -DestinationPath "$name.zip"
+
+    - name: Package (Unix)
+      if: runner.os != 'Windows'
+      shell: bash
+      env:
+        VERSION_NAME: ${{ steps.version.outputs.version }}
+        PLATFORM: ${{ matrix.platform }}
+        BINARY: ${{ matrix.binary }}
+      run: |
+        name="TarkovItemManager-$VERSION_NAME-$PLATFORM"
+        mkdir "$name"
+        cp "backend/target/release/$BINARY" "$name/"
+        chmod +x "$name/$BINARY"
+        zip -r "$name.zip" "$name"
+
+    - name: Upload artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: TarkovItemManager-${{ steps.version.outputs.version }}-${{ matrix.platform }}
+        path: TarkovItemManager-${{ steps.version.outputs.version }}-${{ matrix.platform }}.zip
+        if-no-files-found: error
+
+    - name: Attach to release
+      if: github.ref_type == 'tag'
+      shell: bash
+      env:
+        GH_TOKEN: ${{ github.token }}
+        TAG: ${{ github.ref_name }}
+        ZIP: TarkovItemManager-${{ steps.version.outputs.version }}-${{ matrix.platform }}.zip
+      run: |
+        for _ in $(seq 1 30); do
+          if gh release view "$TAG" >/dev/null 2>&1; then
+            gh release upload "$TAG" "$ZIP" --clobber
+            exit 0
+          fi
+          sleep 10
+        done
+        echo "::error::Release $TAG not found after 5 minutes."
+        exit 1
