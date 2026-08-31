@@ -50,7 +50,7 @@ SECURE_COOKIES=false
 - `APP_ORIGIN`：开发环境的前端来源，用于 CORS。
 - `SESSION_SECRET`：至少 16 个字符，用于哈希会话令牌。生产环境必须设置为随机高强度值。
 - `SECURE_COOKIES`：HTTPS 部署时设为 `true`。
-- `DESKTOP_APP`：默认 `true`，桌面应用模式下服务成功绑定端口后会打开本机默认浏览器；开发脚本和 Docker 环境显式设为 `false`。
+- `DESKTOP_APP`：默认 `true`，桌面应用模式下服务成功绑定端口后会打开本机默认浏览器；开发脚本显式设为 `false`。
 
 ## 数据集
 
@@ -67,17 +67,6 @@ PVE 材料、数量、带勾、建造时间和页面提供的设施/商人/技�
 - 每个 `{ facilityID, level }` 只定义一次。
 - 设施前置条件必须指向存在的升级等级，且不可形成循环。
 - 来源名称归并必须记录在 `hideout.json` 的 `sources.notes` 中。
-
-## Docker
-
-Docker/Compose 可用时，先提供会话密钥：
-
-```bash
-export SESSION_SECRET='replace-with-a-long-random-secret'
-docker compose up --build
-```
-
-访问 `http://localhost:3000`。SQLite 数据会保存到名为 `tarkov-data` 的 Docker 卷；容器重建不会清除该卷。
 
 ## 本地发布
 
@@ -115,9 +104,3 @@ pnpm build
 4. 设置页修改密码：当前密码错误被拒绝；修改成功后旧密码无法登录、新密码可登录；其他已登录会话被退出。
 5. 设置页显示软件名称、版本号和仓库链接。
 6. 浅色/深色主题与跟随系统切换正常。
-
-容器镜像构建命令：
-
-```bash
-docker build -t tarkov-item-manager .
-```
