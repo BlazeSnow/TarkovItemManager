@@ -81,7 +81,7 @@ docker compose up --build
 
 ## 本地发布
 
-仓库根目录的 `VERSION` 文件保存下一个待发布标签（如 `v2026.8.31-beta.1`）。`./syncVersion.ps1` 把去掉 `v` 前缀的版本号同步到后端 `Cargo.toml`、前端 `package.json` 并刷新 `Cargo.lock`。`./tag.ps1` 读取 VERSION 创建并推送同名标签（校验格式且不允许重复）；GitHub 工作流校验标签与文件一致后创建 Release，版本号带 `-` 后缀时标记为预发布，否则为正式版。推送标签后 `build.yml` 会在 Windows x64、Linux x64 和 macOS ARM 上构建并把对应 zip 附带到同一 Release，也支持在 Actions 页面手动触发（仅产出构建工件）。
+仓库根目录的 `VERSION` 文件保存下一个待发布标签（如 `v2026.8.31-beta.1`）。`./syncVersion.ps1` 把去掉 `v` 前缀的版本号同步到后端 `Cargo.toml`、前端 `package.json` 并刷新 `Cargo.lock`。`./tag.ps1` 读取 VERSION 创建并推送同名标签（校验格式且不允许重复）；`release.yml` 先校验标签与文件一致并创建 Release（版本号带 `-` 后缀标记为预发布），随后在 Windows x64、Linux x64 和 macOS ARM 上构建、把对应 zip 附带到该 Release；也支持在 Actions 页面手动触发（仅产出构建工件，不创建 Release）。
 
 先使用 `./tag.ps1` 创建并推送版本标签，然后运行：
 

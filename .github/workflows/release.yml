@@ -1,4 +1,4 @@
-name: Build
+name: Release
 
 on:
   push:
@@ -10,7 +10,30 @@ permissions:
   contents: write
 
 jobs:
+  release:
+    if: github.ref_type == 'tag'
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout tagged commit
+      uses: actions/checkout@v4
+    - name: Verify tag matches VERSION
+      env:
+        TAG: ${{ github.ref_name }}
+      run: |
+        version="$(tr -d '[:space:]' < VERSION)"
+        if [ -z "$version" ] || [ "$version" != "$TAG" ]; then
+          echo "::error::Tag $TAG does not match VERSION file content '$version'."
+          exit 1
+        fi
+    - name: Create Release
+      uses: ncipollo/release-action@v1
+      with:
+        tag: ${{ github.ref_name }}
+        prerelease: ${{ contains(github.ref_name, '-') }}
+
   build:
+    needs: release
+    if: ${{ !cancelled() && (needs.release.result == 'success' || needs.release.result == 'skipped') }}
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
@@ -114,13 +137,4 @@ jobs:
         GH_TOKEN: ${{ github.token }}
         TAG: ${{ github.ref_name }}
         ZIP: TarkovItemManager-${{ steps.version.outputs.version }}-${{ matrix.platform }}.zip
-      run: |
-        for _ in $(seq 1 30); do
-          if gh release view "$TAG" >/dev/null 2>&1; then
-            gh release upload "$TAG" "$ZIP" --clobber
-            exit 0
-          fi
-          sleep 10
-        done
-        echo "::error::Release $TAG not found after 5 minutes."
-        exit 1
+      run: gh release upload "$TAG" "$ZIP" --clobber
